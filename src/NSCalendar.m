@@ -176,37 +176,51 @@ MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
 }
 
 
-static NSInteger  mod_0_n( NSInteger *value, NSInteger max)
+
+static NSInteger  mod_0_n( NSInteger *p_value, NSInteger max)
 {
    NSInteger   diff;
+   NSInteger   value;
 
-   if( *value < 0)
+   diff  = 0;
+   value = *p_value;
+
+   if( value < 0)
    {
-      diff   = *value / max;
-      *value = max - (*value  % max);
-      return( diff);
+      diff  = value / max - 1;
+      value %= max;
+      if( value)
+         value += max;
    }
+   else
+      if( value >= max)
+      {
+         diff   = value / max;
+         value %= max;
+      }
 
-   if( *value >= max)
-   {
-      diff    = *value / max;
-      *value %= max;
-      return( diff);
-   }
-
-   return( 0);
+   *p_value = value;
+   return( diff);
 }
 
 
 static inline NSInteger  mod_0_60( NSInteger *value)
 {
-   return( mod_0_n( value, 60));
+   NSInteger   diff;
+
+   diff = mod_0_n( value, 60);
+   assert( *value >= 0 && *value <= 59);
+   return( diff);
 }
 
 
 static inline NSInteger  mod_0_24( NSInteger *value)
 {
-   return( mod_0_n( value, 24));
+   NSInteger   diff;
+
+   diff = mod_0_n( value, 24);
+   assert( *value >= 0 && *value <= 23);
+   return( diff);
 }
 
 
@@ -217,6 +231,8 @@ static NSInteger  mod_1_13( NSInteger *value)
    *value -= 1;
    diff    = mod_0_n( value, 12);
    *value += 1;
+
+   assert( *value >=1 && *value <= 12);
    return( diff);
 }
 
@@ -226,8 +242,9 @@ static NSInteger  mod_1_13( NSInteger *value)
                             options:(NSUInteger) options
 {
    NSDateComponents   *dateComponents;
+   NSInteger          max;
 
-   if( ! options)
+   if( options)
       abort();
 
    dateComponents = [self components:NSEraCalendarUnit|\
@@ -236,8 +253,23 @@ static NSInteger  mod_1_13( NSInteger *value)
                             fromDate:date];
 
    dateComponents->_year   += components->_year   != NSDateComponentUndefined ? components->_year  : 0;
-   dateComponents->_month  += components->_month  != NSDateComponentUndefined ? components->_month : 1;
-   dateComponents->_day    += components->_day    != NSDateComponentUndefined ? components->_day   : 1;
+   dateComponents->_month  += components->_month  != NSDateComponentUndefined ? components->_month : 0;
+
+   // days overflow like they want for now
+   // we can't overflow them into months as it makes no sense
+
+   //
+   // but under/overflowing months is not a problem
+   //
+   dateComponents->_year   += mod_1_13( &dateComponents->_month);
+
+   // the day can slightly overflow now though...
+   max = [self mulleNumberOfDaysInMonth:dateComponents->_month
+                                 ofYear:dateComponents->_year];
+   if( dateComponents->_day > max)
+      dateComponents->_day = max;
+
+   dateComponents->_day    += components->_day    != NSDateComponentUndefined ? components->_day   : 0;
 
    dateComponents->_hour   += components->_hour   != NSDateComponentUndefined ? components->_hour   : 0;
    dateComponents->_minute += components->_minute != NSDateComponentUndefined ? components->_minute : 0;
@@ -246,14 +278,6 @@ static NSInteger  mod_1_13( NSInteger *value)
    dateComponents->_minute += mod_0_60( &dateComponents->_second);
    dateComponents->_hour   += mod_0_60( &dateComponents->_minute);
    dateComponents->_day    += mod_0_24( &dateComponents->_hour);
-
-   // days overflow like they want
-   // we can't overflow them into months or years as it makes no sense
-
-   //
-   // but under/overflowing months is not a problem
-   //
-   dateComponents->_year   += mod_1_13( &dateComponents->_month);
 
    return( [self dateFromComponents:dateComponents]);
 }

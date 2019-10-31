@@ -360,9 +360,9 @@ static int  accumulated_month_days[] =
 {
    NSInteger result;
 
-   assert( day >= 1 && day <= 366);
    assert( month >= 1 && month <= 12);
    assert( year >= 1 && year <= 144683);
+   assert( day >= 1 && day <= mulleGregorianNumberOfDaysInMonthOfYear( month, year));
 
    result = accumulated_month_days[ month];
    if( month > 2 && mulleGregorianIsSchaltjahr( year))
@@ -418,6 +418,71 @@ static int  accumulated_month_days[] =
    case NSCalendarUnitWeekOfYear  : return( NSMakeRange( 1, 53));
    }
    return( NSMakeRange( NSNotFound, 0));
+}
+
+
+- (NSTimeInterval) mulleTimeIntervalWithYear:(NSInteger) year
+                                       month:(NSInteger) month
+                                         day:(NSInteger) day
+                                        hour:(NSInteger) hour
+                                      minute:(NSInteger) minute
+                                      second:(NSInteger) second
+                                 millisecond:(NSInteger) millisecond
+{
+   NSInteger        daysOfCommonEra;
+   NSTimeInterval   interval;
+   NSInteger        max;
+
+   //
+   // day can be crazy and must be adjusted, all the other
+   // values are sane...
+   // Shabby code follows to get something going
+   //
+   if( day < 1)
+   {
+      // adjust (go backwards in time)
+      for(;;)
+      {
+         if( --month < 1)
+         {
+            month = 12;
+            --year;
+         }
+
+         max  = mulleGregorianNumberOfDaysInMonthOfYear( month, year);
+         day += max;
+         if( day >= 1)
+            break;
+      }
+   }
+   else
+   {
+      for(;;)
+      {
+         max = mulleGregorianNumberOfDaysInMonthOfYear( month, year);
+         if( day <= max)
+            break;
+         // adjust (go forwards in time)
+         if( ++month > 12)
+         {
+            month = 1;
+            ++year;
+         }
+         day -= max;
+      }
+   }
+
+   daysOfCommonEra  = [self mulleNumberOfDaysInCommonEraOfDay:day
+                                                        month:month
+                                                         year:year];
+   daysOfCommonEra -= _daysOfCommonEraOfReferenceDate;
+
+   interval = (daysOfCommonEra * 86400.0) + (hour * 3600) + (minute * 60) + second;
+
+   if( millisecond)
+      interval += millisecond / 1000.0 + 0.0001; // + 0.0001 ???
+
+   return( interval);
 }
 
 @end

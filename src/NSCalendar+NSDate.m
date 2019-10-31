@@ -33,6 +33,7 @@ THE SOFTWARE.
    NSInteger        daysOfCommonEra;
    NSTimeInterval   interval;
 
+
    daysOfCommonEra  = [self mulleNumberOfDaysInCommonEraOfDay:day
                                                         month:month
                                                          year:year];

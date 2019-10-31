@@ -19,7 +19,7 @@ mulle-sde craft
 
 ## Acknowledgements
 
-Major portions of this library:
+Major parts of this library:
 
 ```
 Copyright (c) 2006-2007 Christopher J. W. Lloyd
