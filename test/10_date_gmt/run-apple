@@ -1,0 +1,11 @@
+#! /bin/sh
+
+for i in *.m
+do
+   name="`basename "$i" .m`"
+   exe="${name}.apple.exe"
+   stdout="${name}.stdout"
+
+   cc -o "${exe}" "${i}" -framework Foundation || exit 1
+   ./${exe} > ${stdout} || exit 1
+done

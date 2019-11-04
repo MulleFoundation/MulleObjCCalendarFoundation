@@ -89,17 +89,20 @@ typedef NSUInteger NSCalendarUnit;
 
 - (NSRange) rangeOfUnit:(NSCalendarUnit) unit
                  inUnit:(NSCalendarUnit) inUnit
-                 forDate:(NSDate *)date;
+                forDate:(NSDate *)date;
 
 - (NSUInteger) ordinalityOfUnit:(NSCalendarUnit) unit
                          inUnit:(NSCalendarUnit) inUnit
-                         forDate:(NSDate *) date;
+                        forDate:(NSDate *) date;
 
+- (NSInteger) mulleNumberOfDaysInYear:(NSInteger) year;
+- (NSInteger) mulleNumberOfWeeksInYear:(NSInteger) year;
 - (NSInteger) mulleNumberOfDaysInMonth:(NSInteger) month
                                 ofYear:(NSInteger) year;
 - (NSInteger) mulleNumberOfDaysInCommonEraOfDay:(NSInteger) day
                                           month:(NSInteger) month
                                            year:(NSInteger) year;
+
 @end
 
 

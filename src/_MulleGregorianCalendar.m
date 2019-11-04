@@ -1,5 +1,12 @@
 #import "_MulleGregorianCalendar.h"
 
+#import "NSCalendar+NSDate.h"
+
+
+// the non-proleptic code is more for documentation purposes
+// #define USE_JULIAN_BEFORE_CHANGE
+
+
 /* $selId: gregor.c,v 2.0 1995/10/24 01:13:06 lees Exp $
  * Copyright 1993-1995, Scott E. Lee, all rights reserved.
  * Permission granted to use, copy, modify, distribute and sell so long as
@@ -8,46 +15,6 @@
  */
 
 /**************************************************************************
- *
- * These are the externally visible components of this file:
- *
- *     void
- *     SdnToGregorian(
- *         long int  sdn,
- *         int      *pYear,
- *         int      *pMonth,
- *         int      *pDay);
- *
- * Convert a SDN to a Gregorian calendar date.  If the input SDN is less
- * than 1, the three output values will all be set to zero, otherwise
- * *pYear will be >= -4714 and != 0; *pMonth will be in the range 1 to 12
- * inclusive; *pDay will be in the range 1 to 31 inclusive.
- *
- *     long int
- *     GregorianToSdn(
- *         int inputYear,
- *         int inputMonth,
- *         int inputDay);
- *
- * Convert a Gregorian calendar date to a SDN.  Zero is returned when the
- * input date is detected as invalid or out of the supported range.  The
- * return value will be > 0 for all valid, supported dates, but there are
- * some invalid dates that will return a positive value.  To verify that a
- * date is valid, convert it to SDN and then back and compare with the
- * original.
- *
- *     char *MonthNameShort[13];
- *
- * Convert a Gregorian month number (1 to 12) to the abbreviated (three
- * character) name of the Gregorian month (null terminated).  An index of
- * zero will return a zero length string.
- *
- *     char *MonthNameLong[13];
- *
- * Convert a Gregorian month number (1 to 12) to the name of the Gregorian
- * month (null terminated).  An index of zero will return a zero length
- * string.
- *
  * VALID RANGE
  *
  *     4714 B.C. to at least 10000 A.D.
@@ -127,118 +94,44 @@
  *     algorithm number 199).
  *
  **************************************************************************/
-#define SDN_OFFSET         32045
-#define DAYS_PER_5_MONTHS  153
-#define DAYS_PER_4_YEARS   1461
-#define DAYS_PER_400_YEARS 146097
-
-static void
-SdnToGregorian(
-    long int  sdn,
-    int      *pYear,
-    int      *pMonth,
-    int      *pDay)
-{
-    int       century;
-    int       year;
-    int       month;
-    int       day;
-    long int  temp;
-    int       dayOfYear;
-
-    if (sdn <= 0) {
-   *pYear = 0;
-   *pMonth = 0;
-   *pDay = 0;
-   return;
-    }
-
-    temp = (sdn + SDN_OFFSET) * 4 - 1;
-
-    /* Calculate the century (year/100). */
-    century = temp / DAYS_PER_400_YEARS;
-
-    /* Calculate the year and day of year (1 <= dayOfYear <= 366). */
-    temp = ((temp % DAYS_PER_400_YEARS) / 4) * 4 + 3;
-    year = (century * 100) + (temp / DAYS_PER_4_YEARS);
-    dayOfYear = (temp % DAYS_PER_4_YEARS) / 4 + 1;
-
-    /* Calculate the month and day of month. */
-    temp = dayOfYear * 5 - 3;
-    month = temp / DAYS_PER_5_MONTHS;
-    day = (temp % DAYS_PER_5_MONTHS) / 5 + 1;
-
-    /* Convert to the normal beginning of the year. */
-    if (month < 10) {
-   month += 3;
-    } else {
-   year += 1;
-   month -= 9;
-    }
-
-    /* Adjust to the B.C./A.D. type numbering. */
-    year -= 4800;
-    if (year <= 0) year--;
-
-    *pYear = year;
-    *pMonth = month;
-    *pDay = day;
-}
-
-static long int
-GregorianToSdn(
-    int inputYear,
-    int inputMonth,
-    int inputDay)
-{
-    int year;
-    int month;
-
-    /* check for invalid dates */
-    if (inputYear == 0 || inputYear < -4714 ||
-   inputMonth <= 0 || inputMonth > 12 ||
-   inputDay <= 0 || inputDay > 31)
-    {
-   return(0);
-    }
-
-    /* check for dates before SDN 1 (Nov 25, 4714 B.C.) */
-    if (inputYear == -4714) {
-   if (inputMonth < 11) {
-       return(0);
-   }
-   if (inputMonth == 11 && inputDay < 25) {
-       return(0);
-   }
-    }
-
-    /* Make year always a positive number. */
-    if (inputYear < 0) {
-   year = inputYear + 4801;
-    } else {
-   year = inputYear + 4800;
-    }
-
-    /* Adjust the start of the year. */
-    if (inputMonth > 2) {
-   month = inputMonth - 3;
-    } else {
-   month = inputMonth + 9;
-   year--;
-    }
-
-    return( ((year / 100) * DAYS_PER_400_YEARS) / 4
-       + ((year % 100) * DAYS_PER_4_YEARS) / 4
-       + (month * DAYS_PER_5_MONTHS + 2) / 5
-       + inputDay
-       - SDN_OFFSET );
-}
-
-
-
+//
+// Start of this calendar is 15.10.1582
+// Basically any dates before the start are invalid. But one can migrate to
+// Julian for that. I believe that is what ISO does.
+//
 NSString  *NSGregorianCalendar = @"gregorian";
 
-#define MulleGregorianDaysOfCommonEraOfReferenceDate  730486
+// Our reference date is 00:00:00 UTC on 1 January 2001.
+// So if the calendar starts on 00:00:00 1.1.1 (does it or is it noon)
+//
+// The mean tropical year in 2000 was 365.24219 ephemeris days; each ephemeris
+// day lasting 86,400 SI seconds.[1] This is 365.24217 mean solar days
+// (Richards 2013, p. 587).
+// So 2000*365.24219 = 730484,38 and 2000*365.24219 = 730484,34
+// Gregorian defines it as 365.2425 -> 2000*365.2425 = 730485
+// It doesn't really work though, because summing up the days from 1.1.1 to
+// 1.1.2001 gives: 730486 bummer!
+//
+// 5.10.1582 - 14.10-1582 as calendar days do not exist, if you do it
+// right and migrate from Julian to Gregorian. This is not how its done though.
+// The "probleptic" gregoran calendar just doesn't care. There are no lost
+// days, so 14.10 in Gegorian is 4.10 Julian. (See ISO norm for that)
+//
+// +730851 days since 0000-01-01 until Jan 01 2001 according to
+// https://www.epochconverter.com/seconds-days-since-y0
+// 0000-00-00 is same as 0000-01-01
+//
+// means 730485 days since 1.1.0001 since 0 is leap year
+// Alright then why is this 730487 ? All days summed ala Julian up till
+// Gregorian and then ala Gregorian until 1.1.2001 equal 730487
+//
+
+#ifdef USE_JULIAN_BEFORE_CHANGE
+# define MulleGregorianDaysOfCommonEraOfReferenceDate   730487
+#else
+# define MulleGregorianDaysOfCommonEraOfReferenceDate   730485
+#endif
+
 
 @implementation _MulleGregorianCalendar
 
@@ -265,32 +158,29 @@ NSString  *NSGregorianCalendar = @"gregorian";
 }
 
 
-- (struct MulleCalendarDate) mulleCalendarDateFromCanonicalDay:(mulle_canonicalcalendardate_t) sdn
-{
-   struct MulleCalendarDate   date;
-   int                        year;
-   int                        month;
-   int                        day;
-
-   SdnToGregorian( sdn, &year, &month, &day);
-   date.year  = year;
-   date.month = month;
-   date.day   = day;
-   return( date);
-}
-
-
-- (mulle_canonicalcalendardate_t) mulleCanonicalDateFromCalendarDate:(struct MulleCalendarDate) date
-{
-   return( GregorianToSdn( date.year, date.month, date.day));
-}
-
-
 - (NSInteger) mulleDaysOfCommonEraOfReferenceDate
 {
-   return( MulleGregorianDaysOfCommonEraOfReferenceDate);
+   return( _daysOfCommonEraOfReferenceDate);
 }
 
+
+#ifdef USE_JULIAN_BEFORE_CHANGE
+
+// because we treat the missing ones in a "special" way, we claim 5-14 as
+// gregorian
+static inline int   is_gregorian_date( NSInteger day, NSInteger month, NSInteger year)
+{
+   return( year > 1582 || (year == 1582 && (month > 10 || (month == 10 && day > 4))));
+}
+
+
+//
+// the whole in the middle is gone because of Pope Gregory
+//
+static inline int   is_missing_date( NSInteger day, NSInteger month, NSInteger year)
+{
+   return( year == 1582 && month == 10 && day > 4 && day < 15);
+}
 
 
 static inline int
@@ -298,9 +188,34 @@ static inline int
 {
    assert( year >= 1 && year <= 144683);
 
-   return( ((year % 4) == 0 && (year % 100) != 0) || (year % 400) == 0);
+   if( year > 1582)
+      return( ((year % 4) == 0 && (year % 100) != 0) || (year % 400) == 0);
+   return( (year % 4) == 0);
 }
 
+
+static inline NSInteger
+   mulleGregorianMaxCalendarDayInMonthOfYear( NSInteger month,
+                                            NSInteger year)
+{
+   assert( month >= 1 && month <= 12);
+   assert( year >= 1 && year <= 144683);
+
+   switch( month)
+   {
+   case 2:
+      return( mulleGregorianIsSchaltjahr( year) ? 29 : 28);
+
+   case 4:
+   case 6:
+   case 9:
+   case 11:
+      return 30;
+
+   default:
+      return 31; // we have a hole in 10 but the last day is 31
+   }
+}
 
 
 static inline NSInteger
@@ -321,10 +236,56 @@ static inline NSInteger
    case 11:
       return 30;
 
+   case 10 :
+      return( year == 1582 ? 21 : 31);
+
    default:
       return 31;
    }
 }
+
+#endif
+
+static inline int
+   mulleGregorianIsSchaltjahr( NSInteger year)
+{
+   assert( year >= 1 && year <= 144683);
+
+   return( ((year % 4) == 0 && (year % 100) != 0) || (year % 400) == 0);
+}
+
+
+static inline NSInteger
+   mulleGregorianMaxCalendarDayInMonthOfYear( NSInteger month,
+                                                       NSInteger year)
+{
+   assert( month >= 1 && month <= 12);
+   assert( year >= 1 && year <= 144683);
+
+   switch( month)
+   {
+   case 2:
+      return( mulleGregorianIsSchaltjahr( year) ? 29 : 28);
+
+   case 4:
+   case 6:
+   case 9:
+   case 11:
+      return 30;
+
+   default:
+      return 31; // we have a hole in 10 but the last day is 31
+   }
+}
+
+
+static inline NSInteger
+   mulleGregorianNumberOfDaysInMonthOfYear( NSInteger month,
+                                            NSInteger year)
+{
+   return( mulleGregorianMaxCalendarDayInMonthOfYear( month, year));
+}
+
 
 
 - (NSInteger) mulleNumberOfDaysInMonth:(NSInteger) month
@@ -353,74 +314,120 @@ static int  accumulated_month_days[] =
 };
 
 
+- (NSInteger) mulleNumberOfDaysInYear:(NSInteger) year
+{
+#ifdef USE_JULIAN_BEFORE_CHANGE
+   if( year == 1582)
+      return( 355);
+#endif
+   return( 365 + mulleGregorianIsSchaltjahr( year));
+}
 
+
+
+//
+// the result should be elapsed DaysInCommonEra
+// Which isn't necessarily the same as tropical days
+//
 - (NSInteger) mulleNumberOfDaysInCommonEraOfDay:(NSInteger) day
                                           month:(NSInteger) month
                                            year:(NSInteger) year
 {
-   NSInteger result;
+   NSInteger   result;
+   BOOL        isGregorian;
 
    assert( month >= 1 && month <= 12);
    assert( year >= 1 && year <= 144683);
-   assert( day >= 1 && day <= mulleGregorianNumberOfDaysInMonthOfYear( month, year));
+   assert( day >= 1 && day <= mulleGregorianMaxCalendarDayInMonthOfYear( month, year));
 
    result = accumulated_month_days[ month];
    if( month > 2 && mulleGregorianIsSchaltjahr( year))
      result++;
 
+#ifdef USE_JULIAN_BEFORE_CHANGE
+   isGregorian = is_gregorian_date( day, month, year);
+
+   if( year == 1582)
+   {
+      // there are 10 days less in Okt. 1582, so adjust Nov Dez accumulate
+      if( month >= 11)
+         result -= 10;
+      else
+      {
+         if( is_missing_date( day, month, year))
+         {
+            // adjust invalid dates away
+            day = 15;
+         }
+      }
+   }
+   //
+   // with the julian calendar ending on 4.10.1582
+   // 57736 days were elapsed
+   //
+   if( isGregorian)
+#endif
+   {
+      year   -= 1;
+      result += 365 * year;
+      result += year / 4;
+      result -= year / 100;
+      result += year / 400;
+      result += day;
+#ifdef USE_JULIAN_BEFORE_CHANGE
+      result += 1;  // fudge
+#else
+      result -= 1;
+#endif
+      return( result);
+   }
+
+#ifdef USE_JULIAN_BEFORE_CHANGE
    year   -= 1;
    result += 365 * year;
    result += year / 4;
-   result -= year / 100;
-   result += year / 400;
-
    result += day;
+   result -= 1;  // 1.1.1 is not a full day
 
    return( result);
+#endif
 }
 
 
-// the ranges are compatible with Apple
-- (NSRange) minimumRangeOfUnit:(NSCalendarUnit) unit
-{
-   switch( unit)
-   {
-   case NSCalendarUnitEra         : return( NSMakeRange( 0, 2));
-   case NSCalendarUnitYear        : return( NSMakeRange( 1, 140742));
-   case NSCalendarUnitMonth       : return( NSMakeRange( 1, 12));
-   case NSCalendarUnitDay         : return( NSMakeRange( 1, 28));
-   case NSCalendarUnitHour        : return( NSMakeRange( 0, 24));
-   case NSCalendarUnitMinute      : return( NSMakeRange( 0, 60));
-   case NSCalendarUnitSecond      : return( NSMakeRange( 0, 60));
-   case NSCalendarUnitWeekday     : return( NSMakeRange( 1, 7));
-   case NSCalendarUnitQuarter     : return( NSMakeRange( 1, 4));
-   case NSCalendarUnitWeekOfMonth : return( NSMakeRange( 1, 4));
-   case NSCalendarUnitWeekOfYear  : return( NSMakeRange( 1, 52));
-   }
-   return( NSMakeRange( NSNotFound, 0));
+- (NSInteger) mulleDayOfMonthFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext
+{ // 1-31
+   NSInteger   day;
+   NSInteger   year;
+   NSInteger   month;
+
+   year  = (ext->year == NSIntegerMax) ? [self mulleYearFromExtendedTimeInterval:ext]
+                                       : ext->year;
+   day   = (ext->dayOfCommonEra == NSIntegerMax) ? [self mulleDayOfCommonEraFromExtendedTimeInterval:ext]
+                                                 : ext->dayOfCommonEra;
+   month = (ext->month == NSIntegerMax) ? [self mulleMonthFromExtendedTimeInterval:ext]
+                                        : ext->month;
+
+   day  -= [self mulleNumberOfDaysInCommonEraOfDay:1
+                                             month:month
+                                              year:year] - 1;
+
+#ifdef USE_JULIAN_BEFORE_CHANGE
+   if( is_missing_date( day, month, year))
+      day = 15;
+#endif
+
+   ext->dayOfMonth = day;
+
+   return( day);
 }
 
 
-- (NSRange) maximumRangeOfUnit:(NSCalendarUnit) unit;
-{
-   switch( unit)
-   {
-   case NSCalendarUnitEra         : return( NSMakeRange( 0, 2));
-   case NSCalendarUnitYear        : return( NSMakeRange( 1, 144683));
-   case NSCalendarUnitMonth       : return( NSMakeRange( 1, 12));
-   case NSCalendarUnitDay         : return( NSMakeRange( 1, 31));
-   case NSCalendarUnitHour        : return( NSMakeRange( 0, 24));
-   case NSCalendarUnitMinute      : return( NSMakeRange( 0, 60));
-   case NSCalendarUnitSecond      : return( NSMakeRange( 0, 60));
-   case NSCalendarUnitWeekday     : return( NSMakeRange( 1, 7));
-   case NSCalendarUnitQuarter     : return( NSMakeRange( 1, 4));
-   case NSCalendarUnitWeekOfMonth : return( NSMakeRange( 1, 6));
-   case NSCalendarUnitWeekOfYear  : return( NSMakeRange( 1, 53));
-   }
-   return( NSMakeRange( NSNotFound, 0));
-}
-
-
+//
+// 15.10.1582 0:00:00 = -13197600000.0
+// therefore
+// 4.10.1582 23:59:59 = -13197600001.0
+// when USE_JULIAN_BEFORE_CHANGE is defined
+//
 - (NSTimeInterval) mulleTimeIntervalWithYear:(NSInteger) year
                                        month:(NSInteger) month
                                          day:(NSInteger) day
@@ -435,7 +442,7 @@ static int  accumulated_month_days[] =
 
    //
    // day can be crazy and must be adjusted, all the other
-   // values are sane...
+   // values are assumed to be sane...
    // Shabby code follows to get something going
    //
    if( day < 1)
@@ -459,15 +466,18 @@ static int  accumulated_month_days[] =
    {
       for(;;)
       {
-         max = mulleGregorianNumberOfDaysInMonthOfYear( month, year);
+         max = mulleGregorianMaxCalendarDayInMonthOfYear( month, year);
          if( day <= max)
             break;
+
          // adjust (go forwards in time)
          if( ++month > 12)
          {
             month = 1;
             ++year;
          }
+         if( year == 1582 && month == 10)
+            max -= 10;
          day -= max;
       }
    }

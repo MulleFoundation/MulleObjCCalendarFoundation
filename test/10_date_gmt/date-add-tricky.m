@@ -20,39 +20,49 @@ struct date
    int   second;
 } dates[] =
 {
-   { 1, 1, 1970,  12, 0, 0 },
-   { 1, 1, 2000,  12, 0, 0 },
+   {  1,  1, 1970,  12,  0,  0 },
+   { 18,  4, 1848,  18, 48,  0 },
+   {  4, 10, 1582,  23, 59,  59 },
+   { 10, 10, 1582,  10, 10, 10 },
+   { 15, 10, 1582,   0,  0,  0 },
+   {  4, 10, 2582,  23, 59,  59 },
+   { 10, 10, 2582,  10, 10, 10 },
+   { 15, 10, 2582,   0,  0,  0 },
+   { 31, 12, 2000,  23, 59, 59 },
+
    // schaltjahr
    { 28, 2, 2020,  23, 59, 59 },
-   { 29, 2, 2020,  0, 0, 0 },
+   { 29, 2, 2020,   0,  0,  0 },
    { 29, 2, 2020,  23, 59, 59 },
-   { 30, 2, 2020,  0, 0, 0 },
-   { 1, 3, 2020,  0, 0, 0 },
+   { 30, 2, 2020,   0,  0,  0 },
+   {  1, 3, 2020,   0,  0,  0 },
+
+   // kein schaltjahr
+   { 28, 2, 2100,  23, 59, 59 },
+   { 29, 2, 2100,  23, 59, 59 },
+
    // sommerzeit
    { 31, 3, 2019,  1, 59, 59 },
-   { 31, 3, 2019,  2, 0, 0 },
+   { 31, 3, 2019,  2,  0,  0 },
    { 31, 3, 2019,  2, 59, 59 },
-   { 31, 3, 2019,  3, 0, 0 }
+   { 31, 3, 2019,  3,  0,  0 }
 };
 
 
 struct date   additions[] =
 {
-   { 0, 0, 0,   0, 0, 0  },
-
-   { 0, 0, 0,   0, 0, 1  },
-   { 0, 0, 0,   0, 1, 0  },
-   { 0, 0, 0,   1, 0, 0  },
-   { 0, 0, 1,   0, 0, 0  },
-   { 0, 1, 0,   0, 0, 0  },
-   { 1, 0, 0,   0, 0, 0  },
-
-   { 0, 0, 0,   0, 0, -1 },
-   { 0, 0, 0,   0, -1, 0 },
-   { 0, 0, 0,  -1, 0, 0  },
-   { 0, 0, -1,  0, 0, 0  },
-   { 0, -1, 0,  0, 0, 0  },
-   { -1, 0, 0,  0, 0, 0  }
+   { 0, 0, 0,   0, 0, 1000  },
+   { 0, 0, 0,   0, 1000, 0  },
+   { 0, 0, 0,   1000, 0, 0  },
+   { 0, 0, 1000,   0, 0, 0  },
+   { 0, 1000, 0,   0, 0, 0  },
+   { 1000, 0, 0,   0, 0, 0  },
+   { 0, 0, 0,   0, 0, -1000 },
+   { 0, 0, 0,   0, -1000, 0 },
+   { 0, 0, 0,  -1000, 0, 0  },
+   { 0, 0, -1000,  0, 0, 0  },
+   { 0, -1000, 0,  0, 0, 0  },
+   { -1000, 0, 0,  0, 0, 0  }
 };
 
 
@@ -61,7 +71,6 @@ int   main( void)
 {
    NSCalendar        *calendar;
    NSDateComponents  *components;
-   NSDateComponents  *resultComponents;
    NSDate            *date;
    NSDate            *addedDate;
    struct date       *p;
@@ -112,10 +121,10 @@ int   main( void)
          addedDate = [calendar dateByAddingComponents:components
                                                toDate:date
                                               options:0];
-
          components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay| \
                                            NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond
                                   fromDate:addedDate];
+
          printf( "%d.%d.%d %d:%02d:%02d (%.1f) + %d.%d.%d %d:%02d:%02d = %ld.%ld.%ld %ld:%02ld:%02ld (%.1f)\n",
                p->day, p->month, p->year,
                p->hour, p->minute, p->second,
@@ -125,7 +134,10 @@ int   main( void)
                (long) [components day], (long) [components month], (long) [components year],
                (long) [components hour], (long) [components minute], (long) [components second],
                [addedDate timeIntervalSinceReferenceDate]);
+
       }
+      if( q + 1 < q_sentinel)
+         printf( "---\n");
    }
    return( 0);
 }
