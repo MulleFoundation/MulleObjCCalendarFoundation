@@ -1,51 +1,44 @@
-
-/* Copyright (c) 2007 Christopher J. W. Lloyd
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
-
 #import "import.h"
 
 
 @class NSDateComponents;
 
 
+// keep order as is
 enum
 {
-    NSEraCalendarUnit,
-
-    NSYearCalendarUnit,
-    NSMonthCalendarUnit,
-    NSDayCalendarUnit,
-    NSHourCalendarUnit,
-    NSMinuteCalendarUnit,
-    NSSecondCalendarUnit,
-
-    NSWeekCalendarUnit,
-    NSWeekdayCalendarUnit,
-    NSWeekdayOrdinalCalendarUnit
-};
-
-
-enum
-{
-    NSCalendarUnitEra            = NSEraCalendarUnit,
-
-    NSCalendarUnitYear           = NSYearCalendarUnit,
-    NSCalendarUnitMonth          = NSMonthCalendarUnit,
-    NSCalendarUnitDay            = NSDayCalendarUnit,
-    NSCalendarUnitHour           = NSHourCalendarUnit,
-    NSCalendarUnitMinute         = NSMinuteCalendarUnit,
-    NSCalendarUnitSecond         = NSSecondCalendarUnit,
-
-    NSCalendarUnitWeekOfMonth    = NSWeekCalendarUnit, // ???
-    NSCalendarUnitWeekday        = NSWeekdayCalendarUnit,
-    NSCalendarUnitWeekdayOrdinal = NSWeekdayOrdinalCalendarUnit,
-
-    NSCalendarUnitQuarter,
-    NSCalendarUnitWeekOfYear
+    NSCalendarUnitEra            = 0x0001,
+    NSCalendarUnitYear           = 0x0002,
+    NSCalendarUnitQuarter        = 0x0004,
+    NSCalendarUnitMonth          = 0x0008,
+    NSCalendarUnitWeekOfYear     = 0x0010,
+    NSCalendarUnitWeekOfMonth    = 0x0020,
+    NSCalendarUnitDay            = 0x0040,
+    NSCalendarUnitWeekday        = 0x0080,
+    NSCalendarUnitWeekdayOrdinal = 0x0100,
+    NSCalendarUnitHour           = 0x0200,
+    NSCalendarUnitMinute         = 0x0400,
+    NSCalendarUnitSecond         = 0x0800,
+    NSCalendarUnitNanosecond     = 0x1000
 };
 typedef NSUInteger NSCalendarUnit;
+
+
+enum
+{
+    NSEraCalendarUnit            = NSCalendarUnitEra,
+
+    NSYearCalendarUnit           = NSCalendarUnitYear,
+    NSMonthCalendarUnit          = NSCalendarUnitMonth,
+    NSWeekCalendarUnit           = NSCalendarUnitWeekOfYear,
+    NSDayCalendarUnit            = NSCalendarUnitDay,
+    NSWeekdayCalendarUnit        = NSCalendarUnitWeekday,
+    NSWeekdayOrdinalCalendarUnit = NSCalendarUnitWeekdayOrdinal,
+    NSHourCalendarUnit           = NSCalendarUnitHour,
+    NSMinuteCalendarUnit         = NSCalendarUnitMinute,
+    NSSecondCalendarUnit         = NSCalendarUnitSecond
+};
+
 
 
 @interface NSCalendar : NSObject <NSCopying>
@@ -55,6 +48,13 @@ typedef NSUInteger NSCalendarUnit;
 
 @property( copy) NSLocale     *locale;
 @property( copy) NSTimeZone   *timeZone;
+
+// Sunday: 0, Monday: 1
+@property( assign) NSInteger  firstWeekday;
+
+// numbers of days a week must have to be considered a week for weekOfYear
+@property( assign) NSInteger  minimumDaysInFirstWeek;
+
 
 // must be done during +load
 + (void) mulleRegisterClass:(Class) cls
@@ -81,8 +81,7 @@ typedef NSUInteger NSCalendarUnit;
 + (instancetype) currentCalendar;
 - (NSString *) calendarIdentifier;
 
-- (NSUInteger) firstWeekday;
-- (NSUInteger) minimumDaysInFirstWeek;
+- (NSInteger) mulleFirstWeekdayOfCommonEra;
 
 - (NSRange) minimumRangeOfUnit:(NSCalendarUnit) unit;
 - (NSRange) maximumRangeOfUnit:(NSCalendarUnit) unit;
@@ -95,6 +94,7 @@ typedef NSUInteger NSCalendarUnit;
                          inUnit:(NSCalendarUnit) inUnit
                         forDate:(NSDate *) date;
 
+- (BOOL) mulleIsLeapYear:(NSInteger) year;
 - (NSInteger) mulleNumberOfDaysInYear:(NSInteger) year;
 - (NSInteger) mulleNumberOfWeeksInYear:(NSInteger) year;
 - (NSInteger) mulleNumberOfDaysInMonth:(NSInteger) month
@@ -103,31 +103,13 @@ typedef NSUInteger NSCalendarUnit;
                                           month:(NSInteger) month
                                            year:(NSInteger) year;
 
-@end
-
-
-
-struct MulleCalendarDate
-{
-   int32_t    year;
-   uint16_t   month;
-   uint16_t   day;
-};
-
-
-//
-// the mulle_canonicalcalendardate_t (SDN) can be used to convert dates
-// between calendars
-//
-typedef int32_t   mulle_canonicalcalendardate_t;
-
-
-@interface NSCalendar( CalendarConversion)
-
-- (struct MulleCalendarDate) mulleCalendarDateFromCanonicalDate:(mulle_canonicalcalendardate_t) snd;
-- (mulle_canonicalcalendardate_t)  mulleCanonicalDateFromCalendarDate:(struct MulleCalendarDate) date;
+- (NSTimeInterval) mulleTimeIntervalWithYear:(NSInteger) year
+                                       month:(NSInteger) month
+                                         day:(NSInteger) day
+                                        hour:(NSInteger) hour
+                                      minute:(NSInteger) minute
+                                      second:(NSInteger) second
+                                  nanosecond:(NSInteger) nanosecond;
 
 @end
-
-
 

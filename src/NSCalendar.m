@@ -1,23 +1,3 @@
-/* Copyright (c) 2007 Christopher J. W. Lloyd
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE. */
-
 #import "NSCalendar.h"
 
 #import "NSCalendar+NSDate.h"
@@ -83,6 +63,10 @@ MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
 {
    _timeZone = [[NSTimeZone localTimeZone] copy];
    _locale   = [[NSLocale currentLocale] copy];
+
+   // the default of Apple...
+   _minimumDaysInFirstWeek = 1;
+
    return( self);
 }
 
@@ -117,24 +101,34 @@ MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
 
    MulleExtendedTimeIntervalInit( &extended, interval);
 
-   if( flags & NSEraCalendarUnit)
+   if( flags & NSCalendarUnitEra)
       result->_era = [self mulleEraFromExtendedTimeInterval:&extended];
-   if( flags & NSYearCalendarUnit)
+   if( flags & NSCalendarUnitYear)
       result->_year = [self mulleYearFromExtendedTimeInterval:&extended];
-   if( flags & NSMonthCalendarUnit)
+   if( flags & NSCalendarUnitQuarter)
+      result->_quarter = [self mulleQuarterFromExtendedTimeInterval:&extended];
+   if( flags & NSCalendarUnitMonth)
       result->_month = [self mulleMonthFromExtendedTimeInterval:&extended];
-   if( flags & NSDayCalendarUnit)
+   if( flags & NSCalendarUnitWeekOfYear)
+      result->_weekOfYear = [self mulleISOWeekOfYearFromExtendedTimeInterval:&extended];
+   if( flags & NSCalendarUnitWeekOfMonth)
+      result->_weekOfMonth = [self mulleWeekOfMonthFromExtendedTimeInterval:&extended];
+   if( flags & NSCalendarUnitDay)
       result->_day = [self mulleDayOfMonthFromExtendedTimeInterval:&extended];
 
-   if( flags & NSHourCalendarUnit)
+   if( flags & NSCalendarUnitHour)
       result->_hour = [self mulle24HourFromExtendedTimeInterval:&extended];
-   if( flags & NSMinuteCalendarUnit)
+   if( flags & NSCalendarUnitMinute)
       result->_minute = [self mulleMinuteFromExtendedTimeInterval:&extended];
-   if( flags & NSSecondCalendarUnit)
+   if( flags & NSCalendarUnitSecond)
       result->_second = MulleSecondFromTimeInterval( interval);
+   if( flags & NSCalendarUnitNanosecond)
+      result->_nanosecond = MulleNanosecondFromTimeInterval( interval);
 
-   if( flags & NSWeekdayCalendarUnit)
+   if( flags & NSCalendarUnitWeekday)
       result->_weekday = [self mulleWeekdayFromExtendedTimeInterval:&extended];
+   if( flags & NSCalendarUnitWeekdayOrdinal)
+      result->_weekdayOrdinal = [self mulleWeekdayOrdinalFromExtendedTimeInterval:&extended];
 
    return( result);
 }
@@ -150,6 +144,7 @@ MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
    NSInteger        hour;
    NSInteger        minute;
    NSInteger        second;
+   NSInteger        nanosecond;
 
    // the 1 initialization is also calendar dependent, but this is a base for
    // for subclasses.
@@ -157,9 +152,10 @@ MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
    month  = components->_month  != NSDateComponentUndefined ? components->_month : 1;
    day    = components->_day    != NSDateComponentUndefined ? components->_day   : 1;
 
-   hour   = components->_hour   != NSDateComponentUndefined ? components->_hour   : 0;
-   minute = components->_minute != NSDateComponentUndefined ? components->_minute : 0;
-   second = components->_second != NSDateComponentUndefined ? components->_second : 0;
+   hour       = components->_hour   != NSDateComponentUndefined ? components->_hour   : 0;
+   minute     = components->_minute != NSDateComponentUndefined ? components->_minute : 0;
+   second     = components->_second != NSDateComponentUndefined ? components->_second : 0;
+   nanosecond = components->_nanosecond != NSDateComponentUndefined ? components->_nanosecond : 0;
 
    interval = [self mulleTimeIntervalWithYear:year
                                         month:month
@@ -167,7 +163,7 @@ MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
                                          hour:hour
                                        minute:minute
                                        second:second
-                                  millisecond:0];
+                                   nanosecond:nanosecond];
 
    date       = [NSDate dateWithTimeIntervalSinceReferenceDate:interval];
    interval  += [_timeZone secondsFromGMTForDate:date];
@@ -187,7 +183,7 @@ static NSInteger  mod_0_n( NSInteger *p_value, NSInteger max)
 
    if( value < 0)
    {
-      diff  = value / max - 1;
+      diff   = value / max - 1;
       value %= max;
       if( value)
          value += max;
@@ -224,6 +220,17 @@ static inline NSInteger  mod_0_24( NSInteger *value)
 }
 
 
+static inline NSInteger  mod_0_1000000000( NSInteger *value)
+{
+   NSInteger   diff;
+
+   diff = mod_0_n( value, 100000000000);
+   assert( *value >= 0 && *value <= 999999999);
+   return( diff);
+}
+
+
+
 static NSInteger  mod_1_13( NSInteger *value)
 {
    NSInteger   diff;
@@ -247,9 +254,11 @@ static NSInteger  mod_1_13( NSInteger *value)
    if( options)
       abort();
 
-   dateComponents = [self components:NSEraCalendarUnit|\
-                                     NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|\
-                                     NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit
+   dateComponents = [self components:NSCalendarUnitEra|NSCalendarUnitYear|\
+                                     NSCalendarUnitMonth|NSCalendarUnitDay|\
+                                     NSCalendarUnitHour|NSCalendarUnitMinute|\
+                                     NSCalendarUnitSecond|\
+                                     NSCalendarUnitNanosecond
                             fromDate:date];
 
    dateComponents->_year   += components->_year   != NSDateComponentUndefined ? components->_year  : 0;
@@ -274,7 +283,9 @@ static NSInteger  mod_1_13( NSInteger *value)
    dateComponents->_hour   += components->_hour   != NSDateComponentUndefined ? components->_hour   : 0;
    dateComponents->_minute += components->_minute != NSDateComponentUndefined ? components->_minute : 0;
    dateComponents->_second += components->_second != NSDateComponentUndefined ? components->_second : 0;
+   dateComponents->_nanosecond += components->_nanosecond != NSDateComponentUndefined ? components->_nanosecond : 0;
 
+   dateComponents->_second += mod_0_1000000000( &dateComponents->_nanosecond);
    dateComponents->_minute += mod_0_60( &dateComponents->_second);
    dateComponents->_hour   += mod_0_60( &dateComponents->_minute);
    dateComponents->_day    += mod_0_24( &dateComponents->_hour);

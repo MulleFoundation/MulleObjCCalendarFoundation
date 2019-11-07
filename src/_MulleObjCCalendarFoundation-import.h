@@ -10,9 +10,9 @@
 #ifndef _mulle_objc_calendar_foundation_import_h__
 #define _mulle_objc_calendar_foundation_import_h__
 
-// remove with `mulle-sourcetree mark MulleObjCStandardFoundation no-header`
-// rename with `mulle-sourcetree mark MulleObjCStandardFoundation set include whatever.h`
-# import <MulleObjCStandardFoundation/MulleObjCStandardFoundation.h>   // MulleObjCStandardFoundation
+// remove with `mulle-sourcetree mark MulleObjCOSFoundation no-header`
+// rename with `mulle-sourcetree mark MulleObjCOSFoundation set include whatever.h`
+# import <MulleObjCOSFoundation/MulleObjCOSFoundation.h>   // MulleObjCOSFoundation
 
 #include "_MulleObjCCalendarFoundation-include.h"
 

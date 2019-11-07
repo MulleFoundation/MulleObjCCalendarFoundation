@@ -45,18 +45,23 @@ struct date
 
 static NSInteger   units[] =
 {
-    NSEraCalendarUnit,
+#if 0
+    NSCalendarUnitEra,
 
-    NSYearCalendarUnit,
-    NSMonthCalendarUnit,
-    NSDayCalendarUnit,
-    NSHourCalendarUnit,
-    NSMinuteCalendarUnit,
-    NSSecondCalendarUnit,
-
-    NSWeekCalendarUnit,
-    NSWeekdayCalendarUnit,
-    NSWeekdayOrdinalCalendarUnit
+    NSCalendarUnitYear,
+    NSCalendarUnitQuarter,
+    NSCalendarUnitMonth,
+#endif
+    NSCalendarUnitWeekOfYear,
+    NSCalendarUnitWeekOfMonth
+#if 0
+    NSCalendarUnitDay,
+    NSCalendarUnitWeekday,
+    NSCalendarUnitWeekdayOrdinal,
+    NSCalendarUnitHour,
+    NSCalendarUnitMinute,
+    NSCalendarUnitSecond
+#endif
 };
 
 
@@ -64,16 +69,18 @@ char  *unit_name( NSInteger   unit)
 {
    switch( unit)
    {
-   case NSEraCalendarUnit            : return( "NSEraCalendarUnit");
-   case NSYearCalendarUnit           : return( "NSYearCalendarUnit");
-   case NSMonthCalendarUnit          : return( "NSMonthCalendarUnit");
-   case NSDayCalendarUnit            : return( "NSDayCalendarUnit");
-   case NSHourCalendarUnit           : return( "NSHourCalendarUnit");
-   case NSMinuteCalendarUnit         : return( "NSMinuteCalendarUnit");
-   case NSSecondCalendarUnit         : return( "NSSecondCalendarUnit");
-   case NSWeekCalendarUnit           : return( "NSWeekCalendarUnit");
-   case NSWeekdayCalendarUnit        : return( "NSWeekdayCalendarUnit");
-   case NSWeekdayOrdinalCalendarUnit : return( "NSWeekdayOrdinalCalendarUnit");
+   case NSCalendarUnitEra            : return( "Era");
+   case NSCalendarUnitYear           : return( "Year");
+   case NSCalendarUnitQuarter        : return( "Quarter");
+   case NSCalendarUnitMonth          : return( "Month");
+   case NSCalendarUnitWeekOfYear     : return( "Week");
+   case NSCalendarUnitWeekOfMonth    : return( "WeekOfMonth");
+   case NSCalendarUnitDay            : return( "Day");
+   case NSCalendarUnitWeekday        : return( "Weekday");
+   case NSCalendarUnitWeekdayOrdinal : return( "WeekdayOrdinal");
+   case NSCalendarUnitHour           : return( "Hour");
+   case NSCalendarUnitMinute         : return( "Minute");
+   case NSCalendarUnitSecond         : return( "Second");
    }
    return( "???");
 }
@@ -94,6 +101,7 @@ int   main( void)
 
    calendar = [NSCalendar calendarWithIdentifier:NSGregorianCalendar];
    [calendar setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
+   [calendar setFirstWeekday:2];  // Monday
 
    p_sentinel = &dates[ sizeof( dates) / sizeof( dates[ 0])];
    q_sentinel = &units[ sizeof( units) / sizeof( units[ 0])];

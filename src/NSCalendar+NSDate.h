@@ -21,11 +21,24 @@ THE SOFTWARE.
 #import "NSCalendar.h"
 
 
+enum MulleCalendarWeekday
+{
+   MulleCalendarSunday    = 1,
+   MulleCalendarMonday    = 2,
+   MulleCalendarTuesday   = 3,
+   MulleCalendarWednesday = 4,
+   MulleCalendarThursday  = 5,
+   MulleCalendarFriday    = 6,
+   MulleCalendarSaturday  = 7
+};
+
+
 struct MulleExtendedTimeInterval
 {
    NSTimeInterval    interval;
    NSInteger         year;
    NSInteger         month;
+   NSInteger         weekday;
    NSInteger         dayOfCommonEra;
    NSInteger         dayOfMonth;
    NSInteger         hour;
@@ -39,6 +52,7 @@ static void  MulleExtendedTimeIntervalInit( struct MulleExtendedTimeInterval *p,
 
    p->year           =
    p->month          =
+   p->weekday        =
    p->dayOfCommonEra =
    p->dayOfMonth     =
    p->hour           = NSIntegerMax;
@@ -47,26 +61,32 @@ static void  MulleExtendedTimeIntervalInit( struct MulleExtendedTimeInterval *p,
 
 @interface NSCalendar( NSDate)
 
-- (NSTimeInterval) mulleTimeIntervalWithYear:(NSInteger) year
-                                       month:(NSInteger) month
-                                         day:(NSInteger) day
-                                        hour:(NSInteger) hour
-                                      minute:(NSInteger) minute
-                                      second:(NSInteger) second
-                                 millisecond:(NSInteger) millisecond;
 
+- (BOOL) mulleIsLeapYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+
+- (NSInteger) mulle12HourFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulle24HourFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulleAMPMFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
 - (NSInteger) mulleDayOfCommonEraFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulleDayOfMonthFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulleDayOfWeekFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulleDayOfYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulleFirstWeekdayOfYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulleISOFirstWeekOffsetInYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext;
+- (NSInteger) mulleISONumberOfWeeksInYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext;
+- (NSInteger) mulleISOWeekOfYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext;
+- (NSInteger) mulleLastWeekdayOfYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext;
+- (NSInteger) mulleMinuteFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulleMonthFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulleQuarterFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulleWeekdayFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulleWeekdayOrdinalFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulleWeekOfMonthFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulleWeekOfYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulleYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+
 // always 1
 - (NSInteger) mulleEraFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
-- (NSInteger) mulleYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
-- (NSInteger) mulleDayOfYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
-- (NSInteger) mulleMonthFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
-- (NSInteger) mulleDayOfMonthFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
-- (NSInteger) mulleWeekdayFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
-- (NSInteger) mulle24HourFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
-- (NSInteger) mulle12HourFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
-- (NSInteger) mulleAMPMFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
-- (NSInteger) mulleMinuteFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
 
 @end
 
@@ -79,18 +99,20 @@ static inline NSInteger   MulleSecondFromTimeInterval(NSTimeInterval interval)
     if( seconds < 0)
         seconds = (60 + seconds);
 
-    return seconds;
+    return( seconds);
 }
 
 
-static inline NSInteger   MulleMillisecondsFromTimeInterval( NSTimeInterval interval)
-{ // 0-999
-   NSInteger   milli;
+static inline NSInteger   MulleNanosecondFromTimeInterval( NSTimeInterval interval)
+{ // 0-999999999
+   NSInteger   nano;
 
-   milli = (NSInteger) (interval * 1000) % 1000;
-   if( milli < 0)
-   {
-      milli = (1000 + milli);
-   }
-   return milli;
+   // get rid of seconds, trying to keep precision here for the
+   // multiply
+   interval = interval - (NSInteger) interval;
+   nano     = ((NSInteger) (interval * 1000000000)) % 1000000000;
+   if( nano < 0)
+      nano += 1000000000;
+
+   return( nano);
 }

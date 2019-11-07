@@ -2,6 +2,8 @@
 
 #import "NSDateComponents.h"
 
+#import "NSCalendar+NSDate.h"
+
 
 /* $selId: julian.c,v 2.0 1995/10/24 01:13:06 lees Exp $
  * Copyright 1993-1995, Scott E. Lee, all rights reserved.
@@ -10,120 +12,12 @@
  * copies.  THERE IS NO WARRANTY - USE AT YOUR OWN RISK.
  */
 
-/**************************************************************************
- *
- * VALID RANGE
- *
- *     4713 B.C. to at least 10000 A.D.
- *
- *     Although this software can handle dates all the way back to 4713
- *     B.C., such use may not be meaningful.  The calendar was created in
- *     46 B.C., but the details did not stabilize until at least 8 A.D.,
- *     and perhaps as late at the 4th century.  Also, the beginning of a
- *     year varied from one culture to another - not all accepted January
- *     as the first month.
- *
- * CALENDAR OVERVIEW
- *
- *     Julias Ceasar created the calendar in 46 B.C. as a modified form of
- *     the old Roman republican calendar which was based on lunar cycles.
- *     The new Julian calendar set fixed lengths for the months, abandoning
- *     the lunar cycle.  It also specified that there would be exactly 12
- *     months per year and 365.25 days per year with every 4th year being a
- *     leap year.
- *
- *     Note that the current accepted value for the tropical year is
- *     365.242199 days, not 365.25.  This lead to an 11 day shift in the
- *     calendar with respect to the seasons by the 16th century when the
- *     Gregorian calendar was created to replace the Julian calendar.
- *
- *     The difference between the Julian and today's Gregorian calendar is
- *     that the Gregorian does not make centennial years leap years unless
- *     they are a multiple of 400, which leads to a year of 365.2425 days.
- *     In other words, in the Gregorian calendar, 1700, 1800 and 1900 are
- *     not leap years, but 2000 is.  All centennial years are leap years in
- *     the Julian calendar.
- *
- *     The details are unknown, but the lengths of the months were adjusted
- *     until they finally stablized in 8 A.D. with their current lengths:
- *
- *         January          31
- *         February         28/29
- *         March            31
- *         April            30
- *         May              31
- *         June             30
- *         Quintilis/July   31
- *         Sextilis/August  31
- *         September        30
- *         October          31
- *         November         30
- *         December         31
- *
- *     In the early days of the calendar, the days of the month were not
- *     numbered as we do today.  The numbers ran backwards (decreasing) and
- *     were counted from the Ides (15th of the month - which in the old
- *     Roman republican lunar calendar would have been the full moon) or
- *     from the Nonae (9th day before the Ides) or from the beginning of
- *     the next month.
- *
- *     In the early years, the beginning of the year varied, sometimes
- *     based on the ascension of rulers.  It was not always the first of
- *     January.
- *
- *     Also, today's epoch, 1 A.D. or the birth of Jesus Christ, did not
- *     come into use until several centuries later when Christianity became
- *     a dominant religion.
- *
- * ALGORITHMS
- *
- *     The calculations are based on two different cycles: a 4 year cycle
- *     of leap years and a 5 month cycle of month lengths.
- *
- *     The 5 month cycle is used to account for the varying lengths of
- *     months.  You will notice that the lengths alternate between 30 and
- *     31 days, except for three anomalies: both July and August have 31
- *     days, both December and January have 31, and February is less than
- *     30.  Starting with March, the lengths are in a cycle of 5 months
- *     (31, 30, 31, 30, 31):
- *
- *         Mar   31 days  \
- *         Apr   30 days   |
- *         May   31 days    > First cycle
- *         Jun   30 days   |
- *         Jul   31 days  /
- *
- *         Aug   31 days  \
- *         Sep   30 days   |
- *         Oct   31 days    > Second cycle
- *         Nov   30 days   |
- *         Dec   31 days  /
- *
- *         Jan   31 days  \
- *         Feb 28/9 days   |
- *                          > Third cycle (incomplete)
- *
- *     For this reason the calculations (internally) assume that the year
- *     starts with March 1.
- *
- * TESTING
- *
- *     This algorithm has been tested from the year 4713 B.C. to 10000 A.D.
- *     The source code of the verification program is included in this
- *     package.
- *
- * REFERENCES
- *
- *     Conversions Between Calendar Date and Julian Day Number by Robert J.
- *     Tantzen, Communications of the Association for Computing Machinery
- *     August 1963.  (Also published in Collected Algorithms from CACM,
- *     algorithm number 199).  [Note: the published algorithm is for the
- *     Gregorian calendar, but was adjusted to use the Julian calendar's
- *     simpler leap year rule.]
- *
- **************************************************************************/
-
 NSString  *NSJulianCalendar = @"julian";
+
+//
+// hmm, julian day starts 12:00 so maybe it should be half a day less ?
+//
+#define MulleJulianDaysOfCommonEraOfReferenceDate   730500
 
 
 @implementation _MulleJulianCalendar
@@ -135,18 +29,40 @@ NSString  *NSJulianCalendar = @"julian";
 }
 
 
+- (id) init
+{
+   [super init];
+
+   _daysOfCommonEraOfReferenceDate = MulleJulianDaysOfCommonEraOfReferenceDate;
+
+   return( self);
+}
+
+
 - (NSString *) calendarIdentifier
 {
    return( NSJulianCalendar);
 }
 
 
+- (NSInteger) mulleFirstWeekdayOfCommonEra
+{
+   return( 7);  // Julian 1.1.1 is a Saturday
+}
+
+
+MULLE_C_CONST_RETURN
 static inline int
    mulleJulianIsSchaltjahr( NSInteger year)
 {
    return( (year % 4) == 0);
 }
 
+
+- (BOOL) mulleIsLeapYear:(NSInteger) year
+{
+   return( mulleJulianIsSchaltjahr( year));
+}
 
 
 - (NSInteger) mulleNumberOfDaysInYear:(NSInteger) year
@@ -167,6 +83,7 @@ static inline int
    case NSCalendarUnitHour        : return( NSMakeRange( 0, 24));
    case NSCalendarUnitMinute      : return( NSMakeRange( 0, 60));
    case NSCalendarUnitSecond      : return( NSMakeRange( 0, 60));
+   case NSCalendarUnitNanosecond  : return( NSMakeRange( 0, 1000000000));
    case NSCalendarUnitWeekday     : return( NSMakeRange( 1, 7));
    case NSCalendarUnitQuarter     : return( NSMakeRange( 1, 4));
    case NSCalendarUnitWeekOfMonth : return( NSMakeRange( 1, 4));
@@ -187,6 +104,7 @@ static inline int
    case NSCalendarUnitHour        : return( NSMakeRange( 0, 24));
    case NSCalendarUnitMinute      : return( NSMakeRange( 0, 60));
    case NSCalendarUnitSecond      : return( NSMakeRange( 0, 60));
+   case NSCalendarUnitNanosecond  : return( NSMakeRange( 0, 1000000000));
    case NSCalendarUnitWeekday     : return( NSMakeRange( 1, 7));
    case NSCalendarUnitQuarter     : return( NSMakeRange( 1, 4));
    case NSCalendarUnitWeekOfMonth : return( NSMakeRange( 1, 6));
@@ -196,6 +114,7 @@ static inline int
 }
 
 
+MULLE_C_CONST_RETURN
 static inline NSInteger
    mulleJulianNumberOfDaysInMonthOfYear( NSInteger month,
                                          NSInteger year)
@@ -269,6 +188,104 @@ static int  accumulated_month_days[] =
    result -= 1;  // 1.1.1 is not a full day
 
    return( result);
+}
+
+
+- (void) _mulleCorrectDay:(NSInteger *) p_day
+                    month:(NSInteger *) p_month
+                     year:(NSInteger *) p_year
+{
+   NSInteger   day;
+   NSInteger   month;
+   NSInteger   year;
+   NSInteger   max;
+
+   day   = *p_day;
+   month = *p_month;
+   year  = *p_year;
+
+   //
+   // day can be crazy and must be adjusted, all the other
+   // values are assumed to be sane...
+   // Shabby code follows to get something going
+   //
+   if( day < 1)
+   {
+      // adjust (go backwards in time)
+      for(;;)
+      {
+         if( --month < 1)
+         {
+            month = 12;
+            --year;
+         }
+
+         max  = mulleJulianNumberOfDaysInMonthOfYear( month, year);
+         day += max;
+         if( day >= 1)
+            break;
+      }
+   }
+   else
+   {
+      for(;;)
+      {
+         max = mulleJulianNumberOfDaysInMonthOfYear( month, year);
+         if( day <= max)
+            break;
+
+         // adjust (go forwards in time)
+         if( ++month > 12)
+         {
+            month = 1;
+            ++year;
+         }
+         day -= max;
+      }
+   }
+
+   *p_day   = day;
+   *p_month = month;
+   *p_year  = year;
+}
+
+
+//
+// 15.10.1582 0:00:00 = -13197600000.0
+// therefore
+// 4.10.1582 23:59:59 = -13197600001.0
+// when USE_JULIAN_BEFORE_CHANGE is defined
+//
+// TODO: possibly steal code from sqlite, which uses a different algorithm
+//       which might be better (faster)
+//
+- (NSTimeInterval) mulleTimeIntervalWithYear:(NSInteger) year
+                                       month:(NSInteger) month
+                                         day:(NSInteger) day
+                                        hour:(NSInteger) hour
+                                      minute:(NSInteger) minute
+                                      second:(NSInteger) second
+                                  nanosecond:(NSInteger) nanosecond
+{
+   NSInteger        daysOfCommonEra;
+   NSTimeInterval   interval;
+   NSInteger        max;
+
+   [self _mulleCorrectDay:&day
+                    month:&month
+                     year:&year];
+
+   daysOfCommonEra  = [self mulleNumberOfDaysInCommonEraOfDay:day
+                                                        month:month
+                                                         year:year];
+   daysOfCommonEra -= _daysOfCommonEraOfReferenceDate;
+
+   interval = (daysOfCommonEra * 86400.0) + (hour * 3600) + (minute * 60) + second;
+
+   if( nanosecond)
+      interval += nanosecond / 1000000000.0;
+
+   return( interval);
 }
 
 
@@ -461,75 +478,156 @@ static int  accumulated_month_days[] =
 }
 
 
+static inline NSInteger  pure_mod_0_n( NSInteger value, NSInteger max)
+{
+   value %= max;
+   if( value < 0)
+      value += max;
+   return( value);
+}
+
+
 // such a beautiful API
 - (BOOL) rangeOfUnit:(NSCalendarUnit) unit
            startDate:(NSDate **) p_startDate
             interval:(NSTimeInterval *) p_interval
              forDate:(NSDate *) date
 {
-   NSDateComponents   *components;
+   struct MulleExtendedTimeInterval   ext;
+   NSInteger                          days;
+   NSInteger                          year;
+   NSInteger                          month;
+   NSInteger                          weekday;
+   NSInteger                          firstWeekday;
+   NSInteger                          day;
+   NSInteger                          hour;
+   NSInteger                          minute;
+   NSInteger                          second;
+   NSInteger                          nanosecond;
+   NSInteger                          quarter_1;
+   NSTimeInterval                     interval;
+   BOOL                               flag;
    union
    {
       NSTimeInterval   interval;
       NSDate           *date;
    } dummy;
-   BOOL                flag;
 
    if( ! p_startDate)
       p_startDate = &dummy.date;
    if( ! p_interval)
       p_interval = &dummy.interval;
 
-   components = [self components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|\
-                                 NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit
-                        fromDate:date];
+   MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
 
    //
-   // NSEraCalendarUnit  @ 18.4.1848 12:00:00 : 3.1.1 0:00:00 - 4398046511104.0
-   // NSYearCalendarUnit  @ 18.4.1848 12:00:00 : 1.1.1848 0:00:00 - 31622400.0
-   // NSMonthCalendarUnit  @ 18.4.1848 12:00:00 : 1.4.1848 0:00:00 - 2592000.0
-   // NSDayCalendarUnit  @ 18.4.1848 12:00:00 : 18.4.1848 0:00:00 - 86400.0
-   // NSHourCalendarUnit  @ 18.4.1848 12:00:00 : 18.4.1848 12:00:00 - 3600.0
+   // NSEraCalendarUnit     @ 18.4.1848 12:00:00 : 3.1.1      0:00:00 - 4398046511104.0
+   // NSYearCalendarUnit    @ 18.4.1848 12:00:00 : 1.1.1848   0:00:00 - 31622400.0
+   // NSMonthCalendarUnit   @ 18.4.1848 12:00:00 : 1.4.1848   0:00:00 - 2592000.0
+   // NSDayCalendarUnit     @ 18.4.1848 12:00:00 : 18.4.1848  0:00:00 - 86400.0
+   // NSHourCalendarUnit    @ 18.4.1848 12:00:00 : 18.4.1848 12:00:00 - 3600.0
    // NSMinuteCalendarUnit  @ 18.4.1848 12:00:00 : 18.4.1848 12:00:00 - 60.0
    // NSSecondCalendarUnit  @ 18.4.1848 12:00:00 : 18.4.1848 12:00:00 - 1.0
-   // NSWeekCalendarUnit  @ 18.4.1848 12:00:00 : 16.4.1848 0:00:00 - 604800.0
-   // NSWeekdayCalendarUnit  @ 18.4.1848 12:00:00 : 18.4.1848 0:00:00 - 86400.0
+   // NSWeekCalendarUnit    @ 18.4.1848 12:00:00 : 16.4.1848  0:00:00 - 604800.0
+   // NSWeekdayCalendarUnit @ 18.4.1848 12:00:00 : 18.4.1848  0:00:00 - 86400.0
    // NSWeekdayOrdinalCalendarUnit  @ 18.4.1848 12:00:00 : 18.4.1848 0:00:00 - 86400.0
    //
+
    switch( unit)
    {
-   default                        : return( NO);
-   case NSCalendarUnitEra         : return( NO);
-   case NSCalendarUnitYear        : return( NO);
-   case NSCalendarUnitMonth       : return( NO);
+   default :
+      return( NO);
+
+   case NSCalendarUnitYear :
+      year = [self mulleYearFromExtendedTimeInterval:&ext];
+      days = [self mulleNumberOfDaysInYear:year];
+      *p_interval = 86400.0 * days;
+      break;
+
+   case NSCalendarUnitQuarter :
+      month     = [self mulleMonthFromExtendedTimeInterval:&ext];
+      quarter_1 = (month - 1) / 3;
+      switch( quarter_1)
+      {
+      case 0 :
+         year = [self mulleYearFromExtendedTimeInterval:&ext];
+         days = 31 + 31 + [self mulleNumberOfDaysInMonth:2
+                                                  ofYear:year];
+         break;
+
+      case 1 :
+         days = 30 + 31 + 30;  // APR-JUN
+         break;
+
+      case 2 :
+         days = 31 + 31 + 30;  // JUL-SEP
+         break;
+
+      default :
+         days = 31 + 30 + 31;  // OKT-DEZ
+         break;
+      }
+      *p_interval = 86400.0 * days;
+      break;
+
+   case NSCalendarUnitMonth :
+      days = [self mulleNumberOfDaysInMonth:[self mulleMonthFromExtendedTimeInterval:&ext]
+                                     ofYear:[self mulleYearFromExtendedTimeInterval:&ext]];
+      *p_interval = 86400.0 * days;
+      break;
+
    // hard coded values
-   case NSCalendarUnitDay         : *p_interval = 86400.0; break;
-   case NSCalendarUnitHour        : *p_interval = 3600.0; break;
-   case NSCalendarUnitMinute      : *p_interval = 60.0; break;
-   case NSCalendarUnitSecond      : *p_interval = 1.0; break;
-   case NSCalendarUnitWeekday     : *p_interval = 604800.0; break;
-   case NSCalendarUnitWeekOfMonth :
-   case NSCalendarUnitWeekOfYear  : *p_interval = 86400.0; break;
+   case NSCalendarUnitEra            : *p_interval = 4398046511104.0; break;
+   case NSCalendarUnitWeekOfYear     :
+   case NSCalendarUnitWeekOfMonth    : *p_interval = 604800.0; break;
+   case NSCalendarUnitDay            : *p_interval = 86400.0; break;
+   case NSCalendarUnitHour           : *p_interval = 3600.0; break;
+   case NSCalendarUnitMinute         : *p_interval = 60.0; break;
+   case NSCalendarUnitSecond         : *p_interval = 1.0; break;
+   case NSCalendarUnitNanosecond     : *p_interval = 1.0 / 60; break;
+   case NSCalendarUnitWeekday        :
+   case NSCalendarUnitWeekdayOrdinal : *p_interval = 86400.0; break;
       break;
    }
 
    if( p_startDate)
    {
+      year        = (unit >= NSCalendarUnitYear)   ? [self mulleYearFromExtendedTimeInterval:&ext] : 1;
+      month       = (unit >= NSCalendarUnitMonth)  ? [self mulleMonthFromExtendedTimeInterval:&ext] : 1;
+      day         = (unit >= NSCalendarUnitDay)    ? [self mulleDayOfMonthFromExtendedTimeInterval:&ext] : 1;
+      hour        = (unit >= NSCalendarUnitHour)   ? [self mulle24HourFromExtendedTimeInterval:&ext] : 0;
+      minute      = (unit >= NSCalendarUnitMinute) ? [self mulleMinuteFromExtendedTimeInterval:&ext] : 0;
+      second      = (unit >= NSCalendarUnitSecond)     ? (NSInteger) ext.interval % 60 : 0;
+      nanosecond  = (unit >= NSCalendarUnitNanosecond) ? (NSInteger) ((ext.interval - (NSInteger) ext.interval) * 1000000000) : 0;
+
+      // special needs units
       switch( unit)
       {
-      default                        : break;
-      case NSCalendarUnitEra         : break;
-      case NSCalendarUnitYear        : break;
-      case NSCalendarUnitMonth       : break;
-      // hard coded values
-      case NSCalendarUnitDay         : break;
-      case NSCalendarUnitHour        :
-      case NSCalendarUnitMinute      :
-      case NSCalendarUnitSecond      : *p_startDate = date; break;
-      case NSCalendarUnitWeekday     : break;
-      case NSCalendarUnitWeekOfMonth : break;
-      case NSCalendarUnitWeekOfYear  : break;
+      case NSCalendarUnitQuarter :
+         month = ((month - 1) / 3) * 3 + 1;
+         break;
+
+      case NSCalendarUnitWeekOfYear :
+      case NSCalendarUnitWeekOfMonth :
+         weekday      = [self mulleWeekdayFromExtendedTimeInterval:&ext];
+         weekday     -= 1;                  // normalize to 0-6
+         firstWeekday = _firstWeekday - 1;  // normalize to 0-6
+         day         -= pure_mod_0_n( weekday - [self firstWeekday], 7);
+         break;
+
+      case NSCalendarUnitWeekday :
+      case NSCalendarUnitWeekdayOrdinal :
+         break;
       }
+
+      interval    = [self mulleTimeIntervalWithYear:year
+                                              month:month
+                                                day:day
+                                               hour:hour
+                                             minute:minute
+                                             second:second
+                                         nanosecond:nanosecond];
+      *p_startDate = [NSDate dateWithTimeIntervalSinceReferenceDate:interval];
    }
    return( YES);
 }
