@@ -12,7 +12,6 @@ src/MulleObjCCalendarFoundation.m
 src/NSCalendar+NSDate.m
 src/NSCalendar.m
 src/NSDateComponents.m
-src/NSPropertyListSerialization+ICU.m
 src/Parsing/NSObject+ICUPropertyListParsing.m
 src/Parsing/NSString+ICUPropertyListParsing.m
 )

@@ -22,7 +22,6 @@ src/MulleObjCLoader+MulleObjCCalendarFoundation.h
 src/NSCalendar+NSDate.h
 src/NSCalendar.h
 src/NSDateComponents.h
-src/NSPropertyListSerialization+ICU.h
 src/Parsing/NSObject+ICUPropertyListParsing.h
 src/Parsing/NSString+ICUPropertyListParsing.h
 src/import.h

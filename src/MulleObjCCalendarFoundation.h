@@ -42,7 +42,6 @@ extern uint32_t   MulleObjCCalendarFoundation_get_version( void);
 #import "NSCalendar.h"
 #import "NSCalendar+NSDate.h"
 #import "NSDateComponents.h"
-#import "NSPropertyListSerialization+ICU.h"
 
 #import "_MulleGregorianCalendar.h"
 #import "_MulleJulianCalendar.h"
