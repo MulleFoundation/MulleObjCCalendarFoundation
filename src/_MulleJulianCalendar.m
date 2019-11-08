@@ -465,7 +465,10 @@ static int  accumulated_month_days[] =
       {
       case NSEraCalendarUnit    :
       case NSMonthCalendarUnit  :
-         range =NSMakeRange( 1, 5);
+         components = [self components:NSYearCalendarUnit|NSMonthCalendarUnit
+                              fromDate:date];
+         range = NSMakeRange( 1, [self mulleNumberOfDaysInMonth:components->_month
+                                                         ofYear:components->_year] + 6 / 7);
          break;
 
       case NSYearCalendarUnit   :
@@ -501,6 +504,7 @@ static inline NSInteger  pure_mod_0_n( NSInteger value, NSInteger max)
    NSInteger                          firstWeekday;
    NSInteger                          day;
    NSInteger                          hour;
+   NSInteger                          diff;
    NSInteger                          minute;
    NSInteger                          second;
    NSInteger                          nanosecond;
@@ -592,11 +596,11 @@ static inline NSInteger  pure_mod_0_n( NSInteger value, NSInteger max)
 
    if( p_startDate)
    {
-      year        = (unit >= NSCalendarUnitYear)   ? [self mulleYearFromExtendedTimeInterval:&ext] : 1;
-      month       = (unit >= NSCalendarUnitMonth)  ? [self mulleMonthFromExtendedTimeInterval:&ext] : 1;
-      day         = (unit >= NSCalendarUnitDay)    ? [self mulleDayOfMonthFromExtendedTimeInterval:&ext] : 1;
-      hour        = (unit >= NSCalendarUnitHour)   ? [self mulle24HourFromExtendedTimeInterval:&ext] : 0;
-      minute      = (unit >= NSCalendarUnitMinute) ? [self mulleMinuteFromExtendedTimeInterval:&ext] : 0;
+      year        = (unit >= NSCalendarUnitYear)       ? [self mulleYearFromExtendedTimeInterval:&ext] : 1;
+      month       = (unit >= NSCalendarUnitMonth)      ? [self mulleMonthFromExtendedTimeInterval:&ext] : 1;
+      day         = (unit >= NSCalendarUnitDay)        ? [self mulleDayOfMonthFromExtendedTimeInterval:&ext] : 1;
+      hour        = (unit >= NSCalendarUnitHour)       ? [self mulle24HourFromExtendedTimeInterval:&ext] : 0;
+      minute      = (unit >= NSCalendarUnitMinute)     ? [self mulleMinuteFromExtendedTimeInterval:&ext] : 0;
       second      = (unit >= NSCalendarUnitSecond)     ? (NSInteger) ext.interval % 60 : 0;
       nanosecond  = (unit >= NSCalendarUnitNanosecond) ? (NSInteger) ((ext.interval - (NSInteger) ext.interval) * 1000000000) : 0;
 
@@ -604,6 +608,8 @@ static inline NSInteger  pure_mod_0_n( NSInteger value, NSInteger max)
       switch( unit)
       {
       case NSCalendarUnitQuarter :
+         // not read yet, because unit is larger
+         month = [self mulleMonthFromExtendedTimeInterval:&ext];
          month = ((month - 1) / 3) * 3 + 1;
          break;
 
@@ -612,7 +618,9 @@ static inline NSInteger  pure_mod_0_n( NSInteger value, NSInteger max)
          weekday      = [self mulleWeekdayFromExtendedTimeInterval:&ext];
          weekday     -= 1;                  // normalize to 0-6
          firstWeekday = _firstWeekday - 1;  // normalize to 0-6
-         day         -= pure_mod_0_n( weekday - [self firstWeekday], 7);
+         diff         = pure_mod_0_n( weekday - firstWeekday, 7);
+         // not read yet, because unit is larger
+         day          = [self mulleDayOfMonthFromExtendedTimeInterval:&ext] - diff;
          break;
 
       case NSCalendarUnitWeekday :

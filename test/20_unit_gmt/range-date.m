@@ -5,7 +5,7 @@
 #endif
 
 //
-// The range output is that was is suitable for input into datecomponents
+// The range output is that was is suitable for input into date components
 // or so I believe
 //
 struct date
@@ -45,23 +45,19 @@ struct date
 
 static NSInteger   units[] =
 {
-#if 0
     NSCalendarUnitEra,
 
     NSCalendarUnitYear,
     NSCalendarUnitQuarter,
     NSCalendarUnitMonth,
-#endif
     NSCalendarUnitWeekOfYear,
-    NSCalendarUnitWeekOfMonth
-#if 0
+    NSCalendarUnitWeekOfMonth,
     NSCalendarUnitDay,
     NSCalendarUnitWeekday,
     NSCalendarUnitWeekdayOrdinal,
     NSCalendarUnitHour,
     NSCalendarUnitMinute,
     NSCalendarUnitSecond
-#endif
 };
 
 
@@ -73,7 +69,7 @@ char  *unit_name( NSInteger   unit)
    case NSCalendarUnitYear           : return( "Year");
    case NSCalendarUnitQuarter        : return( "Quarter");
    case NSCalendarUnitMonth          : return( "Month");
-   case NSCalendarUnitWeekOfYear     : return( "Week");
+   case NSCalendarUnitWeekOfYear     : return( "WeekOfYear");
    case NSCalendarUnitWeekOfMonth    : return( "WeekOfMonth");
    case NSCalendarUnitDay            : return( "Day");
    case NSCalendarUnitWeekday        : return( "Weekday");
