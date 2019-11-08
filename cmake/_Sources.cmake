@@ -13,8 +13,6 @@ src/NSCalendar+NSDate.m
 src/NSCalendar.m
 src/NSDateComponents+NSString.m
 src/NSDateComponents.m
-src/Parsing/NSObject+ICUPropertyListParsing.m
-src/Parsing/NSString+ICUPropertyListParsing.m
 )
 
 set( STAGE2_SOURCES

@@ -5,13 +5,6 @@
 #import "NSCalendar+NSDate.h"
 
 
-/* $selId: julian.c,v 2.0 1995/10/24 01:13:06 lees Exp $
- * Copyright 1993-1995, Scott E. Lee, all rights reserved.
- * Permission granted to use, copy, modify, distribute and sell so long as
- * the above copyright and this permission statement are retained in all
- * copies.  THERE IS NO WARRANTY - USE AT YOUR OWN RISK.
- */
-
 NSString  *NSJulianCalendar = @"julian";
 
 //
@@ -306,40 +299,40 @@ static int  accumulated_month_days[] =
    range = NSMakeRange( NSNotFound, NSNotFound);
    switch( unit)
    {
-   case NSEraCalendarUnit :
+   case NSCalendarUnitEra :
       break;  // no dice
 
-   // NSYearCalendarUnit in NSEraCalendarUnit @ 1.1.1970 12:00:00 : [1,144683]
-   case NSYearCalendarUnit :
+   // NSCalendarUnitYear in NSCalendarUnitEra @ 1.1.1970 12:00:00 : [1,144683]
+   case NSCalendarUnitYear :
       switch( inUnit)
       {
-      case NSEraCalendarUnit  :
+      case NSCalendarUnitEra  :
          // TODO: check era and return min or max (for Gregorian)
          range = NSMakeRange( 1, 144683);
       }
       break;
 
-   // NSMonthCalendarUnit in NSEraCalendarUnit @ 1.1.1970 12:00:00  : [1,12]
-   // NSMonthCalendarUnit in NSYearCalendarUnit @ 1.1.1970 12:00:00 : [1,12]
-   case NSMonthCalendarUnit :
+   // NSCalendarUnitMonth in NSCalendarUnitEra @ 1.1.1970 12:00:00  : [1,12]
+   // NSCalendarUnitMonth in NSCalendarUnitYear @ 1.1.1970 12:00:00 : [1,12]
+   case NSCalendarUnitMonth :
       switch( inUnit)
       {
-      case NSEraCalendarUnit  :
-      case NSYearCalendarUnit :
+      case NSCalendarUnitEra  :
+      case NSCalendarUnitYear :
          range = NSMakeRange( 1, 12);
       }
       break;
 
-   // NSDayCalendarUnit in NSEraCalendarUnit @ 1.1.1970 12:00:00   : [1,31]
-   // NSDayCalendarUnit in NSYearCalendarUnit @ 1.1.1970 12:00:00  : [1,365]
-   // NSDayCalendarUnit in NSMonthCalendarUnit @ 1.1.1970 12:00:00 : [1,31]
-   // NSDayCalendarUnit in NSWeekCalendarUnit @ 1.1.1970 12:00:00  : [1,3]
-   case NSDayCalendarUnit :
+   // NSCalendarUnitDay in NSCalendarUnitEra @ 1.1.1970 12:00:00   : [1,31]
+   // NSCalendarUnitDay in NSCalendarUnitYear @ 1.1.1970 12:00:00  : [1,365]
+   // NSCalendarUnitDay in NSCalendarUnitMonth @ 1.1.1970 12:00:00 : [1,31]
+   // NSCalendarUnitDay in NSCalendarUnitWeekOfYear @ 1.1.1970 12:00:00  : [1,3]
+   case NSCalendarUnitDay :
    {
       switch( inUnit)
       {
-      case NSEraCalendarUnit :
-      case NSMonthCalendarUnit :
+      case NSCalendarUnitEra :
+      case NSCalendarUnitMonth :
          MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
          year  = [self mulleYearFromExtendedTimeInterval:&ext];
          month = [self mulleMonthFromExtendedTimeInterval:&ext];
@@ -347,13 +340,14 @@ static int  accumulated_month_days[] =
                                                          ofYear:year]);
          break;
 
-      case NSYearCalendarUnit :
+      case NSCalendarUnitYear :
          MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
          year  = [self mulleYearFromExtendedTimeInterval:&ext];
          range = NSMakeRange( 1, [self mulleNumberOfDaysInYear:year]);
          break;
 
-      case NSWeekCalendarUnit :
+      case NSCalendarUnitWeekOfMonth :
+      case NSCalendarUnitWeekOfYear :
          // What does 1,3 mean ?
          // It means that that the 1.1.1970 is a Thursday. There are three
          // days left (SO MO DI MI [DO] FR SA) if the week ends on a Saturday.
@@ -368,115 +362,137 @@ static int  accumulated_month_days[] =
       break;
    }
 
-   // NSHourCalendarUnit in NSEraCalendarUnit @ 1.1.1970 12:00:00 : [0,24]
-   // NSHourCalendarUnit in NSYearCalendarUnit @ 1.1.1970 12:00:00 : [0,24]
-   // NSHourCalendarUnit in NSMonthCalendarUnit @ 1.1.1970 12:00:00 : [0,24]
-   // NSHourCalendarUnit in NSDayCalendarUnit @ 1.1.1970 12:00:00 : [0,24]
-   // NSHourCalendarUnit in NSWeekCalendarUnit @ 1.1.1970 12:00:00 : [0,24]
-   // NSHourCalendarUnit in NSWeekdayCalendarUnit @ 1.1.1970 12:00:00 : [0,24]
-   case NSHourCalendarUnit :
+   // NSCalendarUnitHour in NSCalendarUnitEra @ 1.1.1970 12:00:00 : [0,24]
+   // NSCalendarUnitHour in NSCalendarUnitYear @ 1.1.1970 12:00:00 : [0,24]
+   // NSCalendarUnitHour in NSCalendarUnitMonth @ 1.1.1970 12:00:00 : [0,24]
+   // NSCalendarUnitHour in NSCalendarUnitDay @ 1.1.1970 12:00:00 : [0,24]
+   // NSCalendarUnitHour in NSCalendarUnitWeekOfYear @ 1.1.1970 12:00:00 : [0,24]
+   // NSCalendarUnitHour in NSCalendarUnitWeekday @ 1.1.1970 12:00:00 : [0,24]
+   case NSCalendarUnitHour :
       switch( inUnit)
       {
-      case NSEraCalendarUnit    :
-      case NSYearCalendarUnit   :
-      case NSMonthCalendarUnit  :
-      case NSDayCalendarUnit    :
-      case NSWeekCalendarUnit   :
-      case NSWeekdayCalendarUnit :
+      case NSCalendarUnitEra         :
+      case NSCalendarUnitYear        :
+      case NSCalendarUnitMonth       :
+      case NSCalendarUnitWeekOfYear  :
+      case NSCalendarUnitWeekOfMonth :
+      case NSCalendarUnitDay         :
+      case NSCalendarUnitWeekday     :
          range = NSMakeRange( 0, 24);
       }
       break;
 
 
-   // NSMinuteCalendarUnit in NSEraCalendarUnit @ 1.1.1970 12:00:00 : [0,60]
-   // NSMinuteCalendarUnit in NSYearCalendarUnit @ 1.1.1970 12:00:00 : [0,60]
-   // NSMinuteCalendarUnit in NSMonthCalendarUnit @ 1.1.1970 12:00:00 : [0,60]
-   // NSMinuteCalendarUnit in NSDayCalendarUnit @ 1.1.1970 12:00:00 : [0,60]
-   // NSMinuteCalendarUnit in NSHourCalendarUnit @ 1.1.1970 12:00:00 : [0,60]
-   // NSMinuteCalendarUnit in NSWeekCalendarUnit @ 1.1.1970 12:00:00 : [0,60]
-   // NSMinuteCalendarUnit in NSWeekdayCalendarUnit @ 1.1.1970 12:00:00 : [0,60]
-   case NSMinuteCalendarUnit :
+   // NSCalendarUnitMinute in NSCalendarUnitEra @ 1.1.1970 12:00:00 : [0,60]
+   // NSCalendarUnitMinute in NSCalendarUnitYear @ 1.1.1970 12:00:00 : [0,60]
+   // NSCalendarUnitMinute in NSCalendarUnitMonth @ 1.1.1970 12:00:00 : [0,60]
+   // NSCalendarUnitMinute in NSCalendarUnitDay @ 1.1.1970 12:00:00 : [0,60]
+   // NSCalendarUnitMinute in NSCalendarUnitHour @ 1.1.1970 12:00:00 : [0,60]
+   // NSCalendarUnitMinute in NSCalendarUnitWeekOfYear @ 1.1.1970 12:00:00 : [0,60]
+   // NSCalendarUnitMinute in NSCalendarUnitWeekday @ 1.1.1970 12:00:00 : [0,60]
+   case NSCalendarUnitMinute :
       switch( inUnit)
       {
-      case NSEraCalendarUnit     :
-      case NSYearCalendarUnit    :
-      case NSMonthCalendarUnit   :
-      case NSDayCalendarUnit     :
-      case NSHourCalendarUnit    :
-      case NSWeekCalendarUnit    :
-      case NSWeekdayCalendarUnit :
+      case NSCalendarUnitEra         :
+      case NSCalendarUnitYear        :
+      case NSCalendarUnitMonth       :
+      case NSCalendarUnitWeekOfYear  :
+      case NSCalendarUnitWeekOfMonth :
+      case NSCalendarUnitDay         :
+      case NSCalendarUnitWeekday     :
+      case NSCalendarUnitHour        :
          range = NSMakeRange( 0, 60);
       }
       break;
 
-   // NSSecondCalendarUnit in NSEraCalendarUnit @ 1.1.1970 12:00:00 : [0,60]
-   // NSSecondCalendarUnit in NSYearCalendarUnit @ 1.1.1970 12:00:00 : [0,60]
-   // NSSecondCalendarUnit in NSMonthCalendarUnit @ 1.1.1970 12:00:00 : [0,60]
-   // NSSecondCalendarUnit in NSDayCalendarUnit @ 1.1.1970 12:00:00 : [0,60]
-   // NSSecondCalendarUnit in NSHourCalendarUnit @ 1.1.1970 12:00:00 : [0,60]
-   // NSSecondCalendarUnit in NSMinuteCalendarUnit @ 1.1.1970 12:00:00 : [0,60]
-   // NSSecondCalendarUnit in NSWeekCalendarUnit @ 1.1.1970 12:00:00 : [0,60]
-   // NSSecondCalendarUnit in NSWeekdayCalendarUnit @ 1.1.1970 12:00:00 : [0,60]
-   case NSSecondCalendarUnit :
+   // NSSecondCalendarUnit in NSCalendarUnitEra @ 1.1.1970 12:00:00 : [0,60]
+   // NSSecondCalendarUnit in NSCalendarUnitYear @ 1.1.1970 12:00:00 : [0,60]
+   // NSSecondCalendarUnit in NSCalendarUnitMonth @ 1.1.1970 12:00:00 : [0,60]
+   // NSSecondCalendarUnit in NSCalendarUnitDay @ 1.1.1970 12:00:00 : [0,60]
+   // NSSecondCalendarUnit in NSCalendarUnitHour @ 1.1.1970 12:00:00 : [0,60]
+   // NSSecondCalendarUnit in NSCalendarUnitMinute @ 1.1.1970 12:00:00 : [0,60]
+   // NSSecondCalendarUnit in NSCalendarUnitWeekOfYear @ 1.1.1970 12:00:00 : [0,60]
+   // NSSecondCalendarUnit in NSCalendarUnitWeekday @ 1.1.1970 12:00:00 : [0,60]
+   case NSCalendarUnitSecond :
       switch( inUnit)
       {
-      case NSEraCalendarUnit     :
-      case NSYearCalendarUnit    :
-      case NSMonthCalendarUnit   :
-      case NSDayCalendarUnit     :
-      case NSHourCalendarUnit    :
-      case NSMinuteCalendarUnit  :
-      case NSWeekCalendarUnit    :
-      case NSWeekdayCalendarUnit :
+      case NSCalendarUnitEra         :
+      case NSCalendarUnitYear        :
+      case NSCalendarUnitMonth       :
+      case NSCalendarUnitDay         :
+      case NSCalendarUnitHour        :
+      case NSCalendarUnitMinute      :
+      case NSCalendarUnitWeekOfYear  :
+      case NSCalendarUnitWeekOfMonth :
+      case NSCalendarUnitWeekday     :
          range = NSMakeRange( 0, 60);
       }
       break;
 
-   // NSWeekCalendarUnit in NSEraCalendarUnit @ 31.3.2019 2:00:00 : [1,53]
-   // NSWeekCalendarUnit in NSYearCalendarUnit @ 31.3.2019 2:00:00 : [1,53]
-   // NSWeekCalendarUnit in NSMonthCalendarUnit @ 31.3.2019 2:00:00 : [9,6]
-   case NSWeekCalendarUnit :
+   // NSCalendarUnitWeekOfYear in NSCalendarUnitEra @ 31.3.2019 2:00:00 : [1,53]
+   // NSCalendarUnitWeekOfYear in NSCalendarUnitYear @ 31.3.2019 2:00:00 : [1,53]
+   // NSCalendarUnitWeekOfYear in NSCalendarUnitMonth @ 31.3.2019 2:00:00 : [9,6]
+   case NSCalendarUnitWeekOfYear :
       switch( inUnit)
       {
-      case NSEraCalendarUnit    :
-      case NSYearCalendarUnit   :
+      case NSCalendarUnitEra    :
+      case NSCalendarUnitYear   :
          MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
          range = NSMakeRange( 1, [self mulleNumberOfWeeksInYearFromExtendedTimeInterval:&ext]);
          break;
 
          // apple output makes no sense to me, so we redefine this more
          // sensibly
-      case NSMonthCalendarUnit  :
+      case NSCalendarUnitMonth  :
          MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
          range = NSMakeRange( [self mulleWeekOfMonthFromExtendedTimeInterval:&ext],
                               [self mulleNumberOfWeeksInMonthFromExtendedTimeInterval:&ext]);
       }
       break;
 
-   // NSWeekdayCalendarUnit in NSEraCalendarUnit @ 1.1.1970 12:00:00 : [1,7]
-   // NSWeekdayCalendarUnit in NSYearCalendarUnit @ 1.1.1970 12:00:00 : [1,7]
-   // NSWeekdayCalendarUnit in NSMonthCalendarUnit @ 1.1.1970 12:00:00 : [1,7]
-   // NSWeekdayCalendarUnit in NSWeekCalendarUnit @ 1.1.1970 12:00:00 : [1,7]
-   case NSWeekdayCalendarUnit :
+   case NSCalendarUnitWeekOfMonth :
       switch( inUnit)
       {
-      case NSEraCalendarUnit    :
-      case NSYearCalendarUnit   :
-      case NSMonthCalendarUnit  :
-      case NSWeekCalendarUnit   :
+      case NSCalendarUnitEra    :
+      case NSCalendarUnitYear   :
+         MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
+         range = NSMakeRange( 1, [self mulleNumberOfWeeksInMonthFromExtendedTimeInterval:&ext]);
+         break;
+
+         // apple output makes no sense to me, so we redefine this more
+         // sensibly
+      case NSCalendarUnitMonth  :
+         MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
+         range = NSMakeRange( [self mulleWeekOfMonthFromExtendedTimeInterval:&ext],
+                              [self mulleNumberOfWeeksInMonthFromExtendedTimeInterval:&ext]);
+      }
+      break;
+
+   // NSCalendarUnitWeekday in NSCalendarUnitEra @ 1.1.1970 12:00:00 : [1,7]
+   // NSCalendarUnitWeekday in NSCalendarUnitYear @ 1.1.1970 12:00:00 : [1,7]
+   // NSCalendarUnitWeekday in NSCalendarUnitMonth @ 1.1.1970 12:00:00 : [1,7]
+   // NSCalendarUnitWeekday in NSCalendarUnitWeekOfYear @ 1.1.1970 12:00:00 : [1,7]
+   case NSCalendarUnitWeekday :
+      switch( inUnit)
+      {
+      case NSCalendarUnitEra         :
+      case NSCalendarUnitYear        :
+      case NSCalendarUnitMonth       :
+      case NSCalendarUnitWeekOfYear  :
+      case NSCalendarUnitWeekOfMonth :
          range = NSMakeRange( 1, 7);
       }
       break;
 
-   // NSWeekdayOrdinalCalendarUnit in NSEraCalendarUnit @ 1.1.1970 12:00:00 : [1,5]
-   // NSWeekdayOrdinalCalendarUnit in NSYearCalendarUnit @ 1.1.1970 12:00:00 : [1,59]
-   // NSWeekdayOrdinalCalendarUnit in NSMonthCalendarUnit @ 1.1.1970 12:00:00 : [1,5]
+   // NSWeekdayOrdinalCalendarUnit in NSCalendarUnitEra @ 1.1.1970 12:00:00 : [1,5]
+   // NSWeekdayOrdinalCalendarUnit in NSCalendarUnitYear @ 1.1.1970 12:00:00 : [1,59]
+   // NSWeekdayOrdinalCalendarUnit in NSCalendarUnitMonth @ 1.1.1970 12:00:00 : [1,5]
    case NSWeekdayOrdinalCalendarUnit :
       switch( inUnit)
       {
-      case NSEraCalendarUnit    :
-      case NSYearCalendarUnit   :
-      case NSMonthCalendarUnit  :
+      case NSCalendarUnitEra    :
+      case NSCalendarUnitYear   :
+      case NSCalendarUnitMonth  :
          MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
          year  = [self mulleYearFromExtendedTimeInterval:&ext];
          month = [self mulleMonthFromExtendedTimeInterval:&ext];

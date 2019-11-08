@@ -75,10 +75,6 @@ NSString  *NSGregorianCalendar = @"gregorian";
    return( 2);  // Gregorian 1.1.1 is a Monday (which is 2)
 }
 
-// - (NSInteger) mulleFirstWeekdayOfCommonEra
-// {
-//    return( 7);  // Gregorian 1.1.1 is a Saturday as well
-// }
 
 
 #ifdef USE_JULIAN_BEFORE_CHANGE
@@ -409,40 +405,6 @@ static int  accumulated_month_days[] =
 
    return( day);
 }
-
-
-// - (NSTimeInterval) mulleTimeIntervalWithYear:(NSInteger) year
-//                                        month:(NSInteger) month
-//                                          day:(NSInteger) day
-//                                         hour:(NSInteger) hour
-//                                       minute:(NSInteger) minute
-//                                       second:(NSInteger) second
-//                                   nanosecond:(NSInteger) nanosecond
-// {
-//    NSTimeInterval   interval;
-//
-//    interval = [super mulleTimeIntervalWithYear:year
-//                                          month:month
-//                                            day:day
-//                                           hour:hour
-//                                         minute:minute
-//                                         second:second
-//                                     nanosecond:nanosecond];
-//    // convert to UTC
-//    // WHY ??? What we are doing is a somewhat crazy mix with Julian and
-//    // Gregorian. But the resulting time is not really UTC (as it is with
-//    // Julian) but really a pro-leptic gregorian. That doesn't hurt us on
-//    // input (due to the Julian/Gregorian) algorithm mix, but it does produce
-//    // invalid UTC values when we pass the gregorian barrier.
-//    // e.g. 14.10.1582 pro-leptic is really
-//    //
-//    if( interval < 13197600000.0)
-//    {
-//       interval -= 10 * 84600.0;
-//    }
-//    return( interval);
-// }
-
 
 @end
 

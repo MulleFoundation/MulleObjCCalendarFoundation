@@ -7,7 +7,6 @@ endif()
 
 set( INCLUDE_DIRS
 src
-src/Parsing
 )
 
 set( PRIVATE_HEADERS
@@ -22,8 +21,6 @@ src/MulleObjCLoader+MulleObjCCalendarFoundation.h
 src/NSCalendar+NSDate.h
 src/NSCalendar.h
 src/NSDateComponents.h
-src/Parsing/NSObject+ICUPropertyListParsing.h
-src/Parsing/NSString+ICUPropertyListParsing.h
 src/import.h
 )
 

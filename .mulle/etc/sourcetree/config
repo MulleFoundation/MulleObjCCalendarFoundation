@@ -1,1 +1,1 @@
-MulleObjCOSFoundation;${MULLEOBJCOSFOUNDATION_NODETYPE:-tar};no-singlephase;3f46744f-eb36-4051-9587-6986d64c3b98;${MULLEOBJCOSFOUNDATION_URL:-https://github.com/MulleFoundation/MulleObjCOSFoundation/archive/${MULLE_BRANCH}.tar.gz};${MULLEOBJCOSFOUNDATION_BRANCH:-latest};;;
+MulleObjCOSFoundation;${MULLE_OBJC_OS_FOUNDATION_NODETYPE:-tar};no-singlephase;3f46744f-eb36-4051-9587-6986d64c3b98;${MULLE_OBJC_OS_FOUNDATION_URL:-https://github.com/MulleFoundation/MulleObjCOSFoundation/archive/${MULLE_TAG}.tar.gz};;${MULLE_OBJC_OS_FOUNDATION_TAG:-latest};;
