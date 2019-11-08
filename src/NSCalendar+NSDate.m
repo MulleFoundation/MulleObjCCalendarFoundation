@@ -269,6 +269,21 @@ static inline enum MulleCalendarWeekday
 }
 
 
+// calculate the first weekday of the current month
+- (NSInteger) mulleFirstWeekdayOfMonthFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext
+{
+   NSInteger   dayOfMonth;
+   NSInteger   weekday;
+   NSInteger   firstWeekday;
+
+   dayOfMonth = [self mulleDayOfMonthFromExtendedTimeInterval:ext] - 1;
+   weekday    = [self mulleWeekdayFromExtendedTimeInterval:ext] - 1;
+
+   firstWeekday = pure_mod_0_n( weekday - dayOfMonth, 7);
+   return( firstWeekday + 1);
+}
+
+
 //
 // The ISO 8601 definition for week 01 is the week with the
 // Gregorian year's first Thursday in it.
@@ -287,6 +302,61 @@ static inline enum MulleCalendarWeekday
    case MulleCalendarSunday   : return( 1);
    default                    : return( 0);
    }
+}
+
+
+
+- (NSInteger) mulleNumberOfWeeksInYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext
+{
+   NSInteger   firstWeekdayOfYear;
+   NSInteger   firstWeekday;
+   NSInteger   days;
+   NSInteger   month;
+   NSInteger   weeks;
+   NSInteger   year;
+
+   firstWeekdayOfYear  = [self mulleFirstWeekdayOfYearFromExtendedTimeInterval:ext] - 1;
+   firstWeekday        = _firstWeekday - 1;
+   year                = [self mulleYearFromExtendedTimeInterval:ext];
+   days                = [self mulleNumberOfDaysInYear:year];
+
+   weeks  = days / 7;
+   days  %= 7;
+   weeks += days != 0;
+
+   // e.g. days = 30. 30 % 7 -> 2.  7 - 2 + 1 = 6
+   // add a week, if (compensated) week start is the last weekday
+   weeks += pure_mod_0_n( firstWeekdayOfYear - firstWeekday, 7) >= (7 - days + 1);
+
+   return( weeks);
+}
+
+
+- (NSInteger) mulleNumberOfWeeksInMonthFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext
+{
+   NSInteger   firstWeekdayOfMonth;
+   NSInteger   firstWeekday;
+   NSInteger   days;
+   NSInteger   month;
+   NSInteger   weeks;
+   NSInteger   year;
+
+   firstWeekdayOfMonth = [self mulleFirstWeekdayOfMonthFromExtendedTimeInterval:ext] - 1;
+   firstWeekday        = _firstWeekday - 1;
+   year                = [self mulleYearFromExtendedTimeInterval:ext];
+   month               = [self mulleMonthFromExtendedTimeInterval:ext];
+   days                = [self mulleNumberOfDaysInMonth:month
+                                                 ofYear:year];
+
+   weeks  = days / 7;
+   days  %= 7;
+   weeks += days != 0;
+
+   // e.g. days = 30. 30 % 7 -> 2.  7 - 2 + 1 = 6
+   // add a week, if (compensated) week start is the last weekday
+   weeks += pure_mod_0_n( firstWeekdayOfMonth - firstWeekday, 7) >= (7 - days + 1);
+
+   return( weeks);
 }
 
 

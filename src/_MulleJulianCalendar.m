@@ -34,6 +34,8 @@ NSString  *NSJulianCalendar = @"julian";
    [super init];
 
    _daysOfCommonEraOfReferenceDate = MulleJulianDaysOfCommonEraOfReferenceDate;
+   _firstWeekday                   = MulleCalendarSunday;
+   _minimumDaysInFirstWeek         = 1;
 
    return( self);
 }
@@ -294,8 +296,12 @@ static int  accumulated_month_days[] =
                  inUnit:(NSCalendarUnit) inUnit
                 forDate:(NSDate *) date
 {
-   NSRange            range;
-   NSDateComponents   *components;
+   NSRange                            range;
+   NSInteger                          year;
+   NSInteger                          month;
+   NSInteger                          day;
+   NSInteger                          weekday;
+   struct MulleExtendedTimeInterval   ext;
 
    range = NSMakeRange( NSNotFound, NSNotFound);
    switch( unit)
@@ -330,27 +336,33 @@ static int  accumulated_month_days[] =
    // NSDayCalendarUnit in NSWeekCalendarUnit @ 1.1.1970 12:00:00  : [1,3]
    case NSDayCalendarUnit :
    {
-      components = [self components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
-                           fromDate:date];
       switch( inUnit)
       {
       case NSEraCalendarUnit :
       case NSMonthCalendarUnit :
-         range = NSMakeRange( 1, [self mulleNumberOfDaysInMonth:components->_month
-                                                         ofYear:components->_year]);
+         MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
+         year  = [self mulleYearFromExtendedTimeInterval:&ext];
+         month = [self mulleMonthFromExtendedTimeInterval:&ext];
+         range = NSMakeRange( 1, [self mulleNumberOfDaysInMonth:month
+                                                         ofYear:year]);
          break;
 
       case NSYearCalendarUnit :
-         range = NSMakeRange( 1, [self mulleNumberOfDaysInYear:components->_year]);
+         MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
+         year  = [self mulleYearFromExtendedTimeInterval:&ext];
+         range = NSMakeRange( 1, [self mulleNumberOfDaysInYear:year]);
          break;
 
       case NSWeekCalendarUnit :
          // What does 1,3 mean ?
          // It means that that the 1.1.1970 is a Thursday. There are three
          // days left (SO MO DI MI [DO] FR SA) if the week ends on a Saturday.
-         // why is it a "1" though ?
          //
-         // range = NSMakeRange( 1, 7);
+         MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
+         weekday = [self mulleWeekdayFromExtendedTimeInterval:&ext] - 1;
+         // lastweekday = first + 6 (mod)
+         weekday = pure_mod_0_n( (_firstWeekday + 6) - weekday, 7);
+         range   = NSMakeRange( weekday + 1, 7);
          break;
       }
       break;
@@ -424,23 +436,22 @@ static int  accumulated_month_days[] =
    // NSWeekCalendarUnit in NSYearCalendarUnit @ 31.3.2019 2:00:00 : [1,53]
    // NSWeekCalendarUnit in NSMonthCalendarUnit @ 31.3.2019 2:00:00 : [9,6]
    case NSWeekCalendarUnit :
-   {
-      components = [self components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
-                           fromDate:date];
       switch( inUnit)
       {
       case NSEraCalendarUnit    :
       case NSYearCalendarUnit   :
-         range = NSMakeRange( 1, [self mulleNumberOfWeeksInYear:components->_year]);
+         MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
+         range = NSMakeRange( 1, [self mulleNumberOfWeeksInYearFromExtendedTimeInterval:&ext]);
          break;
 
+         // apple output makes no sense to me, so we redefine this more
+         // sensibly
       case NSMonthCalendarUnit  :
-         // figure out given month, figure out number of weeks in month
-         // figure out week number of first week intersecting month
-         break;
+         MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
+         range = NSMakeRange( [self mulleWeekOfMonthFromExtendedTimeInterval:&ext],
+                              [self mulleNumberOfWeeksInMonthFromExtendedTimeInterval:&ext]);
       }
       break;
-   }
 
    // NSWeekdayCalendarUnit in NSEraCalendarUnit @ 1.1.1970 12:00:00 : [1,7]
    // NSWeekdayCalendarUnit in NSYearCalendarUnit @ 1.1.1970 12:00:00 : [1,7]
@@ -464,16 +475,13 @@ static int  accumulated_month_days[] =
       switch( inUnit)
       {
       case NSEraCalendarUnit    :
-      case NSMonthCalendarUnit  :
-         components = [self components:NSYearCalendarUnit|NSMonthCalendarUnit
-                              fromDate:date];
-         range = NSMakeRange( 1, [self mulleNumberOfDaysInMonth:components->_month
-                                                         ofYear:components->_year] + 6 / 7);
-         break;
-
       case NSYearCalendarUnit   :
-      //  I don't know what this means
-      //   return( NSMakeRange( 1, 59); // or often 60
+      case NSMonthCalendarUnit  :
+         MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
+         year  = [self mulleYearFromExtendedTimeInterval:&ext];
+         month = [self mulleMonthFromExtendedTimeInterval:&ext];
+         range = NSMakeRange( 1, ([self mulleNumberOfDaysInMonth:month
+                                                         ofYear:year] + 6) / 7);
          break;
       }
    }
@@ -523,19 +531,6 @@ static inline NSInteger  pure_mod_0_n( NSInteger value, NSInteger max)
       p_interval = &dummy.interval;
 
    MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
-
-   //
-   // NSEraCalendarUnit     @ 18.4.1848 12:00:00 : 3.1.1      0:00:00 - 4398046511104.0
-   // NSYearCalendarUnit    @ 18.4.1848 12:00:00 : 1.1.1848   0:00:00 - 31622400.0
-   // NSMonthCalendarUnit   @ 18.4.1848 12:00:00 : 1.4.1848   0:00:00 - 2592000.0
-   // NSDayCalendarUnit     @ 18.4.1848 12:00:00 : 18.4.1848  0:00:00 - 86400.0
-   // NSHourCalendarUnit    @ 18.4.1848 12:00:00 : 18.4.1848 12:00:00 - 3600.0
-   // NSMinuteCalendarUnit  @ 18.4.1848 12:00:00 : 18.4.1848 12:00:00 - 60.0
-   // NSSecondCalendarUnit  @ 18.4.1848 12:00:00 : 18.4.1848 12:00:00 - 1.0
-   // NSWeekCalendarUnit    @ 18.4.1848 12:00:00 : 16.4.1848  0:00:00 - 604800.0
-   // NSWeekdayCalendarUnit @ 18.4.1848 12:00:00 : 18.4.1848  0:00:00 - 86400.0
-   // NSWeekdayOrdinalCalendarUnit  @ 18.4.1848 12:00:00 : 18.4.1848 0:00:00 - 86400.0
-   //
 
    switch( unit)
    {

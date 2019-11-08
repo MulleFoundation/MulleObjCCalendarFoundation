@@ -71,6 +71,7 @@ static void  MulleExtendedTimeIntervalInit( struct MulleExtendedTimeInterval *p,
 - (NSInteger) mulleDayOfMonthFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
 - (NSInteger) mulleDayOfWeekFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
 - (NSInteger) mulleDayOfYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulleFirstWeekdayOfMonthFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
 - (NSInteger) mulleFirstWeekdayOfYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
 - (NSInteger) mulleISOFirstWeekOffsetInYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext;
 - (NSInteger) mulleISONumberOfWeeksInYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext;
@@ -78,6 +79,8 @@ static void  MulleExtendedTimeIntervalInit( struct MulleExtendedTimeInterval *p,
 - (NSInteger) mulleLastWeekdayOfYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext;
 - (NSInteger) mulleMinuteFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
 - (NSInteger) mulleMonthFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
+- (NSInteger) mulleNumberOfWeeksInMonthFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext;
+- (NSInteger) mulleNumberOfWeeksInYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext;
 - (NSInteger) mulleQuarterFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
 - (NSInteger) mulleWeekdayFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;
 - (NSInteger) mulleWeekdayOrdinalFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) extended;

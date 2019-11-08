@@ -90,6 +90,11 @@ enum
                  inUnit:(NSCalendarUnit) inUnit
                 forDate:(NSDate *)date;
 
+- (BOOL) rangeOfUnit:(NSCalendarUnit) unit
+           startDate:(NSDate **) p_startDate
+            interval:(NSTimeInterval *) p_interval
+             forDate:(NSDate *) date;
+
 - (NSUInteger) ordinalityOfUnit:(NSCalendarUnit) unit
                          inUnit:(NSCalendarUnit) inUnit
                         forDate:(NSDate *) date;
