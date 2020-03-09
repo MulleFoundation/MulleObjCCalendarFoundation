@@ -41,6 +41,8 @@ NSString  *NSGregorianCalendar = @"gregorian";
 
 @implementation _MulleGregorianCalendar
 
+MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
+
 + (void) load
 {
    [self mulleRegisterClass:self

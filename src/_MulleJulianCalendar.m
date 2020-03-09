@@ -15,6 +15,8 @@ NSString  *NSJulianCalendar = @"julian";
 
 @implementation _MulleJulianCalendar
 
+MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
+
 + (void) load
 {
    [self mulleRegisterClass:self
