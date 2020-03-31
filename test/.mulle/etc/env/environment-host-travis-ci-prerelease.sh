@@ -144,21 +144,21 @@ export MULLE_ATEXIT_BRANCH="prerelease"
 
 
 #
-# MulleObjCStandardFoundation-startup nodetype: ${MULLEOBJCSTANDARDFOUNDATION_STARTUP_NODETYPE:-tar}
+# MulleObjCStandardFoundation-startup nodetype: ${MULLE_OBJC_STANDARD_FOUNDATION_STARTUP_NODETYPE:-tar}
 #
-export MULLEOBJCSTANDARDFOUNDATION_STARTUP_NODETYPE="git"
+export MULLE_OBJC_STANDARD_FOUNDATION_STARTUP_NODETYPE="git"
 
 
 #
-# MulleObjCStandardFoundation-startup url: ${MULLEOBJCSTANDARDFOUNDATION_STARTUP_URL:-https://github.com/MulleFoundation/MulleObjCStandardFoundation-startup/archive/${MULLE_BRANCH}.tar.gz}
+# MulleObjCStandardFoundation-startup url: ${MULLE_OBJC_STANDARD_FOUNDATION_STARTUP_URL:-https://github.com/MulleFoundation/MulleObjCStandardFoundation-startup/archive/${MULLE_BRANCH}.tar.gz}
 #
-export MULLEOBJCSTANDARDFOUNDATION_STARTUP_URL="https://github.com/MulleFoundation/MulleObjCStandardFoundation-startup.git"
+export MULLE_OBJC_STANDARD_FOUNDATION_STARTUP_URL="https://github.com/MulleFoundation/MulleObjCStandardFoundation-startup.git"
 
 
 #
-# MulleObjCStandardFoundation-startup branch: ${MULLEOBJCSTANDARDFOUNDATION_STARTUP_BRANCH:-latest}
+# MulleObjCStandardFoundation-startup branch: ${MULLE_OBJC_STANDARD_FOUNDATION_STARTUP_BRANCH:-latest}
 #
-export MULLEOBJCSTANDARDFOUNDATION_STARTUP_BRANCH="prerelease"
+export MULLE_OBJC_STANDARD_FOUNDATION_STARTUP_BRANCH="prerelease"
 
 
 #
@@ -171,6 +171,12 @@ export MULLE_OBJC_STANDARD_FOUNDATION_NODETYPE="git"
 # MulleObjCStandardFoundation url: ${MULLE_OBJC_STANDARD_FOUNDATION_URL:-https://github.com/MulleFoundation/MulleObjCStandardFoundation/archive/${MULLE_TAG}.tar.gz}
 #
 export MULLE_OBJC_STANDARD_FOUNDATION_URL="https://github.com/MulleFoundation/MulleObjCStandardFoundation.git"
+
+
+#
+# MulleObjCStandardFoundation branch: ${MULLE_OBJC_STANDARD_FOUNDATION_BRANCH}
+#
+export MULLE_OBJC_STANDARD_FOUNDATION_BRANCH="prerelease"
 
 
 #
@@ -423,12 +429,6 @@ export MULLE_OBJC_OS_FOUNDATION_URL="https://github.com/MulleFoundation/MulleObj
 # MulleObjCOSFoundation branch: ${MULLE_OBJC_OS_FOUNDATION_BRANCH}
 #
 export MULLE_OBJC_OS_FOUNDATION_BRANCH="prerelease"
-
-
-#
-# MulleObjCStandardFoundation branch: ${MULLE_OBJC_STANDARD_FOUNDATION_BRANCH}
-#
-export MULLE_OBJC_STANDARD_FOUNDATION_BRANCH="prerelease"
 
 
 #
