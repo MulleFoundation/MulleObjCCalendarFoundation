@@ -1,5 +1,7 @@
 #! /bin/sh
 
+#! /bin/sh
+
 
 get_mulle_kybernetik_gpg_key()
 {
@@ -20,30 +22,6 @@ add_mulle_kybernetik_to_apt_sources()
 
    echo "Added Mulle kybernetiK repository to apt" >&2
 }
-
-
-get_codeon_gpg_key()
-{
-   curl -sS "https://www.codeon.de/dists/codeon-pub.asc" | \
-      sudo apt-key add -
-
-   echo "Added Codeon repository key to apt" >&2
-}
-
-
-add_codeon_to_apt_sources()
-{
-   local release="$1"
-   local debname="$2"
-
-   echo "deb [arch=amd64] http://download.codeon.de ${release} ${debname}" | \
-   sudo tee "/etc/apt/sources.list.d/codeon.de-${debname}.list" > /dev/null
-
-   echo "Added Codeon repository to apt" >&2
-}
-
-
-
 
 
 r_get_linux_release()
@@ -110,7 +88,7 @@ r_get_hostname()
 }
 
 
-main()
+before_install_main()
 {
    local release
    local debname
@@ -121,16 +99,34 @@ main()
    r_get_debname
    debname="${RVAL}"
 
+   echo "DEBIAN_REPOSITORY=\"${debname}\"" 2>&1
+
    r_get_hostname
    MULLE_HOSTNAME="${RVAL}"
    export MULLE_HOSTNAME
 
    get_mulle_kybernetik_gpg_key && \
    add_mulle_kybernetik_to_apt_sources "${release}" "${debname}" &&  \
-   get_codeon_gpg_key && \
-   add_codeon_to_apt_sources "${release}" "${debname}" &&  \
-   sudo apt-get update && \
-   sudo apt-get -y install mulle-sde mulle-test mulle-clang ${OTHER_DEBIAN_PACKAGES}
+
+   sudo apt-get update &&
+
+   if [ -f ".travis.d/PACKAGES.linux" ]
+   then
+      PACKAGES="`egrep -v '^#' ".travis.d/PACKAGES.linux" `"
+   else
+      PACKAGES="`egrep -v '^#' ".travis.d/PACKAGES" `"
+   fi &&
+
+   (
+      IFS=$'\n'
+      for package in ${PACKAGES}
+      do
+         if [ ! -z "${package}" ]
+         then
+            sudo apt-get -y install "${package}"
+         fi
+      done
+   )
 }
 
-main "$@"
+before_install_main "$@"
