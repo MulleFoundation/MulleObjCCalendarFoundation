@@ -305,7 +305,6 @@ static inline enum MulleCalendarWeekday
 }
 
 
-
 - (NSInteger) mulleNumberOfWeeksInYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext
 {
    NSInteger   firstWeekdayOfYear;
