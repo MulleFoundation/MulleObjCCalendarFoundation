@@ -9,7 +9,9 @@ addons:
       - cmake-data
 
 before_install:
-   - '[ ! -f .travis.d/before_install ] || source .travis.d/before_install'
+   - '[ ! -f .travis.d/before_install ]      || source .travis.d/before_install'
+   - '[ ! -f .travis.d/before_install_aux ]  || source .travis.d/before_install_aux'
+   - '[ ! -f .travis.d/before_install_user ] || source .travis.d/before_install_user'
 
 # install:
 #    - '[ ! -f .travis.d/install ] || source .travis.d/install'
