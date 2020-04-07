@@ -107,8 +107,26 @@ before_install_main()
 
    get_mulle_kybernetik_gpg_key && \
    add_mulle_kybernetik_to_apt_sources "${release}" "${debname}" &&  \
-   sudo apt-get update && \
-   sudo apt-get -y install mulle-sde mulle-test ${OTHER_DEBIAN_PACKAGES}
+
+   sudo apt-get update &&
+
+   if [ -f ".travis.d/PACKAGES.linux" ]
+   then
+      PACKAGES="`egrep -v '^#' ".travis.d/PACKAGES.linux" `"
+   else
+      PACKAGES="`egrep -v '^#' ".travis.d/PACKAGES" `"
+   fi &&
+
+   (
+      IFS=$'\n'
+      for package in ${PACKAGES}
+      do
+         if [ ! -z "${package}" ]
+         then
+            sudo apt-get -y install "${package}"
+         fi
+      done
+   )
 }
 
 before_install_main "$@"
