@@ -50,6 +50,7 @@
 #ifdef DEBUG
    abort();
 #endif
+   return( 0);
 }
 
 

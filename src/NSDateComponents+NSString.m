@@ -20,7 +20,7 @@ static void   append( NSMutableString *s, NSString *format, NSString *delim, NSI
 {
    NSMutableString   *s;
 
-   s = [NSMutableString string];
+   s = [NSMutableString object];
 
    append( s, @"%04ld", nil, _year);
    append( s, @"%02ld", @"-", _month);
