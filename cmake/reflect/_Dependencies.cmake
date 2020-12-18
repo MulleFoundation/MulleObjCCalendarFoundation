@@ -8,7 +8,7 @@ endif()
 
 #
 # Generated from sourcetree: MulleObjCOSFoundation;no-singlephase;
-# Disable with: `mulle-sourcetree mark MulleObjCOSFoundation no-link`
+# Disable with: `mulle-sourcetree mark MulleObjCOSFoundation no-header`
 #
 if( NOT MULLE_OBJC_OS_FOUNDATION_LIBRARY)
    find_library( MULLE_OBJC_OS_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCOSFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCOSFoundation NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH)
