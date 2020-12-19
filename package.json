@@ -1,0 +1,16 @@
+{
+   "name" : "MulleObjCCalendarFoundation",
+   "version" : "0.18.0",
+   "description" : "📆 Calendar class NSCalendar",
+   "homepage" : "https://github.com/MulleFoundation/MulleObjCCalendarFoundation",
+   "bugs" : "https://github.com/MulleFoundation/MulleObjCCalendarFoundation/issues",
+   "keywords" : [],
+   "license" : "UNLICENSED",
+   "repository" : {
+      "type" : "git",
+      "url" : "MulleFoundation/MulleObjCCalendarFoundation"
+   },
+   "dependencies" : {
+      "MulleObjCOSFoundation" : "MulleFoundation/MulleObjCOSFoundation"
+   }
+}
