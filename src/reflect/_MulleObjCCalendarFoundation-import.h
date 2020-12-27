@@ -16,15 +16,10 @@
 //    remove:             `mulle-sourcetree mark MulleObjCOSFoundation no-header`
 //    rename:             `mulle-sde dependency|library set MulleObjCOSFoundation include whatever.h`
 //    toggle #import:     `mulle-sourcetree mark MulleObjCOSFoundation [no-]import`
-//    toggle localheader: `mulle-sourcetree mark MulleObjCOSFoundation [no-]localheader`
 //    toggle public:      `mulle-sourcetree mark MulleObjCOSFoundation [no-]public`
 //    toggle optional:    `mulle-sourcetree mark MulleObjCOSFoundation [no-]require`
 //    remove for os:      `mulle-sourcetree mark MulleObjCOSFoundation no-os-<osname>`
-# if defined( __has_include) && __has_include("MulleObjCOSFoundation.h")
-#   import "MulleObjCOSFoundation.h"   // MulleObjCOSFoundation
-# else
-#   import <MulleObjCOSFoundation/MulleObjCOSFoundation.h>   // MulleObjCOSFoundation
-# endif
+# import <MulleObjCOSFoundation/MulleObjCOSFoundation.h>   // MulleObjCOSFoundation
 
 #ifdef __has_include
 # if __has_include( "_MulleObjCCalendarFoundation-include.h")
