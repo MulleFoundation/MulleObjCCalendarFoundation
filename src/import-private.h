@@ -17,8 +17,8 @@
  */
 #import "_MulleObjCCalendarFoundation-import-private.h"
 
-/* These are some semi-private classes from MulleObjCStandardFoundation */
-#import <MulleObjCStandardFoundation/_MulleObjCPropertyListReader.h>
-#import <MulleObjCStandardFoundation/_MulleObjCPropertyListReader+InlineAccessors.h>
-#import <MulleObjCStandardFoundation/NSObject+PropertyListParsing.h>
-#import <MulleObjCStandardFoundation/NSString+PropertyListParsing.h>
+/* These are some semi-private classes from MulleObjCPlistFoundation */
+//#import <MulleObjCPlistFoundation/_MulleObjCPropertyListReader.h>
+//#import <MulleObjCPlistFoundation/_MulleObjCPropertyListReader+InlineAccessors.h>
+//#import <MulleObjCPlistFoundation/NSObject+PropertyListParsing.h>
+//#import <MulleObjCPlistFoundation/NSString+PropertyListParsing.h>

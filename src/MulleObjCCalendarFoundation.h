@@ -6,11 +6,28 @@
 #include <stdint.h>
 
 /*
+   Add other library headers here like so, for exposure to library
+   consumers.
+
+   # include "foo.h"
+*/
+
+#import "_MulleObjCCalendarFoundation-export.h"
+#include "_MulleObjCCalendarFoundation-provide.h"
+
+#ifdef __has_include
+# if __has_include( "_MulleObjCCalendarFoundation-versioncheck.h")
+#  include "_MulleObjCCalendarFoundation-versioncheck.h"
+# endif
+#endif
+
+
+/*
  *  (c) 2019 nat ORGANIZATION
  *
  *  version:  major, minor, patch
  */
-#define MULLE_OBJC_CALENDAR_FOUNDATION_VERSION  ((0 << 20) | (18 << 8) | 0)
+#define MULLE_OBJC_CALENDAR_FOUNDATION_VERSION  ((0 << 20) | (19 << 8) | 0)
 
 
 static inline unsigned int   MulleObjCCalendarFoundation_get_version_major( void)
@@ -32,18 +49,5 @@ static inline unsigned int   MulleObjCCalendarFoundation_get_version_patch( void
 
 
 extern uint32_t   MulleObjCCalendarFoundation_get_version( void);
-
-/*
-   Add other library headers here like so, for exposure to library
-   consumers.
-
-   # include "foo.h"
-*/
-#import "NSCalendar.h"
-#import "NSCalendar+NSDate.h"
-#import "NSDateComponents.h"
-
-#import "_MulleGregorianCalendar.h"
-#import "_MulleJulianCalendar.h"
 
 #endif

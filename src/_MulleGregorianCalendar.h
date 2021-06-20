@@ -9,7 +9,3 @@
 //
 @interface _MulleGregorianCalendar : _MulleJulianCalendar
 @end
-
-
-
-extern NSString  *NSGregorianCalendar; // = @"gregorian";

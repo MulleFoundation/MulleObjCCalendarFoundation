@@ -7,19 +7,19 @@ export PROJECT_NAME="MulleObjCCalendarFoundation"
 #
 #
 #
-export PROJECT_IDENTIFIER="MulleObjCCalendarFoundation"
 
-
-#
-#
-#
-export PROJECT_DOWNCASE_IDENTIFIER="mulle_objc_calendar_foundation"
 
 
 #
 #
 #
-export PROJECT_UPCASE_IDENTIFIER="MULLE_OBJC_CALENDAR_FOUNDATION"
+
+
+
+#
+#
+#
+
 
 
 #
