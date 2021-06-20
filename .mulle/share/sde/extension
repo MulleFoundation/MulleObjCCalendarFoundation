@@ -7,8 +7,8 @@ mulle-objc/objc-cmake;buildtool
 mulle-c/c-cmake;buildtool
 mulle-sde/c-cmake;buildtool
 mulle-sde/cmake;buildtool
+mulle-objc/objc-demo;extra
 mulle-sde/c-demo;extra
 mulle-c/c-demo;extra
-mulle-objc/objc-demo;extra
 mulle-sde/sublime-text;extra
 mulle-foundation/github-actions;extra

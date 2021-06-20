@@ -40,6 +40,12 @@ enum
 };
 
 
+// these should be in _MulleGregorianCalendar.h really but then they
+// ain't visible
+extern NSString  *NSGregorianCalendar; // = @"gregorian";
+extern NSString  *NSJulianCalendar; //  = @"julian";
+
+
 
 @interface NSCalendar : NSObject <NSCopying>
 {

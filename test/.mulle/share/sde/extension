@@ -2,3 +2,4 @@ mulle-sde/objc-test;meta
 mulle-sde/objc-test-runtime;runtime
 mulle-sde/c-test-runtime;runtime
 mulle-sde/base-test-runtime;runtime
+mulle-sde/objc-test-demo;extra

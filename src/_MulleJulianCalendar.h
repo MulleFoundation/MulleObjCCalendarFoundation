@@ -12,4 +12,3 @@
 
 @end
 
-extern NSString  *NSJulianCalendar; //  = @"julian";

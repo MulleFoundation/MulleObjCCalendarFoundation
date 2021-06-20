@@ -9,6 +9,7 @@ var/
 
 environment-user-*.sh
 environment-host-*.sh
+!environment-host-ci-*.sh
 
 # stash is generally boring
 stash/
