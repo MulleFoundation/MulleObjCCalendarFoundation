@@ -15,7 +15,7 @@ endif()
 #
 # Generated from sourcetree: 69A386D5-EA1E-4B78-BCDC-3E8D6923864B;MulleObjCOSFoundation;no-singlephase;
 # Disable with : `mulle-sourcetree mark MulleObjCOSFoundation no-link`
-# Disable for this platform: `mulle-sourcetree mark MulleObjCOSFoundation no-cmake-platform-linux`
+# Disable for this platform: `mulle-sourcetree mark MulleObjCOSFoundation no-cmake-platform-darwin`
 #
 if( NOT MULLE_OBJC_OS_FOUNDATION_LIBRARY)
    find_library( MULLE_OBJC_OS_FOUNDATION_LIBRARY NAMES ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCOSFoundation${CMAKE_STATIC_LIBRARY_SUFFIX} MulleObjCOSFoundation NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH)

@@ -5,13 +5,13 @@ export MULLE_TESTALLOCATOR_NODETYPE="git"
 
 
 #
-# mulle-testallocator url: ${MULLE_TESTALLOCATOR_URL:-https://github.com/mulle-core/mulle-testallocator/archive/${MULLE_BRANCH}.tar.gz}
+# mulle-testallocator url: ${MULLE_TESTALLOCATOR_URL:-https://github.com/mulle-core/mulle-testallocator/archive/${MULLE_TAG}.tar.gz}
 #
 export MULLE_TESTALLOCATOR_URL="https://github.com/mulle-core/mulle-testallocator.git"
 
 
 #
-# mulle-testallocator branch: ${MULLE_TESTALLOCATOR_BRANCH:-latest}
+# mulle-testallocator branch: ${MULLE_TESTALLOCATOR_BRANCH}
 #
 export MULLE_TESTALLOCATOR_BRANCH="prerelease"
 
@@ -149,13 +149,13 @@ export MULLE_OBJC_STANDARD_FOUNDATION_STARTUP_NODETYPE="git"
 
 
 #
-# MulleObjCStandardFoundation-startup url: ${MULLE_OBJC_STANDARD_FOUNDATION_STARTUP_URL:-https://github.com/MulleFoundation/MulleObjCStandardFoundation-startup/archive/${MULLE_BRANCH}.tar.gz}
+# MulleObjCStandardFoundation-startup url: ${MULLE_OBJC_STANDARD_FOUNDATION_STARTUP_URL:-https://github.com/MulleFoundation/MulleObjCStandardFoundation-startup/archive/${MULLE_TAG}.tar.gz}
 #
 export MULLE_OBJC_STANDARD_FOUNDATION_STARTUP_URL="https://github.com/MulleFoundation/MulleObjCStandardFoundation-startup.git"
 
 
 #
-# MulleObjCStandardFoundation-startup branch: ${MULLE_OBJC_STANDARD_FOUNDATION_STARTUP_BRANCH:-latest}
+# MulleObjCStandardFoundation-startup branch: ${MULLE_OBJC_STANDARD_FOUNDATION_STARTUP_BRANCH}
 #
 export MULLE_OBJC_STANDARD_FOUNDATION_STARTUP_BRANCH="prerelease"
 
@@ -419,13 +419,13 @@ export MULLE_OBJC_CALENDAR_FOUNDATION_NODETYPE="git"
 
 
 #
-# MulleObjCCalendarFoundation url: ${MULLE_OBJC_CALENDAR_FOUNDATION_URL:-https://github.com/MulleFoundation/MulleObjCCalendarFoundation/archive/${MULLE_BRANCH}.tar.gz}
+# MulleObjCCalendarFoundation url: ${MULLE_OBJC_CALENDAR_FOUNDATION_URL:-https://github.com/MulleFoundation/MulleObjCCalendarFoundation/archive/${MULLE_TAG}.tar.gz}
 #
 export MULLE_OBJC_CALENDAR_FOUNDATION_URL="https://github.com/MulleFoundation/MulleObjCCalendarFoundation.git"
 
 
 #
-# MulleObjCCalendarFoundation branch: ${MULLE_OBJC_CALENDAR_FOUNDATION_BRANCH:-latest}
+# MulleObjCCalendarFoundation branch: ${MULLE_OBJC_CALENDAR_FOUNDATION_BRANCH}
 #
 export MULLE_OBJC_CALENDAR_FOUNDATION_BRANCH="prerelease"
 
