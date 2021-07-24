@@ -1,6 +1,6 @@
 ## 0.19.0
 
-* Various small improvements
+* moved NSGregorianString string declaration into public header
 
 
 ## 0.18.0
