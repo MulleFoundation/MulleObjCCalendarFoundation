@@ -2,14 +2,11 @@
 ### picked up in preference over the one in cmake/share. And it will not get
 ### clobbered with the next upgrade.
 
-# can be included multiple times
-
 if( MULLE_TRACE_INCLUDE)
    message( STATUS "# Include \"${CMAKE_CURRENT_LIST_FILE}\"" )
 endif()
 
-include( CompilerDetectionC)
-include( UnwantedWarningsC) # after detection, before flags
-include( CompilerFlagsC)
+include( CompilerFlagsObjC)
 
-include( PreLibraryAuxC OPTIONAL)
+# load in flags defined by other plugins, presumably Objective-C
+include( CompilerFlagsAuxObjC OPTIONAL)
