@@ -60,7 +60,7 @@ if( NOT __ENVIRONMENT__CMAKE__)
       endif()
    else()
       # temporary fix until mulle-objc 0.16 release
-      if( NOT "$ENV{MULLE_MAKE_VERSION}" STREQUAL "")
+      if( NOT "$ENV{MULLE_MAKE_VERSION}" STREQUAL "") 
          if( "$ENV{MULLE_MAKE_VERSION}" VERSION_LESS 0.14.0)
             string( REPLACE ":" ";" MULLE_SDK_PATH "${MULLE_SDK_PATH}")
          endif()
