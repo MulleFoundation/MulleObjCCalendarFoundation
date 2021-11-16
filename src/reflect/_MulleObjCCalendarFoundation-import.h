@@ -13,14 +13,14 @@
 
 // You can tweak the following #import with these commands.
 // (Use 69A386D5-EA1E-4B78-BCDC-3E8D6923864B instead of MulleObjCOSFoundation if there are duplicate entries)
-//    remove:             `mulle-sourcetree mark MulleObjCOSFoundation no-header`
+//    remove:             `mulle-sde dependency mark MulleObjCOSFoundation no-header`
 //    rename:             `mulle-sde dependency|library set MulleObjCOSFoundation include whatever.h`
-//    reorder:            `mulle-sourcetree move MulleObjCOSFoundation <up|down>`
-//    toggle #import:     `mulle-sourcetree mark MulleObjCOSFoundation [no-]import`
-//    toggle public:      `mulle-sourcetree mark MulleObjCOSFoundation [no-]public`
-//    toggle optional:    `mulle-sourcetree mark MulleObjCOSFoundation [no-]require`
-//    remove for platform:`mulle-sourcetree mark MulleObjCOSFoundation no-platform-<uname>`
-//        (use mulle-sourcetree-to-c --unames for known values)
+//    reorder:            `mulle-sde dependency move MulleObjCOSFoundation <up|down>`
+//    toggle #import:     `mulle-sde dependency mark MulleObjCOSFoundation [no-]import`
+//    toggle public:      `mulle-sde dependency mark MulleObjCOSFoundation [no-]public`
+//    toggle optional:    `mulle-sde dependency mark MulleObjCOSFoundation [no-]require`
+//    remove for platform:`mulle-sde dependency mark MulleObjCOSFoundation no-platform-<uname>`
+//        (use `mulle-sourcetree-to-c --unames` to list known values)
 #import <MulleObjCOSFoundation/MulleObjCOSFoundation.h>   // MulleObjCOSFoundation
 
 #ifdef __has_include

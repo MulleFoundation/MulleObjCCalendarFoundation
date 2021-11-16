@@ -48,6 +48,7 @@ static inline unsigned int   MulleObjCCalendarFoundation_get_version_patch( void
 }
 
 
-extern uint32_t   MulleObjCCalendarFoundation_get_version( void);
+MULLE_OBJC_CALENDAR_FOUNDATION_EXTERN_GLOBAL
+uint32_t   MulleObjCCalendarFoundation_get_version( void);
 
 #endif
