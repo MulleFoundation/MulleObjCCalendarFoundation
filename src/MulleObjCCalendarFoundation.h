@@ -15,19 +15,13 @@
 #import "_MulleObjCCalendarFoundation-export.h"
 #include "_MulleObjCCalendarFoundation-provide.h"
 
-#ifdef __has_include
-# if __has_include( "_MulleObjCCalendarFoundation-versioncheck.h")
-#  include "_MulleObjCCalendarFoundation-versioncheck.h"
-# endif
-#endif
-
 
 /*
  *  (c) 2019 nat ORGANIZATION
  *
  *  version:  major, minor, patch
  */
-#define MULLE_OBJC_CALENDAR_FOUNDATION_VERSION  ((0 << 20) | (19 << 8) | 0)
+#define MULLE_OBJC_CALENDAR_FOUNDATION_VERSION  ((0 << 20) | (20 << 8) | 0)
 
 
 static inline unsigned int   MulleObjCCalendarFoundation_get_version_major( void)
@@ -50,5 +44,12 @@ static inline unsigned int   MulleObjCCalendarFoundation_get_version_patch( void
 
 MULLE_OBJC_CALENDAR_FOUNDATION_EXTERN_GLOBAL
 uint32_t   MulleObjCCalendarFoundation_get_version( void);
+
+#ifdef __has_include
+# if __has_include( "_MulleObjCCalendarFoundation-versioncheck.h")
+#  include "_MulleObjCCalendarFoundation-versioncheck.h"
+# endif
+#endif
+
 
 #endif
