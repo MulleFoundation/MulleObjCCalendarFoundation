@@ -71,6 +71,15 @@ MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
 }
 
 
+- (void) dealloc
+{
+   [_timeZone release];
+   [_locale release];
+
+   [super dealloc];
+}
+
+
 + (instancetype) calendarWithIdentifier:(NSString *) identifier;
 {
    return( [[[self alloc] initWithCalendarIdentifier:identifier] autorelease]);
