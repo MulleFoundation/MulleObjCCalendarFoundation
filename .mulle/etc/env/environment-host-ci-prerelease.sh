@@ -35,21 +35,21 @@ export MULLE_OBJC_STANDARD_FOUNDATION_BRANCH="prerelease"
 
 
 #
-# MulleObjCValueFoundation nodetype: ${MULLE_OBJC_VALUE_FOUNDATION_NODETYPE:-tar}
+# MulleObjCTimeFoundation nodetype: ${MULLE_OBJC_TIME_FOUNDATION_NODETYPE:-tar}
 #
-export MULLE_OBJC_VALUE_FOUNDATION_NODETYPE="git"
+export MULLE_OBJC_TIME_FOUNDATION_NODETYPE="git"
 
 
 #
-# MulleObjCValueFoundation url: ${MULLE_OBJC_VALUE_FOUNDATION_URL:-https://github.com/MulleFoundation/MulleObjCValueFoundation/archive/${MULLE_TAG}.tar.gz}
+# MulleObjCTimeFoundation url: ${MULLE_OBJC_TIME_FOUNDATION_URL:-https://github.com/MulleFoundation/MulleObjCTimeFoundation/archive/${MULLE_TAG}.tar.gz}
 #
-export MULLE_OBJC_VALUE_FOUNDATION_URL="https://github.com/MulleFoundation/MulleObjCValueFoundation.git"
+export MULLE_OBJC_TIME_FOUNDATION_URL="https://github.com/MulleFoundation/MulleObjCTimeFoundation.git"
 
 
 #
-# MulleObjCValueFoundation branch: ${MULLE_OBJC_VALUE_FOUNDATION_BRANCH}
+# MulleObjCTimeFoundation branch: ${MULLE_OBJC_TIME_FOUNDATION_BRANCH}
 #
-export MULLE_OBJC_VALUE_FOUNDATION_BRANCH="prerelease"
+export MULLE_OBJC_TIME_FOUNDATION_BRANCH="prerelease"
 
 
 #
@@ -431,6 +431,42 @@ export MULLE_MULTIFIFO_BRANCH="prerelease"
 
 
 #
+# mulle-time nodetype: ${MULLE_TIME_NODETYPE:-tar}
+#
+export MULLE_TIME_NODETYPE="git"
+
+
+#
+# mulle-time url: ${MULLE_TIME_URL:-https://github.com/mulle-core/mulle-time/archive/${MULLE_TAG}.tar.gz}
+#
+export MULLE_TIME_URL="https://github.com/mulle-core/mulle-time.git"
+
+
+#
+# mulle-time branch: ${MULLE_TIME_BRANCH}
+#
+export MULLE_TIME_BRANCH="prerelease"
+
+
+#
+# MulleObjCValueFoundation nodetype: ${MULLE_OBJC_VALUE_FOUNDATION_NODETYPE:-tar}
+#
+export MULLE_OBJC_VALUE_FOUNDATION_NODETYPE="git"
+
+
+#
+# MulleObjCValueFoundation url: ${MULLE_OBJC_VALUE_FOUNDATION_URL:-https://github.com/MulleFoundation/MulleObjCValueFoundation/archive/${MULLE_TAG}.tar.gz}
+#
+export MULLE_OBJC_VALUE_FOUNDATION_URL="https://github.com/MulleFoundation/MulleObjCValueFoundation.git"
+
+
+#
+# MulleObjCValueFoundation branch: ${MULLE_OBJC_VALUE_FOUNDATION_BRANCH}
+#
+export MULLE_OBJC_VALUE_FOUNDATION_BRANCH="prerelease"
+
+
+#
 # MulleObjCContainerFoundation nodetype: ${MULLE_OBJC_CONTAINER_FOUNDATION_NODETYPE:-tar}
 #
 export MULLE_OBJC_CONTAINER_FOUNDATION_NODETYPE="git"
@@ -500,24 +536,6 @@ export MULLE_OBJC_LOCK_FOUNDATION_URL="https://github.com/MulleFoundation/MulleO
 # MulleObjCLockFoundation branch: ${MULLE_OBJC_LOCK_FOUNDATION_BRANCH}
 #
 export MULLE_OBJC_LOCK_FOUNDATION_BRANCH="prerelease"
-
-
-#
-# mulle-time nodetype: ${MULLE_TIME_NODETYPE:-tar}
-#
-export MULLE_TIME_NODETYPE="git"
-
-
-#
-# mulle-time url: ${MULLE_TIME_URL:-https://github.com/mulle-core/mulle-time/archive/${MULLE_TAG}.tar.gz}
-#
-export MULLE_TIME_URL="https://github.com/mulle-core/mulle-time.git"
-
-
-#
-# mulle-time branch: ${MULLE_TIME_BRANCH}
-#
-export MULLE_TIME_BRANCH="prerelease"
 
 
 #

@@ -42,10 +42,10 @@ enum
 
 // these should be in _MulleGregorianCalendar.h really but then they
 // ain't visible
-MULLE_OBJC_CALENDAR_FOUNDATION_EXTERN_GLOBAL
+MULLE_OBJC_CALENDAR_FOUNDATION_GLOBAL
 NSString  *NSGregorianCalendar; // = @"gregorian";
 
-MULLE_OBJC_CALENDAR_FOUNDATION_EXTERN_GLOBAL
+MULLE_OBJC_CALENDAR_FOUNDATION_GLOBAL
 NSString  *NSJulianCalendar; //  = @"julian";
 
 
