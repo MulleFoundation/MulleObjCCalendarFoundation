@@ -2,7 +2,7 @@
 
 #### 📆 Calendar class NSCalendar
 
-Adds a Gregorian and a Julian `NSCalendar` to the [MulleFoundation](/MulleFoundation).
+Adds a Gregorian and a Julian `NSCalendar` to the [MulleFoundation](//github.com/MulleFoundation).
 
 
 #### Classes
