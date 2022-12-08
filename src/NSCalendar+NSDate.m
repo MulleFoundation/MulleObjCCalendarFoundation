@@ -142,12 +142,9 @@ THE SOFTWARE.
 - (NSInteger) mulleWeekOfYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext
 {
    NSInteger   day;
-   NSInteger   year;
    NSInteger   weeks;
-   NSInteger   month;
    NSInteger   weekday;
    NSInteger   monthFirstWeekday;
-   NSInteger   diff;
    NSInteger   leftover;
    NSInteger   firstWeekday;
 
@@ -290,8 +287,7 @@ static inline enum MulleCalendarWeekday
 //
 - (NSInteger) mulleISOFirstWeekOffsetInYearFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext
 {
-   enum MulleCalendarWeekday         firstWeekday;
-   struct MulleCalendarWeekdayRange  range;
+   enum MulleCalendarWeekday   firstWeekday;
 
    firstWeekday = [self mulleFirstWeekdayOfYearFromExtendedTimeInterval:ext];
 
@@ -310,7 +306,6 @@ static inline enum MulleCalendarWeekday
    NSInteger   firstWeekdayOfYear;
    NSInteger   firstWeekday;
    NSInteger   days;
-   NSInteger   month;
    NSInteger   weeks;
    NSInteger   year;
 
@@ -393,19 +388,11 @@ static inline enum MulleCalendarWeekday
 {
    enum MulleCalendarWeekday         weekday;
    NSInteger                         day;
-   NSInteger                         days;
-   NSInteger                         diff;
    NSInteger                         firstWeekday;
    NSInteger                         lastWeekday;
-   NSInteger                         isoDay;
    NSInteger                         isoOffset;
    NSInteger                         isoRemainder;
    NSInteger                         isoWeeks;
-   NSInteger                         leftover;
-   NSInteger                         month;
-   NSInteger                         monthFirstWeekday;
-   NSInteger                         weeks;
-   NSInteger                         year;
    struct MulleCalendarWeekdayRange  range;
    struct MulleExtendedTimeInterval  tmp;
 
@@ -460,8 +447,6 @@ static inline enum MulleCalendarWeekday
 - (NSInteger) mulleWeekOfMonthFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext
 {
    NSInteger   dayOfMonth;
-   NSInteger   year;
-   NSInteger   month;
    NSInteger   weekday;
    NSInteger   monthFirstWeekday;
    NSInteger   diff;

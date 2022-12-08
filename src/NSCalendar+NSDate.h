@@ -45,8 +45,8 @@ struct MulleExtendedTimeInterval
 };
 
 
-static void  MulleExtendedTimeIntervalInit( struct MulleExtendedTimeInterval *p,
-                                            NSTimeInterval interval)
+static inline void  MulleExtendedTimeIntervalInit( struct MulleExtendedTimeInterval *p,
+                                                  NSTimeInterval interval)
 {
    p->interval       = interval;
 

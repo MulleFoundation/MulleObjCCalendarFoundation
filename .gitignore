@@ -34,3 +34,5 @@ research/
 version.old
 .gdb_history
 *.sublime-workspace
+cmake-build-*/
+.ackrc

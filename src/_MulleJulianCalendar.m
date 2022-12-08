@@ -266,7 +266,6 @@ static int  accumulated_month_days[] =
 {
    NSInteger        daysOfCommonEra;
    NSTimeInterval   interval;
-   NSInteger        max;
 
    [self _mulleCorrectDay:&day
                     month:&month
@@ -294,7 +293,6 @@ static int  accumulated_month_days[] =
    NSRange                            range;
    NSInteger                          year;
    NSInteger                          month;
-   NSInteger                          day;
    NSInteger                          weekday;
    struct MulleExtendedTimeInterval   ext;
 
@@ -536,7 +534,6 @@ static inline NSInteger  pure_mod_0_n( NSInteger value, NSInteger max)
    NSInteger                          nanosecond;
    NSInteger                          quarter_1;
    NSTimeInterval                     interval;
-   BOOL                               flag;
    union
    {
       NSTimeInterval   interval;
