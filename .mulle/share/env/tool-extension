@@ -20,3 +20,4 @@ mulle-match-to-cmake;optional
 mulle-match-to-c;optional
 cmake
 subl;optional
+clion;optional

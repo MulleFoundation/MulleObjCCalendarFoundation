@@ -321,7 +321,9 @@ static int  accumulated_month_days[] =
                                            year:(NSInteger) year
 {
    NSInteger   result;
+#ifdef USE_JULIAN_BEFORE_CHANGE
    BOOL        isGregorian;
+#endif
 
    assert( month >= 1 && month <= 12);
    assert( year >= 1 && year <= 144683);
