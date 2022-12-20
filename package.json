@@ -8,7 +8,7 @@
    "license" : "UNLICENSED",
    "repository" : {
       "type" : "git",
-      "url" : "MulleFoundation/MulleObjCCalendarFoundation"
+      "url" : "github:MulleFoundation/MulleObjCCalendarFoundation"
    },
    "dependencies" : {
       "MulleObjCOSFoundation" : "git://github.com/MulleFoundation/MulleObjCOSFoundation",
