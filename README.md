@@ -4,68 +4,73 @@
 
 Adds a Gregorian and a Julian `NSCalendar` to the [MulleFoundation](//github.com/MulleFoundation).
 
+| Release Version                                       | Release Notes
+|-------------------------------------------------------|--------------
+| ![Mulle kybernetiK tag](https://img.shields.io/github/tag//MulleObjCCalendarFoundation.svg?branch=release) [![Build Status](https://github.com//MulleObjCCalendarFoundation/workflows/CI/badge.svg?branch=release)](//github.com//MulleObjCCalendarFoundation/actions)| [RELEASENOTES](RELEASENOTES.md) |
 
-#### Classes
 
-Class               | Description
---------------------|-----------------------
-`NSCalendar`        |
-`NSDateComponents`  |
+## API
 
+| Class               | Description
+|---------------------|-----------------------
+| `NSCalendar`        |
+| `NSDateComponents`  |
+
+
+
+
+## Requirements
+
+|   Requirement         | Release Version  | Description
+|-----------------------|------------------|---------------
+| [MulleObjCOSFoundation](https://github.com/MulleFoundation/MulleObjCOSFoundation) | ![Mulle kybernetiK tag](https://img.shields.io/github/tag//.svg) [![Build Status](https://github.com///workflows/CI/badge.svg?branch=release)](https://github.com///actions/workflows/mulle-sde-ci.yml) | 💻 Platform-dependent classes and categories like NSTask, NSPipe
+| [mulle-objc-list](https://github.com/mulle-objc/mulle-objc-list) | ![Mulle kybernetiK tag](https://img.shields.io/github/tag//.svg) [![Build Status](https://github.com///workflows/CI/badge.svg?branch=release)](https://github.com///actions/workflows/mulle-sde-ci.yml) | 📒 Lists mulle-objc runtime information contained in executables.
 
 ### You are here
 
 ![Overview](overview.dot.svg)
 
+## Add
+
+Use [mulle-sde](//github.com/mulle-sde) to add MulleObjCCalendarFoundation to your project:
+
+``` sh
+mulle-sde add github:MulleFoundation/MulleObjCCalendarFoundation
+```
 
 ## Install
 
-This is a [mulle-sde](https://mulle-sde.github.io/) project.
+### Install with mulle-sde
 
-It has it's own virtual environment, that will be automatically setup for you
-once you enter it with:
+Use [mulle-sde](//github.com/mulle-sde) to build and install MulleObjCCalendarFoundation and all dependencies:
 
-```
-mulle-sde MulleObjCCalendarFoundation
-```
-
-Now you can let **mulle-sde** fetch the required dependencies and build the
-project for you:
-
-```
-mulle-sde craft
+``` sh
+mulle-sde install --prefix /usr/local \
+   https://github.com/MulleFoundation/MulleObjCCalendarFoundation/archive/latest.tar.gz
 ```
 
+### Manual Installation
 
-## Acknowledgements
+Install the requirements:
 
-Some parts of this library:
+| Requirements                                 | Description
+|----------------------------------------------|-----------------------
+| [MulleObjCOSFoundation](https://github.com/MulleFoundation/MulleObjCOSFoundation)             | 💻 Platform-dependent classes and categories like NSTask, NSPipe
+| [mulle-objc-list](https://github.com/mulle-objc/mulle-objc-list)             | 📒 Lists mulle-objc runtime information contained in executables.
 
-```
-Copyright (c) 2006-2007 Christopher J. W. Lloyd
+Install **MulleObjCCalendarFoundation** into `/usr/local` with [cmake](https://cmake.org):
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+``` sh
+cmake -B build \
+      -DCMAKE_INSTALL_PREFIX=/usr/local \
+      -DCMAKE_PREFIX_PATH=/usr/local \
+      -DCMAKE_BUILD_TYPE=Release &&
+cmake --build build --config Release &&
+cmake --install build --config Release
 ```
 
-```
-Copyright 1993-1995, Scott E. Lee, all rights reserved.
-Permission granted to use, copy, modify, distribute and sell so long as
-the above copyright and this permission statement are retained in all
-copies.  THERE IS NO WARRANTY - USE AT YOUR OWN RISK.
-```
+## Author
+
+[Nat!](https://mulle-kybernetik.com/weblog) for Mulle kybernetiK
+
+

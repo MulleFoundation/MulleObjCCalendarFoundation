@@ -1,0 +1,38 @@
+{
+   "name" : "MulleObjCCalendarFoundation",
+   "version" : "0.20.2",
+   "description" : "Calendar class NSCalendar",
+   "keywords" : [],
+   "license" : "BSD-3-Clause",
+   "repo" : "MulleFoundation/MulleObjCCalendarFoundation",
+   "src" : [
+      "src/generic/import-private.h",
+      "src/generic/import.h",
+      "src/MulleObjCCalendarFoundation.h",
+      "src/MulleObjCCalendarFoundation.m",
+      "src/MulleObjCLoader+MulleObjCCalendarFoundation.h",
+      "src/MulleObjCLoader+MulleObjCCalendarFoundation.m",
+      "src/NSCalendar+NSDate.h",
+      "src/NSCalendar+NSDate.m",
+      "src/NSCalendar.h",
+      "src/NSCalendar.m",
+      "src/NSDateComponents+NSString.m",
+      "src/NSDateComponents.h",
+      "src/NSDateComponents.m",
+      "src/reflect/objc-loader.inc",
+      "src/reflect/_MulleObjCCalendarFoundation-export.h",
+      "src/reflect/_MulleObjCCalendarFoundation-import-private.h",
+      "src/reflect/_MulleObjCCalendarFoundation-import.h",
+      "src/reflect/_MulleObjCCalendarFoundation-include-private.h",
+      "src/reflect/_MulleObjCCalendarFoundation-include.h",
+      "src/reflect/_MulleObjCCalendarFoundation-provide.h",
+      "src/_MulleGregorianCalendar.h",
+      "src/_MulleGregorianCalendar.m",
+      "src/_MulleJulianCalendar.h",
+      "src/_MulleJulianCalendar.m"
+   ],
+   "dependencies" : {
+      "MulleFoundation/MulleObjCOSFoundation": "*",
+      "mulle-objc/mulle-objc-list": "*"
+   }
+}
