@@ -47,16 +47,17 @@ MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
 }
 
 
-- (id) copy
-{
-   NSCalendar   *clone;
-
-   clone            = NSCopyObject( self, 0, NULL);
-   clone->_timeZone = [clone->_timeZone copy];
-   clone->_locale   = [clone->_locale copy];
-
-   return( clone);
-}
+// made redundant by NSObject -copy now copying  ivars
+// - (id) copy
+// {
+//    NSCalendar   *clone;
+// 
+//    clone            = NSCopyObject( self, 0, NULL);
+//    clone->_timeZone = [clone->_timeZone copy];
+//    clone->_locale   = [clone->_locale copy];
+// 
+//    return( clone);
+// }
 
 
 - (instancetype) init
