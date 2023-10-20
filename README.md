@@ -59,6 +59,8 @@ Install the requirements:
 | [MulleObjCOSFoundation](https://github.com/MulleFoundation/MulleObjCOSFoundation)             | 💻 Platform-dependent classes and categories like NSTask, NSPipe
 | [mulle-objc-list](https://github.com/mulle-objc/mulle-objc-list)             | 📒 Lists mulle-objc runtime information contained in executables.
 
+Download the latest [tar](https://github.com/MulleFoundation/MulleObjCCalendarFoundation/archive/refs/tags/latest.tar.gz) or [zip](https://github.com/MulleFoundation/MulleObjCCalendarFoundation/archive/refs/tags/latest.zip) archive and unpack it.
+
 Install **MulleObjCCalendarFoundation** into `/usr/local` with [cmake](https://cmake.org):
 
 ``` sh
