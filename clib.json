@@ -1,7 +1,7 @@
 {
    "name" : "MulleObjCCalendarFoundation",
-   "version" : "0.20.3",
-   "description" : "Calendar class NSCalendar",
+   "version" : "0.20.4",
+   "description" : "📆 Calendar class NSCalendar",
    "keywords" : [],
    "license" : "BSD-3-Clause",
    "repo" : "MulleFoundation/MulleObjCCalendarFoundation",
@@ -19,6 +19,7 @@
       "src/NSDateComponents+NSString.m",
       "src/NSDateComponents.h",
       "src/NSDateComponents.m",
+      "src/reflect/objc-loader.inc",
       "src/reflect/_MulleObjCCalendarFoundation-export.h",
       "src/reflect/_MulleObjCCalendarFoundation-import-private.h",
       "src/reflect/_MulleObjCCalendarFoundation-import.h",

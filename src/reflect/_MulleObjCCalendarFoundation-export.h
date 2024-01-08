@@ -9,8 +9,8 @@
  *
  *      mulle-sde environment set MULLE_MATCH_TO_C_RUN DISABLE
  */
-#ifndef mulle_objc_calendar_foundation_export_h__
-#define mulle_objc_calendar_foundation_export_h__
+#ifndef _mulle_objc_calendar_foundation__export_h__
+#define _mulle_objc_calendar_foundation__export_h__
 
 
 #import "MulleObjCLoader+MulleObjCCalendarFoundation.h"
