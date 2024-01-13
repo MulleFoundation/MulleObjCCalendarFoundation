@@ -7,7 +7,7 @@
       user="MulleFoundation";
       repo="MulleObjCCalendarFoundation";
       homepage="https://github.com/MulleFoundation/MulleObjCCalendarFoundation";
-      license="BSD-3-Clause"
+      license="BSD-3-Clause";
    };
    dependencies =
    (
@@ -27,5 +27,5 @@
          url="https://github.com/mulle-objc/mulle-objc-list";
          user="mulle-objc";
       }
-   )
+   );
 }
