@@ -42,8 +42,6 @@ mulle-sde add github:MulleFoundation/MulleObjCCalendarFoundation
 
 ## Install
 
-### Install with mulle-sde
-
 Use [mulle-sde](//github.com/mulle-sde) to build and install MulleObjCCalendarFoundation and all dependencies:
 
 ``` sh
@@ -51,7 +49,7 @@ mulle-sde install --prefix /usr/local \
    https://github.com/MulleFoundation/MulleObjCCalendarFoundation/archive/latest.tar.gz
 ```
 
-### Manual Installation
+### Legacy Installation
 
 Install the requirements:
 

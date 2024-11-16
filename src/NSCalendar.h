@@ -50,10 +50,11 @@ NSString  *NSJulianCalendar; //  = @"julian";
 
 
 
-@interface NSCalendar : NSObject <NSCopying>
+@interface NSCalendar : NSObject
 {
    NSUInteger   _daysOfCommonEraOfReferenceDate;
 }
+
 
 @property( copy) NSLocale     *locale;
 @property( copy) NSTimeZone   *timeZone;

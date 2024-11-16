@@ -35,7 +35,7 @@ static void   append( NSMutableString *s, NSString *format, NSString *delim, NSI
 }
 
 
-- (NSString *) mulleDebugContentsDescription
+- (NSString *) mulleDebugContentsDescription      MULLE_OBJC_THREADSAFE_METHOD
 {
    return( [self description]);
 }
