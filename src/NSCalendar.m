@@ -32,10 +32,13 @@ MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
 
 + (void) deinitialize
 {
-   if( Self._table)
+   NSMapTable   *table;
+
+   @autoreleasepool
    {
-      NSFreeMapTable( Self._table);
+      table       = Self._table;
       Self._table = NULL;
+      NSFreeMapTable( table);
    }
 }
 

@@ -73,20 +73,20 @@ static inline int
 {
    switch( unit)
    {
-   case NSCalendarUnitEra         : return( NSMakeRange( 0, 2));
-   case NSCalendarUnitYear        : return( NSMakeRange( 1, 140742));
-   case NSCalendarUnitMonth       : return( NSMakeRange( 1, 12));
-   case NSCalendarUnitDay         : return( NSMakeRange( 1, 28));
-   case NSCalendarUnitHour        : return( NSMakeRange( 0, 24));
-   case NSCalendarUnitMinute      : return( NSMakeRange( 0, 60));
-   case NSCalendarUnitSecond      : return( NSMakeRange( 0, 60));
-   case NSCalendarUnitNanosecond  : return( NSMakeRange( 0, 1000000000));
-   case NSCalendarUnitWeekday     : return( NSMakeRange( 1, 7));
-   case NSCalendarUnitQuarter     : return( NSMakeRange( 1, 4));
-   case NSCalendarUnitWeekOfMonth : return( NSMakeRange( 1, 4));
-   case NSCalendarUnitWeekOfYear  : return( NSMakeRange( 1, 52));
+   case NSCalendarUnitEra         : return( NSRangeMake( 0, 2));
+   case NSCalendarUnitYear        : return( NSRangeMake( 1, 140742));
+   case NSCalendarUnitMonth       : return( NSRangeMake( 1, 12));
+   case NSCalendarUnitDay         : return( NSRangeMake( 1, 28));
+   case NSCalendarUnitHour        : return( NSRangeMake( 0, 24));
+   case NSCalendarUnitMinute      : return( NSRangeMake( 0, 60));
+   case NSCalendarUnitSecond      : return( NSRangeMake( 0, 60));
+   case NSCalendarUnitNanosecond  : return( NSRangeMake( 0, 1000000000));
+   case NSCalendarUnitWeekday     : return( NSRangeMake( 1, 7));
+   case NSCalendarUnitQuarter     : return( NSRangeMake( 1, 4));
+   case NSCalendarUnitWeekOfMonth : return( NSRangeMake( 1, 4));
+   case NSCalendarUnitWeekOfYear  : return( NSRangeMake( 1, 52));
    }
-   return( NSMakeRange( NSNotFound, 0));
+   return( NSRangeMake( NSNotFound, 0));
 }
 
 
@@ -94,20 +94,20 @@ static inline int
 {
    switch( unit)
    {
-   case NSCalendarUnitEra         : return( NSMakeRange( 0, 2));
-   case NSCalendarUnitYear        : return( NSMakeRange( 1, 144683));
-   case NSCalendarUnitMonth       : return( NSMakeRange( 1, 12));
-   case NSCalendarUnitDay         : return( NSMakeRange( 1, 31));
-   case NSCalendarUnitHour        : return( NSMakeRange( 0, 24));
-   case NSCalendarUnitMinute      : return( NSMakeRange( 0, 60));
-   case NSCalendarUnitSecond      : return( NSMakeRange( 0, 60));
-   case NSCalendarUnitNanosecond  : return( NSMakeRange( 0, 1000000000));
-   case NSCalendarUnitWeekday     : return( NSMakeRange( 1, 7));
-   case NSCalendarUnitQuarter     : return( NSMakeRange( 1, 4));
-   case NSCalendarUnitWeekOfMonth : return( NSMakeRange( 1, 6));
-   case NSCalendarUnitWeekOfYear  : return( NSMakeRange( 1, 53));
+   case NSCalendarUnitEra         : return( NSRangeMake( 0, 2));
+   case NSCalendarUnitYear        : return( NSRangeMake( 1, 144683));
+   case NSCalendarUnitMonth       : return( NSRangeMake( 1, 12));
+   case NSCalendarUnitDay         : return( NSRangeMake( 1, 31));
+   case NSCalendarUnitHour        : return( NSRangeMake( 0, 24));
+   case NSCalendarUnitMinute      : return( NSRangeMake( 0, 60));
+   case NSCalendarUnitSecond      : return( NSRangeMake( 0, 60));
+   case NSCalendarUnitNanosecond  : return( NSRangeMake( 0, 1000000000));
+   case NSCalendarUnitWeekday     : return( NSRangeMake( 1, 7));
+   case NSCalendarUnitQuarter     : return( NSRangeMake( 1, 4));
+   case NSCalendarUnitWeekOfMonth : return( NSRangeMake( 1, 6));
+   case NSCalendarUnitWeekOfYear  : return( NSRangeMake( 1, 53));
    }
-   return( NSMakeRange( NSNotFound, 0));
+   return( NSRangeMake( NSNotFound, 0));
 }
 
 
@@ -296,7 +296,7 @@ static int  accumulated_month_days[] =
    NSInteger                          weekday;
    struct MulleExtendedTimeInterval   ext;
 
-   range = NSMakeRange( NSNotFound, NSNotFound);
+   range = NSRangeMake( NSNotFound, NSNotFound);
    switch( unit)
    {
    case NSCalendarUnitEra :
@@ -308,7 +308,7 @@ static int  accumulated_month_days[] =
       {
       case NSCalendarUnitEra  :
          // TODO: check era and return min or max (for Gregorian)
-         range = NSMakeRange( 1, 144683);
+         range = NSRangeMake( 1, 144683);
       }
       break;
 
@@ -319,7 +319,7 @@ static int  accumulated_month_days[] =
       {
       case NSCalendarUnitEra  :
       case NSCalendarUnitYear :
-         range = NSMakeRange( 1, 12);
+         range = NSRangeMake( 1, 12);
       }
       break;
 
@@ -336,14 +336,14 @@ static int  accumulated_month_days[] =
          MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
          year  = [self mulleYearFromExtendedTimeInterval:&ext];
          month = [self mulleMonthFromExtendedTimeInterval:&ext];
-         range = NSMakeRange( 1, [self mulleNumberOfDaysInMonth:month
+         range = NSRangeMake( 1, [self mulleNumberOfDaysInMonth:month
                                                          ofYear:year]);
          break;
 
       case NSCalendarUnitYear :
          MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
          year  = [self mulleYearFromExtendedTimeInterval:&ext];
-         range = NSMakeRange( 1, [self mulleNumberOfDaysInYear:year]);
+         range = NSRangeMake( 1, [self mulleNumberOfDaysInYear:year]);
          break;
 
       case NSCalendarUnitWeekOfMonth :
@@ -356,7 +356,7 @@ static int  accumulated_month_days[] =
          weekday = [self mulleWeekdayFromExtendedTimeInterval:&ext] - 1;
          // lastweekday = first + 6 (mod)
          weekday = pure_mod_0_n( (_firstWeekday + 6) - weekday, 7);
-         range   = NSMakeRange( weekday + 1, 7);
+         range   = NSRangeMake( weekday + 1, 7);
          break;
       }
       break;
@@ -378,7 +378,7 @@ static int  accumulated_month_days[] =
       case NSCalendarUnitWeekOfMonth :
       case NSCalendarUnitDay         :
       case NSCalendarUnitWeekday     :
-         range = NSMakeRange( 0, 24);
+         range = NSRangeMake( 0, 24);
       }
       break;
 
@@ -401,7 +401,7 @@ static int  accumulated_month_days[] =
       case NSCalendarUnitDay         :
       case NSCalendarUnitWeekday     :
       case NSCalendarUnitHour        :
-         range = NSMakeRange( 0, 60);
+         range = NSRangeMake( 0, 60);
       }
       break;
 
@@ -425,7 +425,7 @@ static int  accumulated_month_days[] =
       case NSCalendarUnitWeekOfYear  :
       case NSCalendarUnitWeekOfMonth :
       case NSCalendarUnitWeekday     :
-         range = NSMakeRange( 0, 60);
+         range = NSRangeMake( 0, 60);
       }
       break;
 
@@ -438,14 +438,14 @@ static int  accumulated_month_days[] =
       case NSCalendarUnitEra    :
       case NSCalendarUnitYear   :
          MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
-         range = NSMakeRange( 1, [self mulleNumberOfWeeksInYearFromExtendedTimeInterval:&ext]);
+         range = NSRangeMake( 1, [self mulleNumberOfWeeksInYearFromExtendedTimeInterval:&ext]);
          break;
 
          // apple output makes no sense to me, so we redefine this more
          // sensibly
       case NSCalendarUnitMonth  :
          MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
-         range = NSMakeRange( [self mulleWeekOfMonthFromExtendedTimeInterval:&ext],
+         range = NSRangeMake( [self mulleWeekOfMonthFromExtendedTimeInterval:&ext],
                               [self mulleNumberOfWeeksInMonthFromExtendedTimeInterval:&ext]);
       }
       break;
@@ -456,14 +456,14 @@ static int  accumulated_month_days[] =
       case NSCalendarUnitEra    :
       case NSCalendarUnitYear   :
          MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
-         range = NSMakeRange( 1, [self mulleNumberOfWeeksInMonthFromExtendedTimeInterval:&ext]);
+         range = NSRangeMake( 1, [self mulleNumberOfWeeksInMonthFromExtendedTimeInterval:&ext]);
          break;
 
          // apple output makes no sense to me, so we redefine this more
          // sensibly
       case NSCalendarUnitMonth  :
          MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
-         range = NSMakeRange( [self mulleWeekOfMonthFromExtendedTimeInterval:&ext],
+         range = NSRangeMake( [self mulleWeekOfMonthFromExtendedTimeInterval:&ext],
                               [self mulleNumberOfWeeksInMonthFromExtendedTimeInterval:&ext]);
       }
       break;
@@ -480,7 +480,7 @@ static int  accumulated_month_days[] =
       case NSCalendarUnitMonth       :
       case NSCalendarUnitWeekOfYear  :
       case NSCalendarUnitWeekOfMonth :
-         range = NSMakeRange( 1, 7);
+         range = NSRangeMake( 1, 7);
       }
       break;
 
@@ -496,7 +496,7 @@ static int  accumulated_month_days[] =
          MulleExtendedTimeIntervalInit( &ext, [date timeIntervalSinceReferenceDate]);
          year  = [self mulleYearFromExtendedTimeInterval:&ext];
          month = [self mulleMonthFromExtendedTimeInterval:&ext];
-         range = NSMakeRange( 1, ([self mulleNumberOfDaysInMonth:month
+         range = NSRangeMake( 1, ([self mulleNumberOfDaysInMonth:month
                                                          ofYear:year] + 6) / 7);
          break;
       }
