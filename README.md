@@ -7,7 +7,7 @@ Adds a Gregorian and a Julian `NSCalendar` to the [MulleFoundation](//github.com
 
 | Release Version                                       | Release Notes
 |-------------------------------------------------------|--------------
-| ![Mulle kybernetiK tag](https://img.shields.io/github/tag/MulleFoundation/MulleObjCCalendarFoundation.svg?branch=release) [![Build Status](https://github.com/MulleFoundation/MulleObjCCalendarFoundation/workflows/CI/badge.svg?branch=release)](//github.com/MulleFoundation/MulleObjCCalendarFoundation/actions) | [RELEASENOTES](RELEASENOTES.md) |
+| ![Mulle kybernetiK tag](https://img.shields.io/github/tag/MulleFoundation/MulleObjCCalendarFoundation.svg) [![Build Status](https://github.com/MulleFoundation/MulleObjCCalendarFoundation/workflows/CI/badge.svg)](//github.com/MulleFoundation/MulleObjCCalendarFoundation/actions) | [RELEASENOTES](RELEASENOTES.md) |
 
 
 ## API
