@@ -8,7 +8,7 @@
 //
 // this is just a glorified struct wrapped into an object
 //
-@interface NSDateComponents : NSObject < NSMutableCopying, MulleObjCThreadUnsafe>
+@interface NSDateComponents : NSObject < MulleObjCThreadUnsafe>
 {
    // setting all this stuff via properties is kinda stupid
 @public
