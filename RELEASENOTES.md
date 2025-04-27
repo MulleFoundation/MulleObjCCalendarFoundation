@@ -1,3 +1,8 @@
+### 0.21.1
+
+
+* mutableCopy methods exiled to Foundation
+
 ## 0.21.0
 
 
