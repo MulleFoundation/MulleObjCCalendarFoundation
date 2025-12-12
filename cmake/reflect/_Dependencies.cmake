@@ -25,7 +25,7 @@ else()
          ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCOSFoundation${CMAKE_DEBUG_POSTFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}
          ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCOSFoundation${CMAKE_STATIC_LIBRARY_SUFFIX}
          MulleObjCOSFoundation
-         NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH
+         NO_CMAKE_SYSTEM_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_FIND_ROOT_PATH
       )
       if( NOT MULLE_OBJC_OS_FOUNDATION_LIBRARY AND NOT DEPENDENCY_IGNORE_SYSTEM_LIBARIES)
          find_library( MULLE_OBJC_OS_FOUNDATION_LIBRARY NAMES
@@ -91,7 +91,9 @@ else()
          endif()
       else()
          # Disable with: `mulle-sourcetree mark MulleObjCOSFoundation no-require-link`
-         message( SEND_ERROR "MULLE_OBJC_OS_FOUNDATION_LIBRARY was not found")
+         message( SEND_ERROR "MULLE_OBJC_OS_FOUNDATION_LIBRARY was not found in ${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCOSFoundation${CMAKE_DEBUG_POSTFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}
+${CMAKE_STATIC_LIBRARY_PREFIX}MulleObjCOSFoundation${CMAKE_STATIC_LIBRARY_SUFFIX}
+MulleObjCOSFoundation")
       endif()
    endif()
 endif()
