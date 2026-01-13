@@ -1,6 +1,6 @@
 cmake_minimum_required( VERSION 3.13...99.99)
 
-project( MulleObjCCalendarFoundation VERSION 0.21.1 LANGUAGES C)
+project( MulleObjCCalendarFoundation VERSION 0.21.2 LANGUAGES C)
 
 
 

@@ -21,7 +21,7 @@
  *
  *  version:  major, minor, patch
  */
-#define MULLE_OBJC_CALENDAR_FOUNDATION_VERSION  ((0UL << 20) | (21 << 8) | 1)
+#define MULLE_OBJC_CALENDAR_FOUNDATION_VERSION  ((0UL << 20) | (21 << 8) | 2)
 
 
 static inline unsigned int   MulleObjCCalendarFoundation_get_version_major( void)
