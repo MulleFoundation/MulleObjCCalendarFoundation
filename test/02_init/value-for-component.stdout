@@ -1,0 +1,43 @@
+init Era: undefined
+init Year: undefined
+init Quarter: undefined
+init Month: undefined
+init WeekOfYear: undefined
+init WeekOfMonth: undefined
+init Day: undefined
+init Weekday: undefined
+init WeekdayOrdinal: undefined
+init Hour: undefined
+init Minute: undefined
+init Second: undefined
+init Nanosecond: undefined
+---
+set/get Era: 1
+set/get Year: 2001
+set/get Quarter: 3
+set/get Month: 7
+set/get WeekOfYear: 26
+set/get WeekOfMonth: 4
+set/get Day: 15
+set/get Weekday: 2
+set/get WeekdayOrdinal: 3
+set/get Hour: 10
+set/get Minute: 30
+set/get Second: 45
+set/get Nanosecond: 500000000
+---
+era             : 1
+year            : 2001
+quarter         : 3
+month           : 7
+weekOfYear      : 26
+weekOfMonth     : 4
+day             : 15
+weekday         : 2
+weekdayOrdinal  : 3
+hour            : 10
+minute          : 30
+second          : 45
+nanosecond      : 500000000
+---
+year reset: undefined

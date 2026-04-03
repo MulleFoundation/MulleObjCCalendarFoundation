@@ -1,5 +1,5 @@
 # Crash checking for Objective-C tests
-<!-- Keywords: test, crash, objc -->
+<!-- Keywords: test, testing, crash, abort, objc, objective-c -->
 
 > Have you enabled vibecoding with `mulle-sde vibecoding on` ?
 

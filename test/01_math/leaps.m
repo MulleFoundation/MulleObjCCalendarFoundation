@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <mulle-fprintf/mulle-fprintf.h>
 
 
 int  main( void)
@@ -21,7 +22,7 @@ int  main( void)
             daysInYear -= 10;  // 1582 exactly
       total += daysInYear;
 
-      printf( "%d: +%d = %d\n", year, daysInYear, total);
+      mulle_printf( "%d: +%d = %d\n", year, daysInYear, total);
    }
    return( 0);
 }

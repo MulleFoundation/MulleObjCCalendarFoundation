@@ -7,7 +7,7 @@
 // depend on this library to properly declare their load in their
 // MulleObjcLoader class.
 //
-@interface MulleObjCLoader( MulleObjCCalendarFoundation)
+@interface MulleObjCDeps( MulleObjCCalendarFoundation)
 
 + (struct _mulle_objc_dependency *) dependencies;
 

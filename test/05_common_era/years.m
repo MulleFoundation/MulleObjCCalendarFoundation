@@ -24,7 +24,7 @@ int   main( void)
    {
       days   = (long) [calendar mulleNumberOfDaysInYear:year];
       total += days;
-      printf( "%ld: +%ld = %ld\n", (long) year, days, total);
+      mulle_printf( "%ld: +%ld = %ld\n", (long) year, days, total);
    }
 
    return( 0);

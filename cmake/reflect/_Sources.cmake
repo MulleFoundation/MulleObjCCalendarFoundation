@@ -24,5 +24,5 @@ src/NSDateComponents.m
 # contents selected with patternfile ??-source--stage2-sources
 #
 set( STAGE2_SOURCES
-src/MulleObjCLoader+MulleObjCCalendarFoundation.m
+src/MulleObjCDeps+MulleObjCCalendarFoundation.m
 )

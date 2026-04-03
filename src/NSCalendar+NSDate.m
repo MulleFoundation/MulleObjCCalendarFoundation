@@ -33,6 +33,7 @@ THE SOFTWARE.
  */
 - (NSInteger) mulleEraFromExtendedTimeInterval:(struct MulleExtendedTimeInterval *) ext
 {
+   MULLE_C_UNUSED( ext);
    return( 1);
 }
 

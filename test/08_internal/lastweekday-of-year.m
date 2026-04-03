@@ -45,10 +45,10 @@ int   main( void)
                                   fromDate:date];
       MulleExtendedTimeIntervalInit( &extended, [date timeIntervalSinceReferenceDate]);
 
-      printf( "%ld.%ld.%ld ",
+      mulle_printf( "%ld.%ld.%ld ",
             (long) [components day], (long) [components month], (long) [components year]);
 
-      printf( " lastWeekday: %s\n",
+      mulle_printf( " lastWeekday: %s\n",
                day_name( [calendar mulleLastWeekdayOfYearFromExtendedTimeInterval:&extended]));
    }
    return( 0);

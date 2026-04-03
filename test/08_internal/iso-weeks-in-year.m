@@ -29,10 +29,10 @@ int   main( void)
                                fromDate:date];
       MulleExtendedTimeIntervalInit( &extended, [date timeIntervalSinceReferenceDate]);
 
-      printf( "%ld.%ld.%ld ",
+      mulle_printf( "%ld.%ld.%ld ",
             (long) [components day], (long) [components month], (long) [components year]);
 
-      printf( " weeks: %ld\n",
+      mulle_printf( " weeks: %ld\n",
                [calendar mulleISONumberOfWeeksInYearFromExtendedTimeInterval:&extended]);
    }
    return( 0);

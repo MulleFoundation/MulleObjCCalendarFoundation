@@ -22,7 +22,7 @@ int   main( void)
    for( min = 1; min <= 7; min++)
    {
       [calendar setMinimumDaysInFirstWeek:min];
-      printf( "--------%ld days in first week---------\n", min);
+      mulle_printf( "--------%ld days in first week---------\n", min);
       for( year = 2017; year <= 2020; year++)
          for( day = -1; day < 15; day++)
          {
@@ -35,11 +35,11 @@ int   main( void)
             components = [calendar components:~0
                                      fromDate:date];
 
-            printf( "%ld.%ld.%ld %ld:%02ld:%02ld",
+            mulle_printf( "%ld.%ld.%ld %ld:%02ld:%02ld",
                   (long) [components day], (long) [components month], (long) [components year],
                   (long) [components hour], (long) [components minute], (long) [components second]);
 
-            printf( " weekOfYear: %ld\n",
+            mulle_printf( " weekOfYear: %ld\n",
                     (long) [components weekOfYear]);
          }
    }

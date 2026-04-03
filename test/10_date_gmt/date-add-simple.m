@@ -124,7 +124,7 @@ int   main( void)
          components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay| \
                                            NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond
                                   fromDate:addedDate];
-         printf( "%d.%d.%d %d:%02d:%02d (%.1f) + %d.%d.%d %d:%02d:%02d = %ld.%ld.%ld %ld:%02ld:%02ld (%.1f)\n",
+         mulle_printf( "%d.%d.%d %d:%02d:%02d (%.1f) + %d.%d.%d %d:%02d:%02d = %ld.%ld.%ld %ld:%02ld:%02ld (%.1f)\n",
                p->day, p->month, p->year,
                p->hour, p->minute, p->second,
                [date timeIntervalSinceReferenceDate],
@@ -135,7 +135,7 @@ int   main( void)
                [addedDate timeIntervalSinceReferenceDate]);
       }
       if( q + 1 < q_sentinel)
-         printf( "---\n");
+         mulle_printf( "---\n");
    }
    return( 0);
 }

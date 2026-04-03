@@ -117,7 +117,7 @@ int   main( void)
 
          date = [calendar dateFromComponents:components];
 
-         printf( "%s  @ %d.%d.%d %d:%02d:%02d : ",
+         mulle_printf( "%s  @ %d.%d.%d %d:%02d:%02d : ",
                   unit_name( *q),
                   p->day, p->month, p->year,
                   p->hour, p->minute, p->second);
@@ -130,16 +130,16 @@ int   main( void)
             components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay| \
                                            NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond
                                      fromDate:startDate];
-            printf( "%ld.%ld.%ld %ld:%02ld:%02ld - %.1f\n",
+            mulle_printf( "%ld.%ld.%ld %ld:%02ld:%02ld - %.1f\n",
                   (long) [components day],  (long) [components month],  (long) [components year],
                   (long) [components hour], (long) [components minute], (long) [components second],
                   interval);
          }
          else
-            printf( "NO\n");
+            mulle_printf( "NO\n");
       }
       if( p + 1 < p_sentinel)
-         printf( "---\n");
+         mulle_printf( "---\n");
    }
 
    return( 0);

@@ -11,11 +11,11 @@ int   main( void)
 
    calendar = [NSCalendar calendarWithIdentifier:NSGregorianCalendar];
 
-   printf( "firstWeekday           : %ld\n", (long) [calendar firstWeekday]);
-   printf( "minimumDaysInFirstWeek : %ld\n", (long) [calendar minimumDaysInFirstWeek]);
+   mulle_printf( "firstWeekday           : %ld\n", (long) [calendar firstWeekday]);
+   mulle_printf( "minimumDaysInFirstWeek : %ld\n", (long) [calendar minimumDaysInFirstWeek]);
 #if 0
-   printf( "timeZone               : \"%s\"\n",  [calendar timeZone] ? [[[calendar timeZone] abbreviation] UTF8String] : "nil");
-   printf( "locale                 : \"%s\"\n",  [calendar locale] ? [[[calendar locale] localeIdentifier] UTF8String] : "nil");
+   mulle_printf( "timeZone               : \"%s\"\n",  [calendar timeZone] ? [[[calendar timeZone] abbreviation] UTF8String] : "nil");
+   mulle_printf( "locale                 : \"%s\"\n",  [calendar locale] ? [[[calendar locale] localeIdentifier] UTF8String] : "nil");
 #endif
    return( 0);
 }

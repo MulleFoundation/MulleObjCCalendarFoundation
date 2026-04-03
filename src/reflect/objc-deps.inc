@@ -1,5 +1,3 @@
-      { @selector( MulleObjCLoader), @selector( MulleFoundationBase) },      // 47a9beb6;MulleObjCLoader;efab19ea;MulleFoundationBase
-      { @selector( MulleObjCLoader), @selector( MulleObjCOSFoundation) },      // 47a9beb6;MulleObjCLoader;94ffe970;MulleObjCOSFoundation
       { @selector( NSCalendar), @selector( NSDate) },      // e4a20882;NSCalendar;cfcedd21;NSDate
       { @selector( NSCalendar), @selector( _MulleGregorianCalendar) },      // e4a20882;NSCalendar;db7623b3;_MulleGregorianCalendar
       { @selector( NSCalendar), MULLE_OBJC_NO_CATEGORYID },      // e4a20882;NSCalendar;;

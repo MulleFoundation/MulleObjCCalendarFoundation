@@ -72,10 +72,12 @@
    case NSCalendarUnitMinute         : _minute         = value; break;
    case NSCalendarUnitSecond         : _second         = value; break;
    case NSCalendarUnitNanosecond     : _nanosecond     = value; break;
-   }
+   default:
 #ifdef DEBUG
-   abort();
+      abort();
 #endif
+      break;
+   }
 }
 
 @end

@@ -85,17 +85,17 @@ char  *unit_name( NSInteger   unit)
 
 static void   print_range( NSRange range)
 {
-   printf( "[");
+   mulle_printf( "[");
    if( range.location == NSNotFound)
-      printf( "NSNotFound");
+      mulle_printf( "NSNotFound");
    else
-      printf( "%lu", range.location);
-   printf( ",");
+      mulle_printf( "%lu", range.location);
+   mulle_printf( ",");
    if( range.length == NSNotFound)
-      printf( "NSNotFound");
+      mulle_printf( "NSNotFound");
    else
-      printf( "%lu", range.length);
-   printf( "]");
+      mulle_printf( "%lu", range.length);
+   mulle_printf( "]");
 }
 
 
@@ -146,18 +146,18 @@ int   main( void)
                                    inUnit:*q2
                                   forDate:date];
 
-            printf( "%s in %s @ %d.%d.%d %d:%02d:%02d : ",
+            mulle_printf( "%s in %s @ %d.%d.%d %d:%02d:%02d : ",
                      unit_name( *q1), unit_name( *q2),
                      p->day, p->month, p->year,
                      p->hour, p->minute, p->second);
             print_range( range);
-            printf( "\n");
+            mulle_printf( "\n");
          }
          if( q1 + 1 < q_sentinel)
-            printf( "---\n");
+            mulle_printf( "---\n");
       }
       if( p + 1 < p_sentinel)
-         printf( "===\n");
+         mulle_printf( "===\n");
    }
 
    return( 0);
