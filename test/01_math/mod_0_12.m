@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <assert.h>
+#include <mulle-fprintf/mulle-fprintf.h>
 
 
 static int  mod_0_n( int *p_value, int max)
@@ -39,7 +40,7 @@ int  main( void)
    {
       value = i;
       diff  = mod_0_n( &value, 12);
-      printf( "%d: mod=%d diff=%d\n", i, value, diff);
+      mulle_printf( "%d: mod=%d diff=%d\n", i, value, diff);
    }
    return( 0);
 }

@@ -28,25 +28,25 @@ int   main( void)
    [components setDay:15];
 
    date = [calendar dateFromComponents:components];
-   printf( "15.10.1582 = %.1f\n",
+   mulle_printf( "15.10.1582 = %.1f\n",
             [date timeIntervalSinceReferenceDate]);
 
    [components setDay:10];
 
    date = [calendar dateFromComponents:components];
-   printf( "10.10.1582 = %.1f\n",
+   mulle_printf( "10.10.1582 = %.1f\n",
             [date timeIntervalSinceReferenceDate]);
 
    [components setDay:5];
 
    date = [calendar dateFromComponents:components];
-   printf( "5.10.1582 = %.1f\n",
+   mulle_printf( "5.10.1582 = %.1f\n",
             [date timeIntervalSinceReferenceDate]);
 
    [components setDay:4];
 
    date = [calendar dateFromComponents:components];
-   printf( "4.10.1582 = %.1f\n",
+   mulle_printf( "4.10.1582 = %.1f\n",
             [date timeIntervalSinceReferenceDate]);
 
    [components setHour:23];
@@ -54,7 +54,7 @@ int   main( void)
    [components setSecond:59];
 
    date = [calendar dateFromComponents:components];
-   printf( "4.10.1582 23:59:59 = %.1f\n",
+   mulle_printf( "4.10.1582 23:59:59 = %.1f\n",
             [date timeIntervalSinceReferenceDate]);
 
    return( 0);

@@ -1,0 +1,15 @@
+2001-01-01 (Q1 day 1  ordinal 1): year=2001 month=1 day=1 quarter=1 ordinal=1 ns=0
+2001-04-01 (Q2 day 1  ordinal 1): year=2001 month=4 day=1 quarter=2 ordinal=1 ns=0
+2001-07-01 (Q3 day 1  ordinal 1): year=2001 month=7 day=1 quarter=3 ordinal=1 ns=0
+2001-10-01 (Q4 day 1  ordinal 1): year=2001 month=10 day=1 quarter=4 ordinal=1 ns=0
+2001-01-08 (Q1 day 8  ordinal 2): year=2001 month=1 day=8 quarter=1 ordinal=2 ns=0
+2001-01-15 (Q1 day 15 ordinal 3): year=2001 month=1 day=15 quarter=1 ordinal=3 ns=0
+2001-01-29 (Q1 day 29 ordinal 5): year=2001 month=1 day=29 quarter=1 ordinal=5 ns=0
+2001-04-14 (Q2 day 14 ordinal 2): year=2001 month=4 day=15 quarter=2 ordinal=3 ns=0
+2004-02-29 (Q1 leap): year=2004 month=2 day=27 quarter=1 ordinal=4 ns=0
+---
+interval=0.00: second=0 ns=0
+interval=0.50: second=0 ns=500000000
+interval=0.25: second=0 ns=250000000
+interval=-0.50: second=0 ns=500000000
+interval=-0.25: second=0 ns=750000000

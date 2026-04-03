@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <mulle-fprintf/mulle-fprintf.h>
 
 
 int  main( void)
@@ -14,7 +15,7 @@ int  main( void)
       daysInYear = 365;
       daysInYear += ((year % 4) == 0 && (year % 100) != 0) || ((year % 400) == 0);
       total      += daysInYear;
-      printf( "%d: +%d = %d\n", year, daysInYear, total);
+      mulle_printf( "%d: +%d = %d\n", year, daysInYear, total);
    }
    return( 0);
 }

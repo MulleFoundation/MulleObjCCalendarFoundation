@@ -1,5 +1,5 @@
 # Leak checking for Objective-C tests
-<!-- Keywords: test, leak, objc -->
+<!-- Keywords: test, testing, leak, leaks, objc, objective-c -->
 
 > Have you enabled vibecoding with `mulle-sde vibecoding on` ?
 

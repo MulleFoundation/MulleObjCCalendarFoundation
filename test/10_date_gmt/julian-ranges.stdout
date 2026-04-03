@@ -1,0 +1,49 @@
+isLeap 2001: 0
+isLeap 2003: 0
+isLeap 2004: 1
+isLeap  100: 1
+isLeap 1900: 1
+isLeap 2000: 1
+isLeap 2100: 1
+isLeap  101: 0
+---
+days Feb  100: 29
+days Feb 1900: 29
+days Feb 2100: 29
+days Feb 2001: 28
+days Feb 2004: 29
+days Jan 2001: 31
+days Apr 2001: 30
+days Dec 2001: 31
+---
+days in  100: 366
+days in 1900: 366
+days in 2000: 366
+days in 2001: 365
+days in 2100: 366
+---
+min Era: [0,2]
+min Year: [1,140742]
+min Quarter: [1,4]
+min Month: [1,12]
+min WeekOfYear: [1,52]
+min WeekOfMonth: [1,4]
+min Day: [1,28]
+min Weekday: [1,7]
+min Hour: [0,24]
+min Minute: [0,60]
+min Second: [0,60]
+min Nanosecond: [0,1000000000]
+---
+max Era: [0,2]
+max Year: [1,144683]
+max Quarter: [1,4]
+max Month: [1,12]
+max WeekOfYear: [1,53]
+max WeekOfMonth: [1,6]
+max Day: [1,31]
+max Weekday: [1,7]
+max Hour: [0,24]
+max Minute: [0,60]
+max Second: [0,60]
+max Nanosecond: [0,1000000000]

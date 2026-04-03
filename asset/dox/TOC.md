@@ -1,4 +1,5 @@
 # MulleObjCCalendarFoundation Library Documentation for AI
+<!-- Keywords: calendar, date-components -->
 
 ## 1. Introduction & Purpose
 

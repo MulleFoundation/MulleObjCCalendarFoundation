@@ -13,7 +13,7 @@
 #define _mulle_objc_calendar_foundation__export_h__
 
 
-#import "MulleObjCLoader+MulleObjCCalendarFoundation.h"
+#import "MulleObjCDeps+MulleObjCCalendarFoundation.h"
 #import "NSCalendar+NSDate.h"
 #import "NSCalendar.h"
 #import "NSDateComponents.h"

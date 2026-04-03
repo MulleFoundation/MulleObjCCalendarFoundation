@@ -60,17 +60,17 @@ char  *unit_name( NSInteger   unit)
 
 static void   print_range( NSRange range)
 {
-   printf( "[");
+   mulle_printf( "[");
    if( range.location == NSNotFound)
-      printf( "NSNotFound");
+      mulle_printf( "NSNotFound");
    else
-      printf( "%lu", range.location);
-   printf( ",");
+      mulle_printf( "%lu", range.location);
+   mulle_printf( ",");
    if( range.length == NSNotFound)
-      printf( "NSNotFound");
+      mulle_printf( "NSNotFound");
    else
-      printf( "%lu", range.length);
-   printf( "]");
+      mulle_printf( "%lu", range.length);
+   mulle_printf( "]");
 }
 
 
@@ -105,12 +105,12 @@ int   main( void)
                              inUnit:NSWeekCalendarUnit
                             forDate:date];
 
-      printf( "%s in %s @ %d.%d.%d : ",
+      mulle_printf( "%s in %s @ %d.%d.%d : ",
                unit_name( NSDayCalendarUnit),
                unit_name( NSWeekCalendarUnit),
                p->day, p->month, p->year);
       print_range( range);
-      printf( "\n");
+      mulle_printf( "\n");
    }
 
    return( 0);

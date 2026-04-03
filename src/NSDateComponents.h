@@ -50,6 +50,9 @@
 - (void) setValue:(NSInteger) value
      forComponent:(NSCalendarUnit) unit;
 
+- (NSString *) description;
+- (NSString *) mulleDebugContentsDescription;
+
 @end
 
 

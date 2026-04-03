@@ -14,6 +14,6 @@ int   main( void)
    [calendar setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
    [calendar setFirstWeekday:2];
 
-   printf( "%ld\n", [calendar minimumDaysInFirstWeek]);
+   mulle_printf( "%ld\n", [calendar minimumDaysInFirstWeek]);
    return( 0);
 }

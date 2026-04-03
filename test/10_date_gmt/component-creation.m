@@ -52,7 +52,7 @@ int   main( void)
       components = [calendar components:~0
                                fromDate:date];
 
-      printf( "%.1f = %ld.%ld.%ld %ld:%02ld:%02ld.%09ld\n",
+      mulle_printf( "%.1f = %ld.%ld.%ld %ld:%02ld:%02ld.%09ld\n",
             [date timeIntervalSinceReferenceDate],
             (long) [components day], (long) [components month], (long) [components year],
             (long) [components hour], (long) [components minute], (long) [components second],

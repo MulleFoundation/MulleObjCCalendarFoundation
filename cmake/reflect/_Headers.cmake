@@ -55,7 +55,7 @@ set( PUBLIC_HEADERS
 src/_MulleGregorianCalendar.h
 src/_MulleJulianCalendar.h
 src/MulleObjCCalendarFoundation.h
-src/MulleObjCLoader+MulleObjCCalendarFoundation.h
+src/MulleObjCDeps+MulleObjCCalendarFoundation.h
 src/NSCalendar+NSDate.h
 src/NSCalendar.h
 src/NSDateComponents.h

@@ -75,7 +75,7 @@ int   main( void)
          [components setSecond:p->second];
 
       date = [calendar dateFromComponents:components];
-      printf( "%d.%d.%d %d:%02d:%02d = %.1f\n",
+      mulle_printf( "%d.%d.%d %d:%02d:%02d = %.1f\n",
             p->day, p->month, p->year,
             p->hour, p->minute, p->second,
             [date timeIntervalSinceReferenceDate]);

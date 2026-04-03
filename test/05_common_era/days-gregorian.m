@@ -26,25 +26,25 @@ int   main( void)
    daysOfCommonEra = [calendar mulleNumberOfDaysInCommonEraOfDay:4
                                                            month:10
                                                             year:1582];
-   printf( "4.10.1582 = %ld\n", daysOfCommonEra);
+   mulle_printf( "4.10.1582 = %ld\n", daysOfCommonEra);
 
 
    daysOfCommonEra = [calendar mulleNumberOfDaysInCommonEraOfDay:5
                                                            month:10
                                                             year:1582];
-   printf( "5.10.1582 = %ld\n", daysOfCommonEra);
+   mulle_printf( "5.10.1582 = %ld\n", daysOfCommonEra);
 
 
    daysOfCommonEra = [calendar mulleNumberOfDaysInCommonEraOfDay:15
                                                            month:10
                                                             year:1582];
-   printf( "15.10.1582 = %ld\n", daysOfCommonEra);
+   mulle_printf( "15.10.1582 = %ld\n", daysOfCommonEra);
 
 
    daysOfCommonEra = [calendar mulleNumberOfDaysInCommonEraOfDay:1
                                                            month:1
                                                             year:1582];
-   printf( "1.1.1582 = %ld\n", daysOfCommonEra);
+   mulle_printf( "1.1.1582 = %ld\n", daysOfCommonEra);
 
 
    daysOfCommonEra = [calendar mulleNumberOfDaysInCommonEraOfDay:1
@@ -52,7 +52,7 @@ int   main( void)
                                                             year:1];
    // this is 1.1.1 basically first day of A.D. so
    // expect daysOfCommonEra to be 0
-   printf( "1.1.1 = %ld\n", daysOfCommonEra);
+   mulle_printf( "1.1.1 = %ld\n", daysOfCommonEra);
 
    return( 0);
 }

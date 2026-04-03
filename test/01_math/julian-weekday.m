@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <mulle-fprintf/mulle-fprintf.h>
 
 
 static char  *s_wochentag[] =
@@ -28,7 +29,7 @@ int  main( void)
       daysInYear  = 365;
       daysInYear += (year % 4) == 0;
 
-      printf( "%s 1.1.%d\n", s_wochentag[ wochentag], year);
+      mulle_printf( "%s 1.1.%d\n", s_wochentag[ wochentag], year);
       wochentag   = (wochentag + daysInYear) % 7;
    }
    return( 0);

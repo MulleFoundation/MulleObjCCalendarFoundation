@@ -25,7 +25,7 @@ int   main( void)
          daysOfCommonEra = [calendar mulleNumberOfDaysInCommonEraOfDay:1
                                                                  month:month
                                                                   year:year];
-         printf( "1.%ld.%ld = %ld\n", (long) month, (long) year, daysOfCommonEra);
+         mulle_printf( "1.%ld.%ld = %ld\n", (long) month, (long) year, daysOfCommonEra);
 
       }
    return( 0);
