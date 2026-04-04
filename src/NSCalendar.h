@@ -86,7 +86,7 @@ NSString  *NSJulianCalendar; //  = @"julian";
 
 
 
-@interface NSCalendar( Subclasses)
+@interface NSCalendar( SubclassesFuture)
 
 + (instancetype) currentCalendar;
 - (NSString *) calendarIdentifier;
