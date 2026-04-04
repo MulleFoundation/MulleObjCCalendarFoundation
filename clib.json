@@ -1,11 +1,12 @@
 {
    "name" : "MulleObjCCalendarFoundation",
-   "version" : "0.21.2",
+   "version" : "0.21.3",
    "description" : "📆 Calendar class NSCalendar",
    "keywords" : [],
    "license" : "BSD-3-Clause",
    "repo" : "MulleFoundation/MulleObjCCalendarFoundation",
    "src" : [
+      "asset/dox/TOC.md",
       "src/generic/import-private.h",
       "src/generic/import.h",
       "src/MulleObjCCalendarFoundation.h",

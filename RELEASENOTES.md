@@ -1,57 +1,12 @@
-### 0.21.2
-
-Various small improvements
-
-### 0.21.1
+### 0.21.3
 
 
-* mutableCopy methods exiled to Foundation
-
-## 0.21.0
 
 
-* adapt to changes in MulleObjC
 
 
-### 0.20.4
-
-* Various small improvements
-
-### 0.20.3
-
-* Various small improvements
-
-### 0.20.2
-
-* Various small improvements
-
-### 0.20.1
-
-* change GLOBALS for Windows
-
-## 0.20.0
-
-* Various small improvements
 
 
-## 0.19.0
-
-* moved NSGregorianString string declaration into public header
-
-
-## 0.18.0
-
-* Various small improvements
-
-
-### 0.17.2
-
-* remove duplicate objc-deps.inc
-
-### 0.17.1
-
-* new mulle-sde project structure
-
-## 0.17.0
-
-* fix possibly dependency problem in +load code
+* **BREAKING** Renamed the loader dependency interface from MulleObjCLoader(...) to MulleObjCDeps(...); consumers relying on the old symbol must update their references.
+* Added NSDateComponents debugging helpers (description, mulleDebugContentsDescription) to improve introspection.
+* Made NSDateComponents setter safer by adding a default case (abort only in DEBUG), preventing accidental aborts in non-debug builds.
