@@ -16,7 +16,6 @@ src/_MulleJulianCalendar.m
 src/MulleObjCCalendarFoundation.m
 src/NSCalendar+NSDate.m
 src/NSCalendar.m
-src/NSDateComponents+NSString.m
 src/NSDateComponents.m
 )
 
