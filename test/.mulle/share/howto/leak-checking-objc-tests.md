@@ -15,7 +15,7 @@ At the end will be the leak addresses. You will easily find the responsible
 call in the vibecoding **stderr** log for this test:
 
 ``` bash
-grep -B3 -A1 <leakaddress> <path>/<testname>.test.stderr | head -4
+grep -B3 -A1 <leakaddress> <path>/<testname>.tmp.stderr | head -4
 ```
 
 IMPORTANT: The leak addresses will change with each `mulle-sde run`, so do not

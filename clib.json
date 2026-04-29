@@ -17,7 +17,6 @@
       "src/NSCalendar+NSDate.m",
       "src/NSCalendar.h",
       "src/NSCalendar.m",
-      "src/NSDateComponents+NSString.m",
       "src/NSDateComponents.h",
       "src/NSDateComponents.m",
       "src/reflect/objc-deps.inc",
