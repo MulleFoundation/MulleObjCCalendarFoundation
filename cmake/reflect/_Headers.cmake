@@ -59,5 +59,6 @@ src/MulleObjCDeps+MulleObjCCalendarFoundation.h
 src/NSCalendar+NSDate.h
 src/NSCalendar.h
 src/NSDateComponents.h
+src/reflect/_MulleObjCCalendarFoundation-versioncheck.h
 )
 

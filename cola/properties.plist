@@ -4,7 +4,7 @@
       description="📆 Calendar class NSCalendar";
       domain="github";
       name="MulleObjCCalendarFoundation";
-      version="0.21.4";
+      version="0.21.5";
       user="MulleFoundation";
       repo="MulleObjCCalendarFoundation";
       homepage="https://github.com/MulleFoundation/MulleObjCCalendarFoundation";
