@@ -1,3 +1,12 @@
+### 0.21.6
+
+
+
+
+* fix inverted timezone offset when converting between `NSDate` and `NSDateComponents`
+* added zone offset test
+* updated build system and tooling
+
 ### 0.21.5
 
 

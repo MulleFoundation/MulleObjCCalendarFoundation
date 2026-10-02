@@ -1,6 +1,6 @@
 {
    "name" : "MulleObjCCalendarFoundation",
-   "version" : "0.21.5",
+   "version" : "0.21.6",
    "description" : "📆 Calendar class NSCalendar",
    "keywords" : [],
    "license" : "BSD-3-Clause",
@@ -32,7 +32,12 @@
       "src/_MulleJulianCalendar.m"
    ],
    "dependencies" : {
-      "MulleFoundation/MulleObjCOSFoundation": "*",
-      "mulle-objc/mulle-objc-list": "*"
+      "MulleFoundation/MulleObjCOSBaseFoundation": "*",
+      "MulleFoundation/MulleObjCPosixFoundation": "*",
+      "MulleFoundation/MulleObjCBSDFoundation": "*",
+      "MulleFoundation/MulleObjCDarwinFoundation": "*",
+      "MulleFoundation/MulleObjCLinuxFoundation": "*",
+      "MulleFoundation/MulleObjCWindowsFoundation": "*",
+      "mulle-objc/mulle-objc-tools": "*"
    }
 }

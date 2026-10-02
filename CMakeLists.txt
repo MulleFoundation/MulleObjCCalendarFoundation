@@ -1,6 +1,6 @@
 cmake_minimum_required( VERSION 3.13...99.99)
 
-project( MulleObjCCalendarFoundation VERSION 0.21.5 LANGUAGES C)
+project( MulleObjCCalendarFoundation VERSION 0.21.6 LANGUAGES C)
 
 
 
@@ -15,7 +15,7 @@ include( Environment)
 
 include( Files)
 
-include( IDESupport OPTIONAL)
+# include( IDESupport OPTIONAL)
 
 ### Library
 
@@ -46,8 +46,8 @@ endif()
 include( InstallLibrary)
 
 if( LINK_PHASE)
-   include( InstallCMakeInclude)
-   include( InstallCMakePackage)
+   include( AddSubdirectorySupport)
+   include( FindPackageSupport)
 endif() 
 
 include( FinalOutput OPTIONAL)

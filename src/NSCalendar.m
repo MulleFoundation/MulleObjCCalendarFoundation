@@ -141,8 +141,10 @@ MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
    struct MulleExtendedTimeInterval   extended;
    NSTimeInterval                     interval;
 
+   // timeIntervalSinceReferenceDate is UTC, adding the zone offset yields
+   // the local wall-clock time the components should describe
    interval  = [date timeIntervalSinceReferenceDate];
-   interval -= [_timeZone secondsFromGMTForDate:date];
+   interval += [_timeZone secondsFromGMTForDate:date];
 
    result = [[NSDateComponents new] autorelease];
 
@@ -212,8 +214,10 @@ MULLE_OBJC_DEPENDS_ON_LIBRARY( MulleObjCStandardFoundation);
                                        second:second
                                    nanosecond:nanosecond];
 
+   // the composed interval is local wall-clock time, subtracting the zone
+   // offset converts it back to the UTC instant NSDate represents
    date       = [NSDate dateWithTimeIntervalSinceReferenceDate:interval];
-   interval  += [_timeZone secondsFromGMTForDate:date];
+   interval  -= [_timeZone secondsFromGMTForDate:date];
 
    return( [NSDate dateWithTimeIntervalSinceReferenceDate:interval]);
 }
