@@ -59,9 +59,11 @@ derived from Christopher J. W. Lloyd's precision-date code (see the copyright in
   `dateByAddingComponents:` and `components:` treat `NSIntegerMax` as "absent".
   The `description` prints `*` for undefined fields.
 * **Timezone / locale awareness.** `NSCalendar` carries `timeZone`
-  (`NSTimeZone *`) and `locale` (`NSLocale *`) properties. Date translation
-  adds/subtracts `[timeZone secondsFromGMTForDate:]`, so results are relative
-  to the calendar's time zone (default: the local time zone).
+  (`NSTimeZone *`) and `locale` (`NSLocale *`) properties. Date decomposition
+  *adds* `[timeZone secondsFromGMTForDate:]` to the UTC reference interval to
+  obtain local wall-clock components; composition *subtracts* it again to get
+  back the UTC instant. Results are therefore relative to the calendar's time
+  zone (default: the local time zone).
 
 ## 3. Core API & Data Structures
 
@@ -326,7 +328,7 @@ Standalone helpers:
 Version macros and accessors:
 
 ```c
-#define MULLE_OBJC_CALENDAR_FOUNDATION_VERSION  ((0UL << 20) | (21 << 8) | 5)
+#define MULLE_OBJC_CALENDAR_FOUNDATION_VERSION  ((0UL << 20) | (21 << 8) | 6)
 
 static inline unsigned int   MulleObjCCalendarFoundation_get_version_major( void);
 static inline unsigned int   MulleObjCCalendarFoundation_get_version_minor( void);
@@ -591,8 +593,17 @@ int  main( void)
 
 Direct `mulle-sde` dependencies (from `.mulle/etc/sourcetree/config`):
 
-- `MulleObjCOSFoundation` — platform-dependent classes/categories; provides the
-  `NSTimeZone`, `NSLocale` infrastructure this library builds on.
+- `MulleObjCOSBaseFoundation` — platform-independent base classes/categories;
+  provides the `NSTimeZone`, `NSLocale` infrastructure this library builds on.
+- `MulleObjCPosixFoundation` — POSIX platform layer (`no-platform-windows`).
+- `MulleObjCBSDFoundation` — BSD platform layer (`no-header`, selected per
+  platform).
+- `MulleObjCDarwinFoundation` — Darwin platform layer (`no-header`,
+  `only-platform-darwin`).
+- `MulleObjCLinuxFoundation` — Linux/Android platform layer (`no-header`,
+  `only-platform-linux`, `only-platform-android`).
+- `MulleObjCWindowsFoundation` — Windows platform layer (`only-platform-mingw`,
+  `only-platform-windows`).
 - `mulle-objc-list` — runtime metadata only (`no-import`, `no-header`,
   `no-link`).
 
@@ -600,4 +611,4 @@ Types used by the public API (`NSDate`, `NSTimeInterval`, `NSRange`,
 `NSTimeZone`, `NSLocale`, `NSString`, `NSMapTable`, ...) come transitively from
 the `MulleFoundation` Objective-C stack (e.g. `MulleObjCTimeFoundation`,
 `MulleObjCValueFoundation`, `MulleObjCStandardFoundation`) via
-`MulleObjCOSFoundation`.
+`MulleObjCOSBaseFoundation`.
