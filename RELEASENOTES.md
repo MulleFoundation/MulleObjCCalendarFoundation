@@ -1,6 +1,7 @@
 ### 0.21.6
 
 
+
 * document that date decomposition adds the timezone's GMT offset to the UTC reference interval, while composition subtracts it again
 * replace the single MulleObjCOSFoundation requirement with MulleObjCOSBaseFoundation plus the Posix, BSD, Darwin, Linux and Windows foundation layers
 
