@@ -6,7 +6,6 @@
       language="c";
       dialect="objc";
       name="MulleObjCCalendarFoundation";
-      version="0.21.6";
       user="MulleFoundation";
       repo="MulleObjCCalendarFoundation";
       homepage="https://github.com/MulleFoundation/MulleObjCCalendarFoundation";
@@ -22,7 +21,6 @@
          user="MulleFoundation";
       },
       {
-         description="This is a [mulle-sde](https://mulle-sde.github.io/) project.";
          domain="github";
          name="MulleObjCPosixFoundation";
          repo="MulleObjCPosixFoundation";
@@ -30,7 +28,6 @@
          user="MulleFoundation";
       },
       {
-         description="This is a [mulle-sde](https://mulle-sde.github.io/) project.";
          domain="github";
          name="MulleObjCBSDFoundation";
          repo="MulleObjCBSDFoundation";
@@ -38,7 +35,6 @@
          user="MulleFoundation";
       },
       {
-         description="This is a [mulle-sde](https://mulle-sde.github.io/) project.";
          domain="github";
          name="MulleObjCDarwinFoundation";
          repo="MulleObjCDarwinFoundation";
@@ -46,7 +42,6 @@
          user="MulleFoundation";
       },
       {
-         description="This is a [mulle-sde](https://mulle-sde.github.io/) project.";
          domain="github";
          name="MulleObjCLinuxFoundation";
          repo="MulleObjCLinuxFoundation";
@@ -54,7 +49,6 @@
          user="MulleFoundation";
       },
       {
-         description="This is the beginning... But nothing works!";
          domain="github";
          name="MulleObjCWindowsFoundation";
          repo="MulleObjCWindowsFoundation";
@@ -64,9 +58,9 @@
       {
          description="📒 Lists mulle-objc runtime information contained in executables.";
          domain="github";
-         name="mulle-objc-list";
-         repo="mulle-objc-list";
-         url="https://github.com/mulle-objc/mulle-objc-list";
+         name="mulle-objc-tools";
+         repo="mulle-objc-tools";
+         url="https://github.com/mulle-objc/mulle-objc-tools";
          user="mulle-objc";
       }
    );
